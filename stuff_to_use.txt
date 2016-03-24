@@ -1,0 +1,27 @@
+Stuff I have implemented and have experience with:
++ means in progress
+* means not at all done
+
+Survey of high-resolution frequency estimation
+----------------------------------------------
+Basis pursuit
+Derivative method
+Reassignment method
+Parabolic interpolation
+Adaptive Quasi-harmonic model
+
+Partial tracking
+----------------
+McAulay Quatieri
+HMM of Depalle*
+my LP method needs to be tweaked, tested+
+
+Multiple F0 estimation
+----------------------
+Technique of Puckette / Doval+
+Cepstrum (performs quite poorly, needs higher level decision making)
+
+Partial grouping
+----------------
+Grouping by common AM and FM*
+Grouping by harmonicity+
