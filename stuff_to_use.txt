@@ -5,16 +5,24 @@ Stuff I have implemented and have experience with:
 Survey of high-resolution frequency estimation
 ----------------------------------------------
 Basis pursuit
+    o-p-u-l-e-n-c-e
+    multipitch_bpdn
 Derivative method
+    mumt-605-final-project
 Reassignment method
-Parabolic interpolation
+    signal_modeling
+Parabolic interpolation+
+    sinusoid_tracker (but in C only?)
 Adaptive Quasi-harmonic model
+    qhm
 
 Partial tracking
 ----------------
 McAulay Quatieri
+    sinusoid_tracker
 HMM of Depalle*
 my LP method needs to be tweaked, tested+
+    o-p-u-l-e-n-c-e
 
 Multiple F0 estimation
 ----------------------
