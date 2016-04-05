@@ -7,7 +7,7 @@ sp.Fs=16000;
 % Length of signal
 sp.N=sp.Fs*2;
 % sample indices
-sp.n=(0:(sp.N-1));
+n=(0:(sp.N-1));
 n=n(:);
 t=n/sp.Fs;
 % Fundamental
@@ -48,5 +48,5 @@ fo=fopen([fname '.f64'],'w');
 fwrite(fo,x,'float64');
 fclose(fo);
 % write log file
-
+save([fname '.dat'],'sp');
 %wavwrite(x/max(x),'/tmp/test.wav');
