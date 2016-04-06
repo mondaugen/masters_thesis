@@ -141,7 +141,19 @@ clustering will be necessary. Ideally the clusters will correctly classify the
 partials as coming from their rightful sources.
 Timeline:
 Synthesis 0.5 day
+    Was straightforward, however we use two techniques for initial attacks,
+    both with their pros and cons. One is a 1st order AR filter and the other is
+    the FOF. FOF is good for short attacks, and the AR should be better in theory
+    for longer attacks but the Tau has to be very large to get long attacks.  The
+    FOF gives a click on long attacks but it is not present for short ones (but it
+    can be seen in the spectrum!). A script was added to ~/mybin to normalize the
+    files for playback, otherwise we will keep them unnormalized. Also added
+    f64_combine for mixing multiple files quickly.
 Peak picking 1 day
+    Started peak picking, added buffer_ne function for framing-up the signals.
+    Peak picking method of course requires different parameters for different
+    signals. What I want to know is if it depends on overall amplitude. It seems
+    okay so far.
 Calculation of parameters 2 days
 PCA Calculation 2 days
 Clustering 2 days
