@@ -2,7 +2,7 @@ clear;
 %synthesis parameters
 sp=struct();
 % filename base
-sp.fname='/tmp/test5';
+sp.fname='/tmp/test4';
 % Sampling rate in Hz
 sp.Fs=16000;
 % Length of signal
@@ -21,7 +21,7 @@ sp.B=0.001;
 % Harmonic numbers
 k=1:sp.K;
 % Harmonic numbers adjusted for inharmonicity
-k_B=k.*sqrt(1+sp.B*k.^2);
+sp.k_B=k.*sqrt(1+sp.B*k.^2);
 % Amplitude based on harmonic number
 sp.A_k_60=20; % The harmonic number that is 60dB lower than the first
 a_k_60=log(10^(-3))/log(10)/sp.A_k_60;
@@ -36,7 +36,7 @@ sp.T_60=.75;
 % amplitude coefficient
 a_60=log(10^(-3))/log(10)/sp.T_60;
 % Time in seconds to when attack function reaches maximum
-sp.T_max=0.1;
+sp.T_max=0.0001;
 sp.A_method='FOF';
 switch sp.A_method
 case 'FOF'
@@ -52,12 +52,12 @@ otherwise
     error('Bad A_method');
 end
 % Amplitude coefficient of FM
-sp.A_fm=sp.f0*2^(0.1/12)-sp.f0;
+sp.A_fm=sp.f0*2^(1/12)-sp.f0;
 % Frequency coefficient of FM
 sp.f_fm=5;
-x=A.*cos(2*pi*(sp.f0*t+sp.A_fm/(2*pi*sp.f_fm)*cos(2*pi*sp.f_fm*t+sp.phi_fm))*k_B+sp.phi);
+x=A.*cos(2*pi*(sp.f0*t-sp.A_fm/(2*pi*sp.f_fm)*cos(2*pi*sp.f_fm*t+sp.phi_fm))*sp.k_B+sp.phi);
 x=sum(x,2);
-[S,T,F]=stft_ne(x',1024,256,'hanning',1023,16000);
+[S,T,F]=stft_ne(x',1024,256,'hanning',1024,16000);
 imagesc(T,F,log(abs(S)));
 % write raw sound file
 fo=fopen([sp.fname '.f64'],'w');

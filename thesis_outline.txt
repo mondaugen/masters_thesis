@@ -149,12 +149,25 @@ Synthesis 0.5 day
     can be seen in the spectrum!). A script was added to ~/mybin to normalize the
     files for playback, otherwise we will keep them unnormalized. Also added
     f64_combine for mixing multiple files quickly.
+    Wed Apr  6 21:44:01 EDT 2016
+    Fixed synthesis because the frequency modulation was "upside-down" starting
+    by first going negative, then   going positive.
 Peak picking 1 day
     Started peak picking, added buffer_ne function for framing-up the signals.
     Peak picking method of course requires different parameters for different
     signals. What I want to know is if it depends on overall amplitude. It seems
     okay so far.
+    Wed Apr  6 21:48:51 EDT 2016
+    ppvp needs parameter adjusting and can crap out if needing to eliminate too
+    many minima, it seems
 Calculation of parameters 2 days
+    Wed Apr  6 21:49:39 EDT 2016
+    I find RM works best simply using FFT like Roebel describes.
+    How do we choose a frequency modulation threshold because sometimes big
+    slopes are discovered which shouldn't be there.
+    STFT_NE has a problem and it seems to give a big click at the beginning of
+    analysis. Have to check if this is just the beginning of the file or something
+    else.
 PCA Calculation 2 days
 Clustering 2 days
 Plotting of results 1 day
