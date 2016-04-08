@@ -168,6 +168,16 @@ Calculation of parameters 2 days
     STFT_NE has a problem and it seems to give a big click at the beginning of
     analysis. Have to check if this is just the beginning of the file or something
     else.
+    Thu Apr  7 21:56:23 EDT 2016
+    Added blackman window to RM method, seems to give better results but this
+    has not been tested thoroughly.
+    Added f0 score for each partial. This works by seeing how well the partial
+    falls in the comb by evaluating the comb at the frequency of the partial and
+    multiplying it by the partial's amplitude. We will see if this improves
+    anything when we get to the PCA calculation step.
+    Reminder: ppvp needs to start with a set of maxima to work properly.
+    Starting with the whole spectrum works in theory but most likely too many
+    iterations will be needed. Plus we know we want maxima anyway.
 PCA Calculation 2 days
 Clustering 2 days
 Plotting of results 1 day
