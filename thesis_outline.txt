@@ -179,6 +179,15 @@ Calculation of parameters 2 days
     Starting with the whole spectrum works in theory but most likely too many
     iterations will be needed. Plus we know we want maxima anyway.
 PCA Calculation 2 days
+    PCA calculation is a breeze although probably my method doesn't scale well
+    as it involves computing all the eigenvalues of the covariance matrix. For this
+    project it's okay. For our actual study we should use the correlation matrix
+    because of unmatched units. GMM also worked impressively well, at least on the
+    dataset I checked out (the irises). I cheated a bit in that I knew the number
+    of means and I gave it a hint as to approximately where they are. If the means
+    are a bit separated, it shouldn't be too hard to automatically start with a
+    guess by finding local maxima in a smoothed histogram, and the covariance I
+    just set to the identity matrix.
 Clustering 2 days
 Plotting of results 1 day
 extra 0.5 days 
