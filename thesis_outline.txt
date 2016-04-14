@@ -188,6 +188,12 @@ PCA Calculation 2 days
     are a bit separated, it shouldn't be too hard to automatically start with a
     guess by finding local maxima in a smoothed histogram, and the covariance I
     just set to the identity matrix.
+    Wed Apr 13 21:18:11 EDT 2016
+    Got a bit behind today. Something got all screwed up with Octave. It
+    wouldn't show any plots. Anyhow this is fixed now, it seems. Worked on
+    synthesizing directly the theoretical parameters that the reassignment method
+    should find. Either the frequency slopes are too steep or there is something
+    wrong with the instantaneous frequency.
 Clustering 2 days
 Plotting of results 1 day
 extra 0.5 days 
