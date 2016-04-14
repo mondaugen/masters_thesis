@@ -2,7 +2,7 @@ clear;
 %synthesis parameters
 sp=struct();
 % filename base
-sp.fname='/tmp/test4';
+sp.fname='/tmp/test5';
 % Sampling rate in Hz
 sp.Fs=16000;
 % Length of signal
@@ -12,7 +12,7 @@ n=(0:(sp.N-1));
 n=n(:);
 t=n/sp.Fs;
 % Fundamental
-sp.f0=440*2^((64-69)/12);
+sp.f0=440*2^((67-69)/12);
 % Number of harmonics
 sp.K=10;
 % Inharmonicity coefficient
@@ -36,7 +36,7 @@ sp.T_60=.75;
 % amplitude coefficient
 a_60=log(10^(-3))/log(10)/sp.T_60;
 % Time in seconds to when attack function reaches maximum
-sp.T_max=0.0001;
+sp.T_max=0.1;
 sp.A_method='FOF';
 switch sp.A_method
 case 'FOF'
@@ -54,7 +54,7 @@ end
 % Amplitude coefficient of FM
 sp.A_fm=sp.f0*2^(1/12)-sp.f0;
 % Frequency coefficient of FM
-sp.f_fm=5;
+sp.f_fm=2;
 x=A.*cos(2*pi*(sp.f0*t-sp.A_fm/(2*pi*sp.f_fm)*cos(2*pi*sp.f_fm*t+sp.phi_fm))*sp.k_B+sp.phi);
 x=sum(x,2);
 [S,T,F]=stft_ne(x',1024,256,'hanning',1024,16000);
