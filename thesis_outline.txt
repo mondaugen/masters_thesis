@@ -195,6 +195,21 @@ PCA Calculation 2 days
     should find. Either the frequency slopes are too steep or there is something
     wrong with the instantaneous frequency.
 Clustering 2 days
+    Thu Apr 14 21:17:37 EDT 2016
+    Checked calculation of theoretical values of AM FM sinusoids and they seem
+    pretty good. Added noise to the parameters to see how they might behave in an
+    analysis. The principle components are helpful because they sort of
+    automatically reveal the more reliable parameter: if FM is hard to separate it
+    will use AM and vice-versa. It might be nice to have even more parameters to
+    help improve the separation!  Some ideas: Try clustering with varying sets of
+    parameters and varying amounts of noise. Also try with up to N mixtures. You
+    could even try to retrieve the noise corrupted parameters using the means of
+    the discovered distributions (extra).  Problems: How to pick the starting means
+    and variances. Initial idea is to pick local maxima, but this involves
+    convolution with a smoothing function. Another idea is to split the histogram
+    of the values into P parts of equal area where P is the number sources we are
+    looking for. The initial means are the centres of these parts. As for the
+    variance, it could be some fraction of the "bandwidth" of the parts.
 Plotting of results 1 day
 extra 0.5 days 
 
