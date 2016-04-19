@@ -210,6 +210,14 @@ Clustering 2 days
     of the values into P parts of equal area where P is the number sources we are
     looking for. The initial means are the centres of these parts. As for the
     variance, it could be some fraction of the "bandwidth" of the parts.
+    Mon Apr 18 20:38:03 EDT 2016
+    Tried adding spurious peaks to the analysis. This really ruins the GMM
+    algorithm as it seems to comprimise the estimation of the covariance matrix.
+    This might still be okay if we do a thresholding on the histogram, discarding
+    samples that are too spurious in the covariance estimation, or even not
+    considering them at all. It might be nice to try this on real sounds, analysed
+    using the RM. First we need to make some plots, however, and see about testing
+    on a variety of signal configurations.
 Plotting of results 1 day
 extra 0.5 days 
 
