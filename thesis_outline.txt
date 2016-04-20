@@ -224,6 +224,11 @@ Clustering 2 days
     separation. We need to consult with Philippe, to see what kinds of other
     experiments we could run.
     NEED TO FIX PLOT THAT IS ONLY JPEG!
+    Wed Apr 20 16:59:07 EDT 2016
+    Fixed plot that is only jpeg and made pdf version.
+    Made reassignment method work on a matrix of frames.
+    Made better and simpler peak-picking algorithm, lmaxw, that starts with
+    local maxima and filters them by finding the local maximum within a window.
 Plotting of results 1 day
 extra 0.5 days 
 
