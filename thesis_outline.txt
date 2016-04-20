@@ -218,6 +218,11 @@ Clustering 2 days
     considering them at all. It might be nice to try this on real sounds, analysed
     using the RM. First we need to make some plots, however, and see about testing
     on a variety of signal configurations.
+    Tue Apr 19 20:21:18 EDT 2016
+    We now threshold the histogram, discarding values that mingle with few
+    others in a histogram bin. This improves the GMM part and does some nice
+    separation. We need to consult with Philippe, to see what kinds of other
+    experiments we could run.
 Plotting of results 1 day
 extra 0.5 days 
 
