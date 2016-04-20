@@ -223,6 +223,7 @@ Clustering 2 days
     others in a histogram bin. This improves the GMM part and does some nice
     separation. We need to consult with Philippe, to see what kinds of other
     experiments we could run.
+    NEED TO FIX PLOT THAT IS ONLY JPEG!
 Plotting of results 1 day
 extra 0.5 days 
 
