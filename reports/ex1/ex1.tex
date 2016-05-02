@@ -1,0 +1,36 @@
+\documentclass[letter,10pt]{report}
+\author{Nicholas Esterer}
+\title{Experiment 1: Partial grouping in one frame}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Introduction}
+To evaluate whether the grouping of partials with common AM and FM parameters is
+plausible, we synthesize a set of parameters and test by corrupting the
+parameters with noise and adding spurious sets of parameters (that should no
+belong to any sources).
+\section{Methodology}
+We synthesize theoretical sets of parameters as described above. On each frame
+of analysis data, i.e., for parameters belonging to the same time instant, we
+consider each data point as a multi-dimensional random variable. With these
+random variables, we compute principle components in order to produce a variable
+with maximum variance. This variable is classified using a clustering algorithm
+and we evalutate the results. A summary follows:
+\begin{itemize}
+\item 
+Parameters are synthesized from a theoretical mixture of AM and FM sinusoids.
+Spurious data are added to these parameters.
+\item
+Principle components analysis is carried out on the parameters happening at
+one time instance.
+\item
+A histogram is made of the 1st principle components. Values sharing a bin with
+too few other values are discarded to remove spurious data points.
+\item
+Initial means and standard deviations for the Gaussian mixture models are made
+by dividing the histogram into equal parts by area and choosing the centres of
+these parts.
+\item
+The EM algorithm for Gaussian mixture models is carried out to classify the
+sources.
+\end{itemize}
