@@ -1,2 +1,6 @@
 *.pdf
 *octave-workspace
+*.aux
+*.dvi
+*.log
+*.toc
