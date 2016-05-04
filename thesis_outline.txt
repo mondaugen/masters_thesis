@@ -261,3 +261,16 @@ Construction of cost functions 3 days
 Improve speed of linear program using better library (CVXOPT) 1 day
 Do partial tracking 2 days
 Plotting of results 1 day
+    Tue May  3 21:10:27 EDT 2016
+    We are a bit behind schedule but the results are more interesting than I
+    thought.  The linear program with frequency argument prediction cost function
+    seems to be doing a better job that the GMM clustering technique. It is
+    however, a bit slower, but gives connections accross frames as well. We should
+    test it on more difficult signals, I think.  I have been thinking about
+    different ways to use the LP. One way, which has actually been implemented but
+    not tested on any real cases is an LP that takes into consideration the mean
+    node selection's deviation from some desired value. It works on some toy
+    signals, but I haven't tried for musical sounds. Another thing that is possible
+    is that you can compute the variance of the nodes selected in a frame by
+    hacking the cone constraints. This might be useful to pick out sinusoids from
+    noise (holy shit, try it!) Any how, I just wanna say this stuff is pretty fun.
