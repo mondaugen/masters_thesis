@@ -3,20 +3,51 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage[dvips]{graphicx}
+\usepackage{tikz}
 \begin{document}
 \author{Nicholas Esterer}
 \title{Experiment 1: Partial grouping in one frame}
 \maketitle
 \tableofcontents
+
 \section{Introduction}
 In the previous experiment we showed it was possible to associate data points
 representing underlying partial trajectories to particular sources and discard
 spurious points. It remained, however, to connect these trajectories between
 analysis frames. In this experiment we will use variations on a linear program
 solving the $L$-shortest through a lattice to find solutions to this problem.
+
 \section{Methodology}
-We start from the same theoretical signals as in experiment 1 with added
-spurious data.
+We start from the same theoretical data as in experiment 1. These data are
+considered as nodes in a graph. Each of the $N$ nodes has some defined distance
+from the other $N$ nodes in the graph. Connections between nodes in the graph
+are represented by edges. We would like to define a measurement of the cost of
+choosing a particular set of edges. One such cost function is the linear cost
+function. We encode in a vector $\mathbf{c}$ the cost of connections between
+nodes: Here $c_{Nj+i}$ is the distance from node $i$ to node $j$. If we define
+the vector $\mathbf{x}$ such that $x_{Nj+i} = 1$ if there is a connection
+between node $i$ and node $j$ or $\mathbf{x} = 0$ if there is no connection,
+then the function $C(x) = \mathbf{c}^T\mathbf{x}$ quantifies the cost of the set
+of connections encoded in $\mathbf{x}$. Assume we are trying to find the set of
+connections with minimal cost, that means the vector $\mathbf{x}^{\ast}$ for
+which $C(\mathbf{x})$ attains a minimum. Besides being trivial and
+uninformative if $\mathbf{x}$ is unconstrained, we can encode desirable
+properties of the resulting set of connections by enforcing constraints on
+$\mathbf{x}$.
+
+\subsection{Constraint 1: Overall graph flow}
+The problem at hand is to discover partials whose instantaneous frequency and
+amplitude are varying in time. We can constrain the linear program such that the
+paths produced represent the trajectory of an underlying partial, the nodes
+being the descrete observations we do have of the paritial. We arrange the
+partials on a 2-dimensional plane with time increasing to the right and
+frequency increasing upward. This arrangement is arbitrary---the distance we
+define between nodes will usually not reflect their arrangement on this plane---
+but it helps to visualize how the constraints are chosen.
+
+As we are interested in separating the sets of nodes afterward one constraint we
+can enforce is that no node accept more than 2 connections; one in-going
+and the other out-going.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{../experiment_2/plots/lp_ptrack_eudist.eps}
