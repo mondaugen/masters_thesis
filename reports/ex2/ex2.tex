@@ -1,0 +1,30 @@
+\documentclass[letterpaper,12pt]{report}
+\usepackage{McECEThesis}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[dvips]{graphicx}
+\begin{document}
+\author{Nicholas Esterer}
+\title{Experiment 1: Partial grouping in one frame}
+\maketitle
+\tableofcontents
+\section{Introduction}
+In the previous experiment we showed it was possible to associate data points
+representing underlying partial trajectories to particular sources and discard
+spurious points. It remained, however, to connect these trajectories between
+analysis frames. In this experiment we will use variations on a linear program
+solving the $L$-shortest through a lattice to find solutions to this problem.
+\section{Methodology}
+We start from the same theoretical signals as in experiment 1 with added
+spurious data.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../experiment_2/plots/lp_ptrack_eudist.eps}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../experiment_2/plots/lp_ptrack_fpredict.eps}
+\end{figure}
+%\input{/home/sandman/Documents/development/masters_thesis/ex2_lp_ptrack_eudist.pgf}
+
+\end{document}
