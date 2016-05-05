@@ -274,3 +274,15 @@ Plotting of results 1 day
     is that you can compute the variance of the nodes selected in a frame by
     hacking the cone constraints. This might be useful to pick out sinusoids from
     noise (holy shit, try it!) Any how, I just wanna say this stuff is pretty fun.
+    Wed May  4 21:21:20 EDT 2016
+    Plotted comparison of partial tracking using frequency prediction error
+    cost function and Euclidean distance cost function. The frequency prediction
+    error works better. However, from my very small experience it is not so good
+    with noise. It also might be better to pre-filter obviously spurious peaks,
+    this would make solving the program faster. A simpler thing to try is: on one
+    frame pick the subset of estimated parameters whose variance is minimal. The
+    variance would be calculated for the values frequency_slope/frequency,
+    amplitude_slope (or even principle components). Try on an actual analysis of a
+    noisey sum of sinusoids. Do we acheive good retrieval of the sinusoids buried
+    in the noise? If so this might mean that we can quickly retrieve sinusoids in bad
+    SNRs. We have to check if it indeed works.
