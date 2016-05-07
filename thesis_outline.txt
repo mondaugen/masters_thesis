@@ -286,3 +286,19 @@ Plotting of results 1 day
     noisey sum of sinusoids. Do we acheive good retrieval of the sinusoids buried
     in the noise? If so this might mean that we can quickly retrieve sinusoids in bad
     SNRs. We have to check if it indeed works.
+    Sat  7 May 2016 13:14:30 EDT
+    Tried to see if frequency slopes could be estimated accurately simply using
+    adjacent DFT frames and solving for a polynomial fitting the phases. This
+    doesn't seem to be the case except in very low levels of noise. So if were
+    interested in finding collections of spectral peaks with minimum
+    freq_slope/freq variance we will probably have to use a different technique
+    (like DDM, RM etc.), and then in high levels of noise, it might not even be
+    meaningful to separate sources like that.  The way we probably could still use
+    the linear program is by using it to solve best source connection paths. The
+    viterbi algorithm's complexity is O((p!)^2*l), whereas the LP complexity is
+    O((pl)^2). So there are advantages to either depending on the number of sources
+    and the number of layers. Furthermore, the inclusion of other constraints might
+    be simpler in the LP formulation, for example if you have more potential
+    sources than real sources, you might be able to incorporate a selection
+    criterion on each frame as well as a best path criterion (similar to when we
+    incorporated the deviation from a mean or even the variance).
