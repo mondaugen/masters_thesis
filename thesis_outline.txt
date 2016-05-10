@@ -286,3 +286,7 @@ Plotting of results 1 day
     noisey sum of sinusoids. Do we acheive good retrieval of the sinusoids buried
     in the noise? If so this might mean that we can quickly retrieve sinusoids in bad
     SNRs. We have to check if it indeed works.
+    Mon May  9 20:15:16 EDT 2016
+    Compared linear program best K paths with
+    Viterbi formulation and well, the LP formulation is faster. Now we need to
+    apply it to the source grouping across frames problem.
