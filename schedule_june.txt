@@ -1,0 +1,28 @@
+What to do in June:
+
+Source separation experiments:
+Source separation on AM and FM signals
+AM
+synthetic, separate analyses
+synthetic, lumped analysis
+FM
+synthetic, separate analyses
+synthetic, lumped analysis
+Real AM equivalent (e.g., 2 percussive instruments)
+separate analyses
+lumped analysis
+Real FM equivalent (e.g., 2 violins playing with vibrato)
+separate analyses
+lumped analysis
+
+Then, write-up:
+
+DDM,
+LP partial tracking
+PCA
+GMM?
+
+Then do overview of other techniques:
+NMF, basically
+
+
