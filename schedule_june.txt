@@ -5,9 +5,17 @@ Source separation on AM and FM signals
 AM
 synthetic, separate analyses
 synthetic, lumped analysis
+Steps:
+- See if DDM gives good estimation of amplitude slope and then plot a histogram of the slope, perhaps divided by frequency or partial number
+- If so, use this to separate two sounds with different amplitude slopes
+- We need to see though if this is true of real sounds
+    - After observing synthetic sound, observe real sound
+    - Draw conclusion (works or doesn't work)
 FM
 synthetic, separate analyses
 synthetic, lumped analysis
+Problems:
+- Probably when the partials cross, you wont be able to resolve them. To help with this, you can use a light Wiener filter based on the analysis of the last frame to filter out the crossing frame (which might have more components than you want).
 Real AM equivalent (e.g., 2 percussive instruments)
 separate analyses
 lumped analysis
@@ -25,4 +33,16 @@ GMM?
 Then do overview of other techniques:
 NMF, basically
 
+If you have time:
 
+Show other methods that estimate phase functions
+Basis Pursuit Denoising
+Quasi-Harmonic model
+
+Show actual source separation example using NMF
+
+Show how very close partials could be resolved using the AM parameter and then
+estimating the phase by minimizing an error function.
+
+LP:
+It's looking like it might not be useful for sounds that I can imagine. Is there a case where we want many paths through a very short lattice?
