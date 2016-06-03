@@ -306,3 +306,14 @@ Plotting of results 1 day
     Compared linear program best K paths with
     Viterbi formulation and well, the LP formulation is faster. Now we need to
     apply it to the source grouping across frames problem.
+
+
+Thu Jun  2 20:59:29 EDT 2016
+Extracting partials from guitar recording
+Partials do not decay at constant rate.
+Allowed algorithm to skip "empty" frames in order to continue connecting partials. This works well.
+Thresholded paths that cost more than average. This is pretty good at getting rid of bad paths.
+There is still the problem where multiple paths overlap over many nodes, these could be taken care of, probably.
+The goal is to extract plausible partial paths and then examine their overall amplitude modulation, then compare these with the overall amplitude modulation of another source. Hopefully, they will be different enough to separate them.
+See partial_estimation_plot_3.py for the code.
+    
