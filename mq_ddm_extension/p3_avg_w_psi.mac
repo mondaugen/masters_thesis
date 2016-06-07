@@ -1,0 +1,42 @@
+/* Extend the McAulay and Quatieri cubic polynomial to include frequency and
+ * frequency slope estimation.
+ * 
+ * The current strategy is to lower variance of frequency and frequency slope
+ * estimators, so we make the constraint that the polynomials 1st and 2nd
+ * derivatives equal the average frequency and frequency slope at the mid-point,
+ * T/2 (average w.r.t the values at t=0 and t=T).
+ */
+
+/* Let th(t) = c3*t^3 + c2*t^2 + c1*t + c0 be the phase function. We require
+ * th(0)=phi0, therefore c0=phi0. It remains to solve for c3-1. */
+
+H: matrix (
+    [T^3,T^2,T],
+    [3/4*T^2,T,1],
+    [3*T,2,0]
+);
+
+b: matrix (
+    [phiT-phi0+2*pi*M],
+    [1/2*(wT-w0)],
+    [1/2*(psiT-psi0)]
+);
+
+H_inv: H ^^ -1;
+
+c: H_inv . b;
+
+/* We now solve for M by minimizing the integral of the squared 2nd derivative
+ * over the interval 0-T.
+ */
+
+ddth_t: 6*c[1]*t+2*c[2];
+
+/* The function to minimize */
+f_M: integrate(ddth_t^2,t,0,T);
+
+/* Its derivative w.r.t. M */
+df_M: diff(f_M,M);
+
+/* Solve equation df_M=0 for M */
+M_: solve(df_M,M);
