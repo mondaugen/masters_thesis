@@ -18,7 +18,7 @@ H: matrix (
 
 b: matrix (
     [phiT-phi0+2*pi*M],
-    [1/2*(wT-w0)],
+    [1/2*(wT+w0)],
     [1/2*(psiT-psi0)]
 );
 
