@@ -1,0 +1,39 @@
+/* Determine the cubic log amplitude function to interpolate between DDM
+ parameters using constrained least squares. */
+
+/* Observation matrix */
+H: matrix (
+    [0,0,1],
+    [3*T^2,2*T,1],
+    [0,2,0],
+    [6*T,2,0]
+);
+
+/* Observed data */
+x: matrix (
+    [a10],
+    [a1T],
+    [a20],
+    [a2T]
+);
+
+/* Constraint matrix */
+A: matrix (
+    [T^3,T^2,T]
+);
+
+/* Constraint */
+b: matrix ([a0T-a00]);
+
+/* (H^T*H)^1 */
+
+HtH_i: (transpose (H) . H) ^^ -1;
+
+/* Unconstrained least squares solution */
+th_hat: HtH_i . transpose(H) . x;
+
+/* Constrained least squares solution */
+th_c: th_hat - HtH_i . transpose(A) . ((A . HtH_i . transpose(A)) ^^ -1) . 
+        (A . th_hat - b);
+
+

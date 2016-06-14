@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Add citation copied from clipboard (for example, from Google scholar) to bib
+# file
+xclip -selection 'clipboard' -o >> bib/thesis.bib
+echo >> bib/thesis.bib
