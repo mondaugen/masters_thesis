@@ -294,7 +294,7 @@ If $\psi(t)$ is 0 outside of some interval $n \in [-T,T]$ then
 \[
     \int_{-T}^{T} \frac{dx}{dn}(n)\overline{\psi}(n) dn
     = \sum_{q=1}^{Q} q c_q \int_{-T}^{T} n^{q-1} x(n) \overline{\psi}(n) dn
-    + \left\langle x, \frac{d\overline{\psi}}{dn} \right\rangle
+    + \left\langle x, \frac{d\overline{\psi}}{dn} \right\rangle = 0
 \]
 which after rearranging is
 \[ 
@@ -340,8 +340,8 @@ The \textit{Hann} window possesses this property
 
 The Hann window is a member of a class of windows constructed by summing scaled
 harmonically related cosine functions, subject to the constraint that the
-scaling coefficients sum to 1. so that the window have a value of 1 at $n=0$.
-Letting $T=N/2$
+scaling coefficients sum to 1 so that the window have a value of 1 at $n=0$.
+Letting $T=N/2$, where $N$ is the length of the window
 \[
     w(n) = \begin{cases}
         \sum_{m=0}^{M-1}a_{m}\cos \left( \frac{2\pi}{N}mn \right) & -\frac{N}{2} \leq n
@@ -372,14 +372,22 @@ subject to
             = w_{\tilde{a}} \left( \frac{-N}{2} \right) = 0
 \]
 \[
-        \sum_{m}^{M-1} a_{m} = 1.
+        \sum_{m}^{M-1} a_{m} = 1
 \]
-The solution $\tilde{a}^{\ast}$ is given in table~\ref{tab:opt_blackman} and
-plots are given in figures~\ref{plot:opt_blackman}. This window will be referred
+where
+\[
+    w_{\tilde{a}}(n) = \begin{cases}
+        \sum_{m=0}^{M-1}\tilde{a}_{m}\cos \left( \frac{2\pi}{N}mn \right) & -\frac{N}{2} \leq n
+        \leq \frac{N}{2} \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+The solution $\tilde{a}^{\ast}$ is given in Table~\ref{tab:opt_blackman} and
+plots are given in Figure~\ref{plot:opt_blackman}. This window will be referred
 to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
 
 \begin{table}
-    \label{tab:opt_blackman}
+    \caption{\label{tab:opt_blackman}}
     \begin{center}
         \begin{tabular}{l c c c c }
             Window & $a_0$ & $a_1$ & $a_2$ & $a_3$ \\
@@ -392,8 +400,25 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
     \end{center}
 \end{table}
 
+% Plots made with continuous_blackman_1.py
 \begin{figure}
-    \label{plot:opt_blackman}
+    \caption{\label{plot:opt_blackman}}
+    \includegraphics[width=\textwidth]{plots/min4_blackman_td.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{}
+    \includegraphics[width=\textwidth]{plots/min4_blackman_fd.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{}
+    \includegraphics[width=\textwidth]{plots/c1_blackman_td.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{}
+    \includegraphics[width=\textwidth]{plots/c1_blackman_fd.eps}
 \end{figure}
 
 \bibliographystyle{plain}
