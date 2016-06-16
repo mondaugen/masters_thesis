@@ -2,8 +2,11 @@
 \usepackage{McECEThesis}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{mathrsfs}
 \usepackage[dvips]{graphicx}
+\usepackage{algorithm2e}
+\DeclareMathOperator{\argmin}{argmin}
 \begin{document}
 \author{Nicholas Esterer}
 \title{Elements of Source Separation}
@@ -179,7 +182,7 @@ musical signals, however, we have some prior information and can make certain
 assumptions about the underlying functions.
 
 \subsubsection{Sinusoidal Representations}
-
+\label{mq_fm_from_phase}
 Many musical acoustic signals are quasi-harmonic, meaning that they consist of a
 sum of sinusoids whose frequencies are roughly integer multiples of a
 fundamental frequency. For these kinds of signals, most of the energy can be
@@ -359,7 +362,9 @@ side-lobe level of 92 dB, lower than the quantization noise of a 16-bit linear
 pulse code modulated signal. This window has a very large main-lobe which means
 two sinusoids of similar frequency will be difficult to resolve. Furthermore,
 the window has a discontinuity at its boundaries, e.g.,
-$w \left( \frac{N}{2} \right) \neq 0$ and is not once-differentiable.
+$w \left( \frac{N}{2} \right) \neq 0$ and is not once-differentiable. In any
+case the window is valuble in that it essentially nulls any influence of signals
+outside of a bandwidth of interest.
 
 To find a window with properties similar to the 4-term Blackman-Harris window
 but without a discontinuity, we solve the optimization problem
@@ -420,6 +425,100 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
     \caption{}
     \includegraphics[width=\textwidth]{plots/c1_blackman_fd.eps}
 \end{figure}
+
+\subsection{Partial Tracking}
+
+In Section~\ref{mq_fm_from_phase} we discussed how to determine reasonable
+values for the coefficients of a cubic phase polynomial by using the frequency,
+phase and time difference of two local maxima in the DTSTFT. In this section we
+discuss possible ways of determining which local maxima are connected. This is
+referred to as \textit{peak matching} \cite{mcaulay1986speech}
+or \textit{partial tracking} \cite{smith1987parshl} \cite{depalle1993tracking}.
+
+\subsubsection{A Greedy Method}
+
+The original method of connecting peaks in the spectrogram is from
+\cite{mcaulay1986speech}. This method is simple and fast but, as we will see,
+can be sensitive to spurious peaks.
+
+Typically the DTSTFT is computed for a block of contiguous samples, called a
+\textit{frame} and these frames are computed every $H$ samples, $H$ being the
+\textit{hop-size}. Consider the parameters of local maxima in adjacent frames
+$k$ and $k+1$ with $M$ maxima in frame $k$ and $N$ maxima in frame $k+1$. In
+\cite{mcaulay1986speech}  the parameters are the instantaneous amplitude, phase
+and frequency and are indexed by frequency as $\omega_0^{k}, \dotsc,
+\omega_{M-1}^{k}$ and $\omega_0^{k+1}, \dotsc, \omega_{N-1}^{k+1}$, but here we
+allow for an arbitrary set of parameters $\theta_0^{k}, \dotsc,
+\theta_{M-1}^{k}$ and $\theta_0^{k+1}, \dotsc,
+\theta_{N-1}^{k+1}$, such as the coefficients of a phase polynomial. Define a
+distance function $\mathcal{D} \left( \theta_{i},\theta_{j} \right)$ that computes the
+similarity between two sets of parameters. We will now consider a method that
+finds $L$ pairs of parameters that are closest.
+
+We compute the cost matrix $C$
+\[
+    C = \theta^{k} \otimes_{\mathcal{D}} \theta^{k+1}
+\]
+so that the $i$th row and $j$th column contain $C_{i,j} = \mathcal{D} \left(
+\theta_{i}^{k},\theta_{j}^{k+1} \right)$.  For each $l \in \left[0 \dotsc L-1
+\right]$, find the indices $i_{l}$ and $j_{l}$ corresponding to the shortest
+distance, then remove the $i_{l}$th row and $j_{l}$th column from consideration
+and continue until $L$ pairs have been determined or the distances exceed some
+threshold $\Delta$. This is summarized in Algorithm~\ref{alg:mq_peak_match}
+
+\begin{algorithm}[H]
+    \caption{\label{alg:mq_peak_match}}
+    \KwIn{the cost matrix $C$}
+    \KwOut{$L$ index pairs $\Gamma_{i}$ and $\Gamma_{j}$}
+    $\Gamma_{i} \leftarrow \varnothing$\;
+    $\Gamma_{j} \leftarrow \varnothing$\;
+    \For{$l \leftarrow 0$ to $L-1$}{
+        $i_{l},j_{l}=\argmin_{i \in \left[ 0,\dotsc,M-1 \right] \setminus
+        \Gamma_{i}, j \in \left[ 0,\dotsc,M-1 \right] \setminus \Gamma_{j}}
+        C_{i,j}$\;
+        \If{$ C_{i_{l},j_{l}} > \Delta$}{
+            \KwRet{$\Gamma_{i},\Gamma_{j}$}
+        }
+        $\Gamma_{i} \leftarrow \Gamma{i} \cup i_{l}$\;
+        $\Gamma_{j} \leftarrow \Gamma{i} \cup j_{l}$\;
+    }
+    \KwRet{$\Gamma_{i},\Gamma_{j}$}
+\end{algorithm}
+
+This is a greedy algorithm because on every iteration the smallest cost is
+identified and its indices are removed from consideration. Perhaps choosing a
+slightly higher cost in one iteration would allow smaller costs to be chosen in
+successive iterations. This algorithm does not allow for that. In other terms,
+the algorithm does not find a set of pairs that represent a globally minimal sum of
+costs.
+Another drawback of the algorithm is that it only works between two sucessive
+frames. The cost function could be extended to consider $K$ sets of parameters,
+constructing an $K$-dimensional tensor instead of a matrix, but assuming equal
+numbers of parameter sets in all frames, the search space would grow exponentially
+with $K$. Nevertheless, the method is simple to implement, computationally
+negligble, and works well with a variety of signals encountered in audio
+\cite{mcaulay1986speech} \cite{smith1987parshl}.
+
+\subsubsection{An Optimal Method}
+
+There is a way to find an optimal set of paths over multiple frames ($K > 2$) if
+we restrict the search to exactly $L$ paths. Instead of indexing parameters by
+their frame number $k$, we make $k$ part of the parameter set so that it can be
+used by the distance function $\mathcal{D}$. Assume that over $K$ frames there
+are $M$ total parameter sets. We define the vector $\boldsymbol{c} \in \mathbb{R}^{M^2}$
+where the entry $\boldsymbol{c}_{i + Mj} = \mathcal{D} \left( \theta_{i}, \theta_{j}
+\right)$. If we have a set of connections $\Gamma_{i,j}$ we can calculate the
+total cost of these connections by defining the vector
+\[
+    \boldsymbol{x}_{i + Mj} = \begin{cases}
+        1 & \text{there is a connection between }i\text{ and }j\\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+and then forming the inner product
+\[
+    c_{\text{total}}=\boldsymbol{c}^{T}\boldsymbol{x}
+\]
 
 \bibliographystyle{plain}
 \bibliography{thesis}
