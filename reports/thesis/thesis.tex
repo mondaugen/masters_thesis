@@ -501,7 +501,8 @@ negligble, and works well with a variety of signals encountered in audio
 
 \subsubsection{An Optimal Method}
 
-There is a way to find an optimal set of paths over multiple frames ($K > 2$) if
+There is a way to find a set of paths over multiple frames ($K > 2$) having the
+lowest total cost if
 we restrict the search to exactly $L$ paths. Instead of indexing parameters by
 their frame number $k$, we make $k$ part of the parameter set so that it can be
 used by the distance function $\mathcal{D}$. Assume that over $K$ frames there
@@ -519,10 +520,106 @@ and then forming the inner product
 \[
     c_{\text{total}}=\boldsymbol{c}^{T}\boldsymbol{x}
 \]
-The question is how to find $\boldsymbol{x}^{\ast}$ so that $c_{\text{total}}$
-is minimized. If no constraints are placed on $\boldsymbol{x}$, the solution is
-trivial, but not useful. How do we constrain $\boldsymbol{x}$ to give us a
-solution to the partial tracking problem? Let us consider an example.
+Note that a node cannot be connected to itself. The question is how to find
+$\boldsymbol{x}^{\ast}$ so that $c_{\text{total}}$ is minimized. If no
+constraints are placed on $\boldsymbol{x}$, the solution is trivial, but not
+useful. How do we constrain $\boldsymbol{x}$ to give us a solution to the
+partial tracking problem? Let us consider an example.
+
+In Figure~\ref{plot:simple_graph} we have an example of a simple graph or
+lattice. The numbers are indices of nodes in the graph and the possible
+connections between them are indicated by lines, or \textit{edges}. We would like to find the two
+shortest paths based on different criteria. In
+Figure~\ref{plot:simple_graph_greedy_paths} we find the paths using an algorithm
+similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a tensor
+of distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry $C_{i,j,k}$
+represents the cost of travelling on the path connecting the $i$th node in layer
+0, the $j$th node in layer 1 and the $k$th node in layer 2. This is the greedy
+method of searching for the best paths whose optimality criterion is to find the
+set of best paths containing the absolute best path. We see in
+Figure~\ref{plot_simple_graph_greedy_paths} that the absolute shortest path, $1
+\rightarrow 4 \rightarrow 8$, is discovered, followed by the second shortest
+path not using the nodes of the first path.
+
+\begin{figure}
+    \caption{\label{plot:simple_graph}}
+    \includegraphics[width=\textwidth]{plots/small_graph_ex.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{\label{plot:simple_graph_greedy_paths}}
+    \includegraphics[width=\textwidth]{plots/small_graph_ex_greedy_paths.eps}
+\end{figure}
+
+To find a set of paths minimizing the total cost, we instead search for total
+solutions $\boldsymbol{x}$ that describe all paths in the graph. Assume for now
+that we can guarantee that the entries of $\boldsymbol{x}$ will be either 0 or
+1. To find a set of constraints for our search, we consider the structure of a
+valid solution $\boldsymbol{x}^{\ast}$. To maintain that paths not overlap, a
+valid solution's nodes are only allowed to have one edge entering \textemdash
+coming from a node in a previous frame \textemdash and one edge leaving
+\textemdash going to a node in a successive frame. To translate this into a
+constraint, consider the node $i$ and its possible $R$ successive connecting
+nodes $j_{0} \dotsc j_{R-1}$. Define the vector
+\[
+    $\boldsymbol{a}^{s,i}_{i + Mj_{r}} \begin{cases}
+        1 & \forall j_{r} \in \left[ j_{0} \dotsc j_{R-1} \right] \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+As all the entries of $\boldsymbol{x}$ are either 0 or 1, we have
+\[
+    0 \leq \boldsymbol{a}^{s,i}^{T}\boldsymbol{x} \leq 1
+\]
+so we can make this a constraint to ensure that a node has at most one path
+leaving. Similarly, if we consider the node $j$ and its possible R previous connecting
+nodes $i_{0} \dotsc i_{R-1}$, the vector
+\[
+    $\boldsymbol{a}^{p,j}_{i_{r} + Mj} \begin{cases}
+        1 & \forall i_{r} \in \left[ i_{0} \dotsc i_{R-1} \right] \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+constrains that node $j$ have only one path entering through the constraint
+\[
+    0 \leq \boldsymbol{a}^{p,j}^{T}\boldsymbol{x} \leq 1
+\]
+A node on a path will also have an edge entering and an edge leaving. To
+translate this into a constraint, we define a vector that counts the number of
+edges entering a node and subtracts then the number of edges leaving a node. The
+result should always be 0. If $r$ is the index of the node considered, the vector is simply
+\[
+    \boldsymbol{a}^{b,r} = \boldsymbol{a}^{p,r} - \boldsymbol{a}^{s,r}
+\]
+and the constraint
+\[
+    \boldsymbol{a}^{b,r}^{T}\boldsymbol{x} = 1
+\]
+Finally we want to constrain that there be only $L$ paths. We do this by
+noticing that if this is true, there will be $L$ edges between frames $k$ and
+$k+1$. We constrain the number of paths going from edges
+$\Gamma_{k}$ in frame $k$ to $\Gamma_{k+1}$ by forming the vector
+\[
+    \boldsymbol{a}^{c,k} = \sum_{j \in \Gamma_{k}} \boldsymbol{a}^{s,j}
+\]
+and asserting the constraint
+\[
+    \boldsymbol{a}^{c,k}^{T}\boldsymbol{x} = 1
+\]
+The length of $\boldsymbol{x}$ is $M^{2}$ so the total size of all the
+constraints is not insignificant, but most entries in the constraint vectors will
+be 0 and therefore the resulting constraint matrices very sparse, so sparse
+linear algebra routines can be used in computations. Furthermore, the
+$\boldsymbol{a}^{b}$ and $\boldsymbol{a}^{c}$ constraints are derived from
+$\boldsymbol{a}^{p}$ and $\boldsymbol{a}^{s}$, so only the latter need to be
+stored.
+
+The complete linear program solving the $L$ shortest paths problem is then
+\[
+        \min \boldsymbol{c}^{T}\boldsymbol{x}
+\]
+subject to
+
 
 \bibliographystyle{plain}
 \bibliography{thesis}
