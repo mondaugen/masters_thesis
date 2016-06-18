@@ -537,7 +537,7 @@ represents the cost of travelling on the path connecting the $i$th node in layer
 0, the $j$th node in layer 1 and the $k$th node in layer 2. This is the greedy
 method of searching for the best paths whose optimality criterion is to find the
 set of best paths containing the absolute best path. We see in
-Figure~\ref{plot_simple_graph_greedy_paths} that the absolute shortest path, $1
+Figure~\ref{plot:simple_graph_greedy_paths} that the absolute shortest path, $1
 \rightarrow 4 \rightarrow 8$, is discovered, followed by the second shortest
 path not using the nodes of the first path.
 
@@ -562,27 +562,27 @@ coming from a node in a previous frame \textemdash and one edge leaving
 constraint, consider the node $i$ and its possible $R$ successive connecting
 nodes $j_{0} \dotsc j_{R-1}$. Define the vector
 \[
-    $\boldsymbol{a}^{s,i}_{i + Mj_{r}} \begin{cases}
+    \boldsymbol{a}^{s,i}_{i + Mj_{r}} \begin{cases}
         1 & \forall j_{r} \in \left[ j_{0} \dotsc j_{R-1} \right] \\
         0 & \text{otherwise}
     \end{cases}
 \]
 As all the entries of $\boldsymbol{x}$ are either 0 or 1, we have
 \[
-    0 \leq \boldsymbol{a}^{s,i}^{T}\boldsymbol{x} \leq 1
+    0 \leq \left\langle \boldsymbol{a}^{s,i}, \boldsymbol{x} \right\rangle \leq 1
 \]
 so we can make this a constraint to ensure that a node has at most one path
 leaving. Similarly, if we consider the node $j$ and its possible R previous connecting
 nodes $i_{0} \dotsc i_{R-1}$, the vector
 \[
-    $\boldsymbol{a}^{p,j}_{i_{r} + Mj} \begin{cases}
+    \boldsymbol{a}^{p,j}_{i_{r} + Mj} \begin{cases}
         1 & \forall i_{r} \in \left[ i_{0} \dotsc i_{R-1} \right] \\
         0 & \text{otherwise}
     \end{cases}
 \]
 constrains that node $j$ have only one path entering through the constraint
 \[
-    0 \leq \boldsymbol{a}^{p,j}^{T}\boldsymbol{x} \leq 1
+    0 \leq \left\langle \boldsymbol{a}^{p,j} , \boldsymbol{x} \right\rangle \leq 1
 \]
 A node on a path will also have an edge entering and an edge leaving. To
 translate this into a constraint, we define a vector that counts the number of
@@ -593,7 +593,7 @@ result should always be 0. If $r$ is the index of the node considered, the vecto
 \]
 and the constraint
 \[
-    \boldsymbol{a}^{b,r}^{T}\boldsymbol{x} = 1
+    \left\langle \boldsymbol{a}^{b,r}, \boldsymbol{x} \right\rangle = 0
 \]
 Finally we want to constrain that there be only $L$ paths. We do this by
 noticing that if this is true, there will be $L$ edges between frames $k$ and
@@ -604,7 +604,7 @@ $\Gamma_{k}$ in frame $k$ to $\Gamma_{k+1}$ by forming the vector
 \]
 and asserting the constraint
 \[
-    \boldsymbol{a}^{c,k}^{T}\boldsymbol{x} = 1
+    \left\langle \boldsymbol{a}^{c,k} , \boldsymbol{x} \right\rangle = 1
 \]
 The length of $\boldsymbol{x}$ is $M^{2}$ so the total size of all the
 constraints is not insignificant, but most entries in the constraint vectors will
@@ -614,11 +614,57 @@ $\boldsymbol{a}^{b}$ and $\boldsymbol{a}^{c}$ constraints are derived from
 $\boldsymbol{a}^{p}$ and $\boldsymbol{a}^{s}$, so only the latter need to be
 stored.
 
-The complete linear program solving the $L$ shortest paths problem is then
+The complete \textit{linear program (LP)} solving the $L$ shortest paths problem is then
+\begin{samepage}
 \[
         \min \boldsymbol{c}^{T}\boldsymbol{x}
 \]
 subject to
+\[
+    \boldsymbol{0} \leq
+    \begin{bmatrix}
+        \boldsymbol{A}_{s} \\
+        \boldsymbol{A}_{p}
+    \end{bmatrix} \boldsymbol{x}
+    \leq \boldsymbol{1}
+\]
+\[
+    \begin{bmatrix}
+        \boldsymbol{A}_{b} \\
+        \boldsymbol{A}_{c}
+    \end{bmatrix}
+    \boldsymbol{x}
+    =
+    \begin{bmatrix}
+        \boldsymbol{0} \\
+        \boldsymbol{1}
+    \end{bmatrix}
+\]
+\end{samepage}
+where $\boldsymbol{A}_{s}$ is the matrix with $\boldsymbol{a}^{s,m}$ as its rows
+for $m \in [0 \dotsc M-1]$ and $\boldsymbol{A}_{p}$ is the matrix with
+$\boldsymbol{a}^{p,m}$ as its rows, etc.
+
+\begin{figure}
+    \caption{\label{plot:simple_graph_lp_paths}}
+    \includegraphics[width=\textwidth]{plots/small_graph_ex_lp_paths.eps}
+\end{figure}
+
+The solution of the two best paths using the LP formulation
+is shown in Figure~\ref{plot:simple_graph_lp_paths} and a comparison of the
+total costs is shown in Table~\ref{tab:greedy_lp_cost_compare}
+
+\begin{table}
+    \caption{\label{tab:greedy_lp_cost_compare} Comparison of total costs}
+    \begin{center}
+        \begin{tabular}{c c}
+            Greedy & LP \\
+            \hline
+            \input{plots/small_graph_ex_greedy_cost.txt} &
+            \input{plots/small_graph_ex_lp_cost.txt} \\
+        \end{tabular}
+    \end{center}
+\end{table}
 
 
 \bibliographystyle{plain}

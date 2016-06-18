@@ -6,3 +6,4 @@ latex thesis/thesis.tex
 BIBINPUTS=bib bibtex thesis.aux
 latex thesis/thesis.tex
 latex thesis/thesis.tex
+dvipdf thesis.dvi
