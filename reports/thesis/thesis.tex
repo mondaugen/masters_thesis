@@ -640,6 +640,9 @@ subject to
         \boldsymbol{1}
     \end{bmatrix}
 \]
+\[
+    \boldsymbol{0} \leq \boldsymbol{x} \leq \boldsymbol{1}
+\]
 \end{samepage}
 where $\boldsymbol{A}_{s}$ is the matrix with $\boldsymbol{a}^{s,m}$ as its rows
 for $m \in [0 \dotsc M-1]$ and $\boldsymbol{A}_{p}$ is the matrix with
@@ -665,6 +668,13 @@ total costs is shown in Table~\ref{tab:greedy_lp_cost_compare}
         \end{tabular}
     \end{center}
 \end{table}
+
+The LP formulation is based on a multiple object tracking algorithm for video
+\cite{jiang2007linear}. A proof that the solution $\boldsymbol{x}^{\ast}$ will
+have entries equal to either $0$ or $1$ can be found in
+\cite[p.~167]{parker1988discrete}. More information on linear programming and
+optimization in general can be found in \cite{boyd2004convex}.
+% Need to comment on solutions being integer valued
 
 
 \bibliographystyle{plain}
