@@ -672,10 +672,19 @@ total costs is shown in Table~\ref{tab:greedy_lp_cost_compare}
 The LP formulation is based on a multiple object tracking algorithm for video
 \cite{jiang2007linear}. A proof that the solution $\boldsymbol{x}^{\ast}$ will
 have entries equal to either $0$ or $1$ can be found in
-\cite[p.~167]{parker1988discrete}. More information on linear programming and
+\cite[p.~167]{parker1988discrete}. The theoretical computational complexity of
+the linear program is polynomial in the number of variables, see
+\cite{karmarkar1984new} for a proof and the demonstration of a fast algorithm
+for finding its solution. More information on linear programming and
 optimization in general can be found in \cite{boyd2004convex}.
-% Need to comment on solutions being integer valued
 
+It should be noted that in the special case that only 1 shortest path is
+searched an algorithm exists that requires on the order of $N^{2}T$ calculations
+\cite{rabiner1989tutorial} where $N$ is the number of nodes in a frame and $T$
+is the number of frames: this algorithm is known as the Viterbi algorithm
+\cite{forney1973viterbi}.
+
+\subsection{Classification}
 
 \bibliographystyle{plain}
 \bibliography{thesis}
