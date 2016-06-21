@@ -6,7 +6,9 @@
 \usepackage{mathrsfs}
 \usepackage[dvips]{graphicx}
 \usepackage{algorithm2e}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
 \DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\argmax}{argmax}
 \begin{document}
 \author{Nicholas Esterer}
 \title{Elements of Source Separation}
@@ -195,7 +197,7 @@ amplitude and phase, plus some noise. The model is
 \end{equation}
 
 where $\varepsilon \sim \mathcal{N}(0,\sigma)$ and $A_p \in \mathbb{R}$ and
-$\phi_p \mathbb{R}$ are functions of amplitude and phase respectively. In the
+$\phi_p \in \mathbb{R}$ are functions of amplitude and phase respectively. In the
 following, we consider equivalent sinusoidal mixtures of complex-valued
 polynomial phase exponentials
 \begin{equation}
@@ -270,7 +272,7 @@ determined as
 \end{equation}
 
 \subsubsection{Polynomial phase parameter estimation}
-
+\label{sec:ddm_description}
 More recently a set of techniques have been developed that use some combination
 of derivatives of the analysis window $w$ or the signal $x$ to estimate the
 polynomial coefficients directly \cite{hamilton2011non}. For this thesis we will
@@ -399,8 +401,8 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
             \hline
             Minimum 4-term Blackman-Harris & 0.35857 & 0.48829 & 0.14128 &
             0.01168 \\
-            $\mathcal{C}^{1}$ 4-Term Blackman-Harris & 0.358735 & 0.488305 &
-            0.141265 & 0.011695
+            $\mathcal{C}^{1}$ 4-Term Blackman-Harris & 0.35874 & 0.48831 &
+            0.14127 & 0.01170
         \end{tabular}
     \end{center}
 \end{table}
@@ -675,18 +677,24 @@ have entries equal to either $0$ or $1$ can be found in
 \cite[p.~167]{parker1988discrete}. The theoretical computational complexity of
 the linear program is polynomial in the number of variables, see
 \cite{karmarkar1984new} for a proof and the demonstration of a fast algorithm
-for finding its solution. More information on linear programming and
-optimization in general can be found in \cite{boyd2004convex}.
+for finding its solution. In practice, to extract paths from the solution, we do
+not test equality with $0$ or $1$ but rather test if the solution vector's
+values are greather than some threshold. This may mean that suboptimal solutions
+may still be close enough. The tolerance of the solutions to suboptimality
+should be investigated, as if they are tolerant, fewer iterations of a
+barrier-based algorithm would be required to solve the problem. More information
+on linear programming and optimization in general can be found in
+\cite{boyd2004convex}.
 
 It should be noted that in the special case that only 1 shortest path is
 searched an algorithm exists that requires on the order of $N^{2}T$ calculations
-\cite{rabiner1989tutorial} where $N$ is the number of nodes in a frame and $T$
-is the number of frames: this algorithm is known as the Viterbi algorithm
-\cite{forney1973viterbi}.
+\cite{rabiner1989tutorial} where $N$ is the number of nodes in each frame and
+$T$ is the number of frames (assuming the same number of nodes in each frame):
+this algorithm is known as the Viterbi algorithm \cite{forney1973viterbi}.
+
+\subsubsection{\label{sec:mq_lp_compare_chirp}Partial paths on example signal}
 
 \subsection{Classification}
-
-% Some missing text needs to be inserted...
 
 If data-points consist of more than two dimensions (say $p$), it becomes
 burdensome to try and find the single best or two best dimensions on which to
@@ -694,9 +702,11 @@ examine for grouping. If we consider variables on each of the dimensions that
 take on the data-point's corresponding values, we are interested in the
 variables that capture most of the data-points's variance. In turns out we can
 determine a linear transformation of our original dataset giving $p$ variables
-and their $p$ variances. The resulting variable with the highest variance will
-have the maximum variance acheivable, under some constraints that will be
-explained shortly. 
+and their $p$ variances such that the resulting variable with the highest
+variance will have the maximum variance acheivable, under some constraints that
+will be explained shortly. 
+
+\subsubsection{Principal components analysis (PCA)}
 
 The following development is based on \cite{jolliffe2002principal}. Say we have
 a set $\left\{ \boldsymbol{x} \right\}$ of data-points and their covariance
@@ -715,13 +725,159 @@ subject to
 (to obtain a bounded solution).
 
 The resulting function of $\boldsymbol{x}$,
-$f_1(\boldsymbol{x})=\boldsymbol{a}_{1}^{\ast T}\boldsymbol{x}$. Is called the first
+$f_1(\boldsymbol{x})=\boldsymbol{a}_{1}^{\ast T}\boldsymbol{x}$ is called the first
 \textit{principal component}. The second principal component
 $f_2(\boldsymbol{x})=\boldsymbol{a}_{2}^{\ast T}\boldsymbol{x}$ is found similary
 to the first, except with the additional constraint that it be uncorrelated
 (orthogonal) to the first component, i.e.,
 $\boldsymbol{a}_{2}^{\ast T}\boldsymbol{a}_{1}=0$, and the third is found by
 requiring orthognality with the first two principal components, etc.
+
+The principal components (PCs) now allow us to examine for grouping more easily as the
+total variance of the dataset has been captured in the first few principal component
+variables. These transformed data-points can now be classified using a
+classification algorithm.
+
+Before we continue describing classification techniques we will briefly discuss
+the nature of our classification problem. If accurate and consistent
+measurements of data-points can be made, and a large enough sample of
+data-points is available to train a model, then to predict the classification of
+new points, a function $g=\hat{h} \left( \boldsymbol{x} \right)$ is postulated,
+giving the classification $g$ of a data-point $\boldsymbol{x}$. There are many
+ways to determine $\hat{h}$ based on its assumed form. For example, if it is
+assumed that $h \left( \boldsymbol{x} \right) =
+\boldsymbol{\hat{\beta}}^{T}\boldsymbol{x}$ then a common estimator of
+$\boldsymbol{\hat{\beta}}$, given $\boldsymbol{X}$, a matrix of observations of
+$\boldsymbol{x}$ with the observations as its rows, and the classifications
+$\boldsymbol{y}$, is \cite[p.~12]{friedman2001elements}
+\begin{equation}
+    \label{eq:least_squares}
+    \boldsymbol{\hat{\beta}} = \left( \boldsymbol{X}^{T}\boldsymbol{X}
+    \right)^{-1} \boldsymbol{X}^{T} \boldsymbol{y}
+\end{equation}
+Here we do not have a sample dataset because of the large number of possible
+situations and the difficulty of consistently estimating underlying model
+parameters (see, for example, Section~\ref{sec:mq_lp_compare_chrip}). To automate
+classification we treat the dataset beforehand to increase the robustness of the
+classification algorithm, and allow the algorithm to estimate some
+class memberships. The classification algorithm will give some estimated $\hat{h}$
+as above, but it is doubtful that we would find a situation to use it to
+classify new data-points. In the case that the classification gives a continuous
+variable as in Equation~\ref{eq:least_squares}, thresholding values are
+required to convert $\hat{h} \left( \boldsymbol{x} \right)$ to discrete values.
+Because we would have to choose these values beforehand, this sort of
+classification algorithm is probably not very useful in practice. For this
+reason we opt for classification algorithms that give discrete indicators as
+output, purely as a function of the input dataset. The algorithm we consider is the
+\textit{Gaussian mixture model (GMM)}.
+
+\subsubsection{Gaussian Mixture Models (GMM)}
+
+Consider the data-points $\boldsymbol{X}$ as realizations of the vector Gaussian
+distributed random variable
+$X$. With a large enough sample and a small enough covariance, we will observe
+realizations of $X$ as a cluster with some mean (centre point) $\boldsymbol{\mu}$ and a shape
+described by the covariance matrix $\boldsymbol{\Sigma}$. If we observe multiple
+clusters this might imply that there are $P$ different distributions each with
+mean $\boldsymbol{\mu}_p$ and covariance matrix $\boldsymbol{\Sigma}_p$ and on each
+iteration one is chosen with probability $w_p$. With $N$ observations
+$\boldsymbol{x}_{n}$ we can estimate, via maximum likelihood, the $P$ sets of
+parameters using a form of the \textit{expectation maximization (EM)} algorithm
+\cite{moon1996expectation}, \cite{dempster1977maximum}, which is an algorithm
+suitable for estimating missing data from known ones. First, define
+\[
+    \mathrm{p} \left( \boldsymbol{x}_{n} | p \right)
+    \doteq
+    \ddfrac{
+        \mathcal{N} \left( \boldsymbol{x}_{n}; \boldsymbol{\mu}^{k}_{p} ,
+        \boldsymbol{\Sigma}^{k}_{p} \right) w^{k}_{p}
+    }{
+        \sum_{l=1}^{P}
+        \mathcal{N} \left( \boldsymbol{x}_{n}; \boldsymbol{\mu}^{k}_{l} ,
+        \boldsymbol{\Sigma}^{k}_{l} \right) w^{k}_{l}
+    }
+\]
+the probability that $\boldsymbol{x}_n$ given distribution $p$ (see
+Appendix~\ref{apdx:gaussian_dist} for the definition of $\mathcal{N} \left(
+\boldsymbol{\mu}^{k} , \boldsymbol{\Sigma}^{k} \right)$). The superscript $k$
+indicates the value of this parameter on iteration $k$. To update $w^{k}_p$:
+\[
+    w^{k+1}_p = \frac{1}{N} \sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n |
+    p \right)
+\]
+which means intuitively that the probability of a data-point having been
+generated by distribution $p$ is the average probability of observing any
+$\boldsymbol{x}_n$ given $p$. To update $\boldsymbol{\mu}^{k+1}_p$:
+\[
+    \boldsymbol{\mu}^{k+1}_p
+    =
+    \ddfrac{\sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n |
+    p \right) \boldsymbol{x}_n }{\sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n |
+    p \right)}
+\]
+which is a weighted mean of all the data-points. Those less likely for a
+given $p$ will weight the mean less and vice versa. A similar computation is
+made for $\boldsymbol{\Sigma}^{k+1}_p$:
+\[
+    \boldsymbol{\Sigma}^{k+1}_p
+    =
+    \ddfrac{\sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
+        \left( \boldsymbol{x}_n - \boldsymbol{\mu}^{k+1}_p \right) \left(
+        \boldsymbol{x}_n - \boldsymbol{\mu}^{k+1}_p \right)^{T}
+    }{
+        \sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
+    }
+\]
+The algorithm is halted after some number of iterations or when convergence is
+reached (the parameters change little each iteration). After convergence, the
+classification $p^{\ast}$ of the data-point $\boldsymbol{x}$ is simply
+\[
+    p^{\ast} = \argmax_{p} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
+\]
+
+\subsection{Partial synthesis}
+
+Once the parameters have been estimated, the partials have been determined, and
+the partials have been grouped into sources, we can now synthesize a single
+source by choosing only those partials belonging to a single source and
+resynthesizing from the parameters in some fashion. A popular technique that is
+straightforward to implement is the \textit{overlap-and-add} procedure
+\cite{portnoff1976implementation}, \cite{moore1990elements}. We assume that in
+the neighbourhood of $\tau_{r}$ the signal is approximately described by the
+function $x(n) \approx f_{\tau_{r}}(n-\tau_{r})$. To synthesize an approximation of $x$
+we sum windowed $f_{\tau_{r}}$ at multiple locations, windowed by a function $w$
+with finite support so
+the resulting signal has finite energy and the piecewise assumption is
+maintained. For simplicity we assume the $\tau_{r}$ are equally spaced by $H$
+samples, and $\tau_{0}=0$, so we have $\tau_{r} = rH$. The length of the window
+function $w$ is $M$ samples. The approximate signal at sample $n$ is then
+\[
+    \tilde{x}(n) = \sum_{l=L_{-}}^{L^{+}} w(n-lH) f_{\tau_l}(n-\tau_l)
+\]
+where
+\[
+    L_{-} = \left\lfloor \frac{n-M}{H} + 1 \right\rfloor
+\]
+and
+\[
+    L_{+} = \left\lfloor \frac{n}{H} \right\rfloor
+\]
+This method has some drawbacks. Usually the function $f$ is an approximation
+$\tilde{f}$ of the true underlying function. In the case of partial tracking,
+often partials that are too short are discarded or missed. At amplitude
+transients, these short partials are important for reproducing sharp attacks
+that are shorter than the window length. If these partials are missing, the
+resulting signal takes on a transient similar to the window shape. This could be
+overcome by choosing a window with a shape similar to the overall amplitude
+envelope in the attack region when resynthesizing an attack transient.
+
+Another drawback is that no attempt is made to interpolate between the functions
+estimated at $\tau_{r}$ and $\tau_{r+1}$. This is what is carried out in
+Section~\ref{mq_fm_from_phase} and results in a cubic interpolating polynomial
+for phase. From Section~\ref{sec:ddm_description} we know we can estimate a
+polynomial of arbitrary order for phase. Perhaps using this additional
+information will give us an interpolating function closer to the underlying
+model.
 
 
 \bibliographystyle{plain}
