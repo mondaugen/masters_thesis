@@ -1,0 +1,25 @@
+/* Extend the McAulay & Quatieri amplitude interpolation model to incorporate
+ * additional information.
+ *
+ * Here we compute a quintic polynomial from 2 quadratic ones.
+ */
+
+H: matrix (
+    [T^5,T^4,T^3],
+    [5*T^4,4*T^3,3*T^2],
+    [20*T^3,12*T^2,6*T]
+);
+
+b: matrix (
+    [a0_T-a2_0/2*T^2-a1_0*T-a0_0],
+    [a1_T-a2_0*T-a1_0],
+    [a2_T-a2_0]
+);
+
+H_inv: H ^^ -1;
+
+d: H_inv . b$
+
+disp("Rows of d");
+for d_ in d do
+    disp(combine(expand(d_)));

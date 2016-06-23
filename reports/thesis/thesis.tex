@@ -6,6 +6,7 @@
 \usepackage{mathrsfs}
 \usepackage[dvips]{graphicx}
 \usepackage{algorithm2e}
+\usepackage{hyperref}
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
 \DeclareMathOperator{\argmin}{argmin}
 \DeclareMathOperator{\argmax}{argmax}
@@ -184,7 +185,7 @@ musical signals, however, we have some prior information and can make certain
 assumptions about the underlying functions.
 
 \subsubsection{Sinusoidal Representations}
-\label{mq_fm_from_phase}
+\label{sec:mqfmfromphase}
 Many musical acoustic signals are quasi-harmonic, meaning that they consist of a
 sum of sinusoids whose frequencies are roughly integer multiples of a
 fundamental frequency. For these kinds of signals, most of the energy can be
@@ -310,11 +311,12 @@ which after rearranging is
 From this we can see that to estimate the coefficients $c_q$, $ 1 \leq q \leq Q
 $ we simply need $R$ atoms with $R \geq Q$ to solve the linear system of
 equations
-\[ 
+\begin{equation}
+    \label{eq:ddmsyseq}
     \sum_{q=1}^{Q} q c_q 
     \left\langle n^{q-1} x(n) , \overline{\psi_{r}}(n) dn \right\rangle
     = -\left\langle x, \frac{d\overline{\psi_{r}}}{dn} \right\rangle
-\]
+\end{equation}
 for $1 \leq r \leq R$. Estimation of the coefficients of a phase polynomial
 using this method is known as the \textit{Distribution Derivative Method (DDM)}.
 
@@ -359,7 +361,7 @@ With $M=2$ and $a_0 = a_1 = 0.5$, we have the Hann window. The
 these windows, optimization techniques were used to search for coefficients
 giving optimum properties, such as minimum height of the highest side-lobe
 (maximum out-of-band rejection) \cite{rabiner1970approach}. The 4-term window
-whose coefficients $a$ are listed in table~\ref{tab:opt_blackman} has a maximum
+whose coefficients $a$ are listed in table~\ref{tab:optblackman} has a maximum
 side-lobe level of 92 dB, lower than the quantization noise of a 16-bit linear
 pulse code modulated signal. This window has a very large main-lobe which means
 two sinusoids of similar frequency will be difficult to resolve. Furthermore,
@@ -389,12 +391,12 @@ where
         0 & \text{otherwise}
     \end{cases}
 \]
-The solution $\tilde{a}^{\ast}$ is given in Table~\ref{tab:opt_blackman} and
+The solution $\tilde{a}^{\ast}$ is given in Table~\ref{tab:optblackman} and
 plots are given in Figure~\ref{plot:opt_blackman}. This window will be referred
 to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
 
 \begin{table}
-    \caption{\label{tab:opt_blackman}}
+    \caption{\label{tab:optblackman}}
     \begin{center}
         \begin{tabular}{l c c c c }
             Window & $a_0$ & $a_1$ & $a_2$ & $a_3$ \\
@@ -430,7 +432,7 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
 
 \subsection{Partial Tracking}
 
-In Section~\ref{mq_fm_from_phase} we discussed how to determine reasonable
+In Section~\ref{sec:mqfmfromphase} we discussed how to determine reasonable
 values for the coefficients of a cubic phase polynomial by using the frequency,
 phase and time difference of two local maxima in the DTSTFT. In this section we
 discuss possible ways of determining which local maxima are connected. This is
@@ -873,12 +875,13 @@ envelope in the attack region when resynthesizing an attack transient.
 
 Another drawback is that no attempt is made to interpolate between the functions
 estimated at $\tau_{r}$ and $\tau_{r+1}$. This is what is carried out in
-Section~\ref{mq_fm_from_phase} and results in a cubic interpolating polynomial
-for phase. From Section~\ref{sec:ddm_description} we know we can estimate a
+Section~\ref{sec:mqfmfromphase} and results in a cubic interpolating polynomial
+for phase. From Equation~\ref{eq:ddmsyseq} we know we can estimate a
 polynomial of arbitrary order for phase. Perhaps using this additional
 information will give us an interpolating function closer to the underlying
 model.
 
+\subsubsection{Extended phase model}
 
 \bibliographystyle{plain}
 \bibliography{thesis}

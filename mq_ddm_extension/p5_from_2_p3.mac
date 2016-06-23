@@ -1,0 +1,49 @@
+/* Extend the McAulay and Quatieri cubic polynomial to include frequency and
+ * frequency slope estimation.
+ * 
+ * Because we have 2 estimations each of phase, frequency and frequency slope,
+ * we can estimate the coefficients of a quintic interpolating polynomial. This
+ * is the strategy employed here.
+ *
+ * phit, wt and psit are the phase, frequency and frequency modulation estimated
+ * at time t, resp.
+ */
+
+/* Let th(t) = c5*t^5 + c4*t^4 + c3*t^3 + c2*t^2 + c1*t + c0 be the phase
+ * function. We require th(0)=phi0, , th'(0)=w0 and th''(0)=psi0 therefore
+ * c0=phi0, c1=w0, c2=psi0/2. It remains to solve for c5-3
+ */
+
+H: matrix (
+    [T^5,T^4,T^3],
+    [5*T^4,4*T^3,3*T^2],
+    [20*T^3,12*T^2,6*T]
+);
+
+b: matrix (
+    [phiT-psi0/2*T^2-w0*T-phi0+2*pi*M],
+    [wT-psi0*T-w0],
+    [psiT-psi0]
+);
+
+H_inv: H ^^ -1;
+
+c: H_inv . b;
+
+/* We now solve for M by minimizing the integral of the squared 2nd derivative
+ * over the interval 0-T.
+ */
+
+ddth_t: 20*c[1]*t^3 + 12*c[2]*t^2 + 6*c[3]*t + psi0;
+
+/* The function to minimize */
+f_M: integrate(ddth_t^2,t,0,T);
+
+/* Its derivative w.r.t. M */
+df_M: diff(f_M,M);
+
+/* Solve equation df_M=0 for M */
+M_: solve(df_M,M);
+
+for c_ in c do
+    disp(combine(expand(c_)))$
