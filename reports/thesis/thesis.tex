@@ -248,6 +248,7 @@ polynomial phase function using the following linear system of equations
 \end{equation}
 and choosing $M$ so that
 \begin{equation}
+    \label{eq:minfmmq}
     \int_{0}^{H}(\tilde{\phi}^{\prime\prime}(t))^{2}dt
 \end{equation}
 is minimized.
@@ -317,7 +318,38 @@ equations
     \left\langle n^{q-1} x(n) , \overline{\psi_{r}}(n) dn \right\rangle
     = -\left\langle x, \frac{d\overline{\psi_{r}}}{dn} \right\rangle
 \end{equation}
-for $1 \leq r \leq R$. Estimation of the coefficients of a phase polynomial
+for $1 \leq r \leq R$. To estimate $c_0$ we write the signal we are analysing as
+\[
+    s(n) = \exp(c_0) \exp \left( \sum_{q=1}^{Q} c_q n^{q} \right) + \eta (n)
+\]
+$\eta (n)$ is the error signal, or the part of the signal that is not explained
+by our model. We also define the function $\gamma (n)$, the part of the signal
+whose coefficients have already been estimated
+\[
+    \gamma(n) = \exp \left( \sum_{q=1}^{Q} c_q n^{q} \right)
+\]
+Computing the inner-product $\left\langle s , \gamma \right\rangle$, we have
+\[
+    \left\langle s , \gamma \right\rangle
+    =
+    \left\langle \exp(c_0) \gamma , \gamma \right\rangle + 
+        \left\langle \eta , \gamma \right\rangle
+\]
+The inner-product between $\eta$ and $\gamma$ is $0$, by the orthogonality
+principle \cite{kay1993fundamentals}. Furthermore, because $\exp(c_0)$ does not
+depend on $n$, we have
+\[
+    \left\langle s , \gamma \right\rangle
+    =
+    \exp(c_0) \left\langle \gamma , \gamma \right\rangle
+\]
+so we can estimate $c_0$ as
+\begin{equation}
+    \label{eq:ddmestc0}
+    c_0 = \log \left( \left\langle s , \gamma \right\rangle \right)
+        - \log \left( \left\langle \gamma , \gamma \right\rangle \right)
+\end{equation}
+The estimation of the coefficients of a phase polynomial
 using this method is known as the \textit{Distribution Derivative Method (DDM)}.
 
 \subsubsection{The choice of atom $\psi$}
@@ -891,52 +923,62 @@ estimated using DDM in calculating a phase function.
 
 \subsubsection{Cubic phase polynomial}
 
-A complex sinusoid with cubic phase has the following form:
-\[
-    x(n) = \exp \left(c_3 n^{3} + c_2 n^{2} + c_1 n + c_0 \right)
-\]
+In this section we describe how to obtain a cubic phase polynomial from
+local estimations of the coefficients of a quadratic phase polynomial.
 
-We can estimate the coefficients of this polynomial using the DDM. From
+A complex sinusoid with cubic phase has the following form:
+\begin{equation}
+    \label{eq:cubicphasepoly}
+    \phi(n) = \exp \left(c_3 n^{3} + c_2 n^{2} + c_1 n + c_0 \right)
+\end{equation}
+One with quadratic phase has this form:
+\begin{equation}
+    \label{eq:quadraticphasepoly}
+    x(n) = \exp \left(a_2 n^{2} + a_1 n + a_0 \right)
+\end{equation}
+with $c_{i} \in \mathbb{C}$ and $a_{i} \in \mathbb{C}$.
+
+We can estimate the coefficients of Equation~\ref{eq:quadraticphasepoly} using the DDM. From
 Equation~\ref{eq:ddmsyseq}, we define the three functions
 \begin{equation}
-    X_{p_{1}} \left(k \right)
+    X_{p_{1}} \left( \tau, k \right)
     =
-    \sum_{m=0}^{m=M-1} w(m) x(m) \exp(-j 2 \pi \frac{k m}{M})
+    \sum_{m=0}^{M-1} w(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
 \end{equation}
 \begin{equation}
-    X_{p_{2}} \left(k \right)
+    X_{p_{2}} \left( \tau, k \right)
     =
-    \sum_{m=0}^{m=M-1} 2 m w(m) x(m) \exp(-j 2 \pi \frac{k m}{M})
+    \sum_{m=0}^{M-1} 2 m w(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
 \end{equation}
 \begin{equation}
-    X_{w^{\prime}} \left(k \right)
+    X_{w^{\prime}} \left( \tau, k \right)
     =
-    -j 2 \pi \frac{k}{M} X_{p_{1}} \left(n, k \right)+ 
-    \sum_{m=0}^{m=M-1} \frac{dw}{dn}(m) x(m) \exp(-j 2 \pi \frac{k m}{M})
+    -j 2 \pi \frac{k}{M} X_{p_{1}} \left( \tau , k \right) + 
+    \sum_{m=0}^{M-1} \frac{dw}{dn}(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
 \end{equation}
 Where $M$ is the length of the window and $k$ is the frequency ``bin". We also
 only consider $x$ at the samples $m = [0, \dotsc, M-1]$ because we can always
 shift the time reference to view an arbitrary contiguous segment of signal with
 these indices.
 
-We then find $k^{\ast}$ such that $X_{p_{1}}$ is maximum. If multiple components are
-present in the signal and are sufficiently separated in frequency, we can split
-the signal up into frequency bands and find local maxima. A technique for doing
-this is described in \cite{serra1989system}. To have a system of equations with a
-unique solution, take the two adjacent bins $k-1$ and $k+1$ to have enough
-unique atoms for equation for Equation~\ref{eq:ddmsyseq}. These bins should
-only contain energy from the component whose parameters we are interested in
-measuring \textemdash this is true if the components are adequately separated in
-time and frequency. We could choose only two bins to have a non-singular system,
-and there are many possibilities for choosing different atoms
-\cite[p.~4639]{betser2009sinusoidal}. We choose three to have improved estimation
-accuracy in most situations. Then $a_2$ and $a_1$ can be determined by
-solving the linear system
+We then find $k^{\ast}$ such that $X_{p_{1}}$ is maximum. If multiple components
+are present in the signal and are sufficiently separated in frequency, we can
+split the signal up into frequency bands and find local maxima. A technique for
+doing so is described in \cite[p.~42]{serra1989system}. To have a system of equations
+with a unique solution, take the two adjacent bins $k-1$ and $k+1$ to have
+enough unique atoms for equation for Equation~\ref{eq:ddmsyseq}. These bins
+should only contain energy from the component whose parameters we are interested
+in measuring \textemdash this is true if the components are adequately separated
+in time and frequency. We could choose only two bins to have a non-singular
+system, and there are many possibilities for choosing different atoms
+\cite[p.~4639]{betser2009sinusoidal}. We choose three to have improved
+estimation accuracy in situations where components are adaquately separated in
+frequency. Then $a_2$ and $a_1$ can be determined by solving the linear system
 \[
     \begin{pmatrix}
-        X_{p_{1}} \left( k^{\ast} - 1 \right) & X_{p_{2}} \left( k^{\ast} - 1 \right) \\
-        X_{p_{1}} \left( k^{\ast} \right) & X_{p_{2}} \left( k^{\ast} \right) \\
-        X_{p_{1}} \left( k^{\ast} + 1 \right) & X_{p_{2}} \left( k^{\ast} + 1 \right)
+        X_{p_{1}} \left( \tau, k^{\ast} - 1 \right) & X_{p_{2}} \left( \tau, k^{\ast} - 1 \right) \\
+        X_{p_{1}} \left( \tau, k^{\ast} \right) & X_{p_{2}} \left( \tau, k^{\ast} \right) \\
+        X_{p_{1}} \left( \tau, k^{\ast} + 1 \right) & X_{p_{2}} \left( \tau, k^{\ast} + 1 \right)
     \end{pmatrix}
     \begin{pmatrix}
         a_1 \\
@@ -944,12 +986,108 @@ solving the linear system
     \end{pmatrix}
     =
     \begin{pmatrix}
-        X_{w^{\prime}} \left( k^{\ast} - 1 \right) \\
-        X_{w^{\prime}} \left( k^{\ast} \right) \\
-        X_{w^{\prime}} \left( k^{\ast} + 1 \right)
+        X_{w^{\prime}} \left( \tau, k^{\ast} - 1 \right) \\
+        X_{w^{\prime}} \left( \tau, k^{\ast} \right) \\
+        X_{w^{\prime}} \left( \tau, k^{\ast} + 1 \right)
     \end{pmatrix}
 \]
-
+With $a_{1}$ and $a_{2}$ determined, we can use Equation~\ref{eq:ddmestc0} to
+estimate $a_0$. We will write $a^{\tau}_{i}$ to refer to coefficient $i$
+determined at time $\tau$. Once the $\boldsymbol{a}^{\tau}$ have been determined
+at two times $\tau_{0}$ and $\tau_{1}$, with $H = \tau_{1} - \tau_{0}$ and these
+times have between determined as connected, we can write a system of equations
+to determine an interpolating cubic phase polynomial. To avoid numerical
+instabilities and for simplicity, we shift the time origin so that $\tau_{0} =
+0$. This means $c_0 = \Im \left\{ a^{\tau_0}_{0} \right\}$. To reduce the size
+of the system, we require that 
+\[
+    \frac{d \phi}{d n} \left(\frac{H}{2} \right)
+    =
+    \frac{1}{2}
+    \left( \Im \left\{ a^{\tau_0}_{1} \right\} + \Im \left\{ a^{\tau_1}_{1}
+    \right\} \right)
+\]
+and
+\[
+    \frac{d^{2} \phi}{d n^{2}} \left(\frac{H}{2}
+    \right)
+    =
+    \frac{1}{2} \left( \Im \left\{ a^{\tau_0}_{2} \right\} + \Im \left\{
+    a^{\tau_1}_{2} \right\} \right)
+\]
+i.e., the average of the two measured coefficients. Finally we require
+\[
+    \phi \left( H \right)
+    =
+    \Im \left\{ a^{\tau_1}_{0} \right\} - \Im \left\{ a^{\tau_0}_{0} \right\}
+    + 2 \pi U^{\ast}
+\]
+where $U^{\ast} \in \mathbb{Z}$ is determined to minimize
+Equation~\ref{eq:minfmmq}, in this case:
+\begin{equation}
+    \label{eq:minfmcubic}
+    \tilde{U} = \argmin_{U} \int_{0}^{H} \left(
+    6 c_3 t + 2 c_2 \right)^{2} dt
+\end{equation}
+which is then rounded to the nearest integer to give $U^{\ast}$. To summarize we have
+\begin{equation}
+    \begin{pmatrix}
+        H^{3} & H^{2} & H \\
+        \frac{3}{4}H^{2} & H & 1 \\
+        3 H & 2 & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        c_{3} \\
+        c_{2} \\
+        c_{1}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \Im \left\{ a^{\tau_1}_{0} \right\} - \Im \left\{ a^{\tau_0}_{0} \right\}
+            + 2 \pi U^{\ast} \\
+        \frac{1}{2}
+        \left( \Im \left\{ a^{\tau_0}_{1} \right\} + \Im \left\{ a^{\tau_1}_{1}
+        \right\} \right) \\
+        \frac{1}{2} \left( \Im \left\{ a^{\tau_0}_{2} \right\} + \Im \left\{
+        a^{\tau_1}_{2} \right\} \right)
+    \end{pmatrix}
+\end{equation}
+Solving for $c_1, \dotsc, c_3$, we have
+\[
+    \begin{pmatrix}
+        c_{3} \\
+        c_{2} \\
+        c_{1}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \frac{4}{H^3} \left( \Im \left\{ a^{\tau_1}_0 \right\}
+            - \Im \left\{ a^{\tau_0}_0 \right\} + 2 \pi U^{\ast} \right)
+        - \frac{2}{H^{2}} \left( \Im \left\{ a^{\tau_1}_1 \right\}
+            + \Im \left\{ a^{\tau_0}_1 \right\} \right) \\
+        \frac{-6}{H^2} \left( \Im \left\{ a^{\tau_1}_0 \right\}
+            - \Im \left\{ a^{\tau_0}_0 \right\} + 2 \pi U^{\ast} \right)
+        - \frac{3}{H} \left( \Im \left\{ a^{\tau_1}_1 \right\}
+            + \Im \left\{ a^{\tau_0}_1 \right\} \right)
+        + \frac{1}{4}  \left( \Im \left\{ a^{\tau_0}_{2} \right\} + \Im \left\{
+            a^{\tau_1}_{2} \right\} \right) \\
+        \frac{-H}{4}  \left( \Im \left\{ a^{\tau_0}_{2} \right\} + \Im \left\{
+            a^{\tau_1}_{2} \right\} \right) 
+        + \frac{3}{H} \left( \Im \left\{ a^{\tau_1}_0 \right\}
+            - \Im \left\{ a^{\tau_0}_0 \right\} + 2 \pi U^{\ast} \right)
+        -  \Im \left\{ a^{\tau_1}_1 \right\}
+            - \Im \left\{ a^{\tau_0}_1 \right\}
+    \end{pmatrix}
+\]
+and then $\tilde{U}$ is determined using Equation~\ref{eq:minfmcubic} to be
+\[
+    \tilde{U} = \frac{1}{4 \pi} \left[ H \left( \Im \left\{ a^{\tau_1}_1
+            \right\} + \Im \left\{
+        a^{\tau_0}_1 \right\} \right)
+        -2 \left( \Im \left\{ a^{\tau_1}_0 \right\} - \Im \left\{
+        a^{\tau_0}_0 \right\} \right) \right]
+\]
+and then rounded to obtain $U^{\ast}$.
 
 \bibliographystyle{plain}
 \bibliography{thesis}
