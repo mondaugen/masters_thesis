@@ -392,7 +392,7 @@ where
     \end{cases}
 \]
 The solution $\tilde{a}^{\ast}$ is given in Table~\ref{tab:optblackman} and
-plots are given in Figure~\ref{plot:opt_blackman}. This window will be referred
+plots are given in Figure~\ref{plot:optblackman}. This window will be referred
 to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
 
 \begin{table}
@@ -430,7 +430,7 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
     \includegraphics[width=\textwidth]{plots/c1_blackman_fd.eps}
 \end{figure}
 
-\subsection{Partial Tracking}
+\subsection{\label{sec:partialtracking}Partial Tracking}
 
 In Section~\ref{sec:mqfmfromphase} we discussed how to determine reasonable
 values for the coefficients of a cubic phase polynomial by using the frequency,
@@ -881,7 +881,75 @@ polynomial of arbitrary order for phase. Perhaps using this additional
 information will give us an interpolating function closer to the underlying
 model.
 
-\subsubsection{Extended phase model}
+\subsection{Extended phase model}
+
+In Section~\ref{sec:mqfmfromphase} it was shown how a cubic phase function could
+be postulated from two connected measurements (see
+Section~\ref{sec:partialtracking}) giving a cubic phase polynomial. Here we will
+demonstrate how to include the additional phase polynomial coefficients
+estimated using DDM in calculating a phase function.
+
+\subsubsection{Cubic phase polynomial}
+
+A complex sinusoid with cubic phase has the following form:
+\[
+    x(n) = \exp \left(c_3 n^{3} + c_2 n^{2} + c_1 n + c_0 \right)
+\]
+
+We can estimate the coefficients of this polynomial using the DDM. From
+Equation~\ref{eq:ddmsyseq}, we define the three functions
+\begin{equation}
+    X_{p_{1}} \left(k \right)
+    =
+    \sum_{m=0}^{m=M-1} w(m) x(m) \exp(-j 2 \pi \frac{k m}{M})
+\end{equation}
+\begin{equation}
+    X_{p_{2}} \left(k \right)
+    =
+    \sum_{m=0}^{m=M-1} 2 m w(m) x(m) \exp(-j 2 \pi \frac{k m}{M})
+\end{equation}
+\begin{equation}
+    X_{w^{\prime}} \left(k \right)
+    =
+    -j 2 \pi \frac{k}{M} X_{p_{1}} \left(n, k \right)+ 
+    \sum_{m=0}^{m=M-1} \frac{dw}{dn}(m) x(m) \exp(-j 2 \pi \frac{k m}{M})
+\end{equation}
+Where $M$ is the length of the window and $k$ is the frequency ``bin". We also
+only consider $x$ at the samples $m = [0, \dotsc, M-1]$ because we can always
+shift the time reference to view an arbitrary contiguous segment of signal with
+these indices.
+
+We then find $k^{\ast}$ such that $X_{p_{1}}$ is maximum. If multiple components are
+present in the signal and are sufficiently separated in frequency, we can split
+the signal up into frequency bands and find local maxima. A technique for doing
+this is described in \cite{serra1989system}. To have a system of equations with a
+unique solution, take the two adjacent bins $k-1$ and $k+1$ to have enough
+unique atoms for equation for Equation~\ref{eq:ddmsyseq}. These bins should
+only contain energy from the component whose parameters we are interested in
+measuring \textemdash this is true if the components are adequately separated in
+time and frequency. We could choose only two bins to have a non-singular system,
+and there are many possibilities for choosing different atoms
+\cite[p.~4639]{betser2009sinusoidal}. We choose three to have improved estimation
+accuracy in most situations. Then $a_2$ and $a_1$ can be determined by
+solving the linear system
+\[
+    \begin{pmatrix}
+        X_{p_{1}} \left( k^{\ast} - 1 \right) & X_{p_{2}} \left( k^{\ast} - 1 \right) \\
+        X_{p_{1}} \left( k^{\ast} \right) & X_{p_{2}} \left( k^{\ast} \right) \\
+        X_{p_{1}} \left( k^{\ast} + 1 \right) & X_{p_{2}} \left( k^{\ast} + 1 \right)
+    \end{pmatrix}
+    \begin{pmatrix}
+        a_1 \\
+        a_2
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        X_{w^{\prime}} \left( k^{\ast} - 1 \right) \\
+        X_{w^{\prime}} \left( k^{\ast} \right) \\
+        X_{w^{\prime}} \left( k^{\ast} + 1 \right)
+    \end{pmatrix}
+\]
+
 
 \bibliographystyle{plain}
 \bibliography{thesis}
