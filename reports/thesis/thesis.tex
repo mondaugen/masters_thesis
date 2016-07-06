@@ -1304,58 +1304,142 @@ Table~\ref{tab:quarticsinampparams}.
 \end{table}
 
 The signal was sampled with a sampling rate of 16000 Hz and was analysed every
-256 samples with an analysis window of length 1024. For the DDM method, the
+256 samples with an analysis window of length 1024 samples. For the DDM method, the
 $\mathcal{C}^{1}$ 4-Term Blackman-Harris was used (see
 Section~\ref{sec:optblackman}).
 
 \begin{figure}
-    \caption{The original method\label{plot:mqcubicoriginalspec}}
     \includegraphics[width=\textwidth]{plots/mq_cubic_original_spec.eps}
+    \caption{This depicts the log spectrum. Darker regions represent greater
+        values whereas lighter are smaller values.
+    \label{plot:mqcubicoriginalspec}}
 \end{figure}
 
 \begin{figure}
-    \caption{The original method\label{plot:mqcubicestimatedspec}}
     \includegraphics[width=\textwidth]{plots/mq_cubic_estimated_spec.eps}
+    \caption{This depicts the log spectrum. Darker regions represent greater
+        values whereas lighter are smaller values. The estimated signal is
+        computed using the original method proposed by McAulay and Quatieri.
+    \label{plot:mqcubicestimatedspec}}
 \end{figure}
 
 \begin{figure}
-    \caption{The original method\label{plot:mqcubicerror}}
     \includegraphics[width=\textwidth]{plots/mq_cubic_error.eps}
+    \caption{
+        The error when subtracting the original signal from the estimated
+        signal. The estimated signal is computed using the original method
+        proposed by McAulay and Quatieri.
+    \label{plot:mqcubicerror}}
 \end{figure}
 
-\begin{figure}
-    \caption{The extended cubic method\label{plot:mqmodcubicoriginalspec}}
-    \includegraphics[width=\textwidth]{plots/mq_mod_cubic_original_spec.eps}
-\end{figure}
+%\begin{figure}
+%    \includegraphics[width=\textwidth]{plots/mq_mod_cubic_original_spec.eps}
+%    \caption{This depicts the dB spectrum. Darker regions represent greater
+%        values whereas lighter are smaller values.
+%    \label{plot:mqmodcubicoriginalspec}}
+%\end{figure}
 
 \begin{figure}
-    \caption{The extended cubic method\label{plot:mqmodcubicestimatedspec}}
     \includegraphics[width=\textwidth]{plots/mq_mod_cubic_estimated_spec.eps}
+    \caption{This depicts the dB spectrum. Darker regions represent greater
+        values whereas lighter are smaller values. The estimated signal is
+        computed using the cubic interpolation method proposed here.
+    \label{plot:mqmodcubicestimatedspec}}
 \end{figure}
 
 \begin{figure}
-    \caption{The extended cubic method\label{plot:mqmodcubicerror}}
     \includegraphics[width=\textwidth]{plots/mq_mod_cubic_error.eps}
+    \caption{The error when subtracting the original signal from the estimated
+        signal. The estimated signal is computed using the cubic interpolation
+        method proposed here.
+    \label{plot:mqmodcubicerror}}
+\end{figure}
+
+%\begin{figure}
+%    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_original_spec.eps}
+%    \caption{This depicts the dB spectrum. Darker regions represent greater
+%        values whereas lighter are smaller values.
+%    \label{plot:mqmodcubicoriginalspec}}
+%\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_estimated_spec.eps}
+    \caption{This depicts the dB spectrum. Darker regions represent greater
+        values whereas lighter are smaller values. The estimated signal is
+        computed using the quintic interpolation method proposed here.
+    \label{plot:mqmodcubicestimatedspec}}
 \end{figure}
 
 \begin{figure}
-    \caption{\label{plot:mqmoderrcomplogamperr}}
+    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_error.eps}
+    \caption{The error when subtracting the original signal from the estimated
+        signal. The estimated signal is computed using the quintic interpolation
+        method proposed here.
+    \label{plot:mqmodcubicerror}}
+\end{figure}
+
+\begin{figure}
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
+    \caption{This shows the error of the interpolated signals when compared
+    with the original signal for the three proposed methods.
+    \label{plot:mqmoderrcomplogamperr}}
 \end{figure}
 
 \begin{figure}
-    \caption{\label{plot:mqmoderrcomplogampfunc}}
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_logamp_func.eps}
+    \caption{This compares the original log-amplitude function with the
+    interpolated log-amplitude functions. The log-amplitude functions are
+    considered because these are the real part of the polynomial exponents in
+    the complex sinusoid model.
+    \label{plot:mqmoderrcomplogampfunc}}
 \end{figure}
 
 \begin{figure}
-    \caption{\label{plot:mqmoderrcompphaseerr}}
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
+    \caption{This compares the phase functions with the interpolated phase
+    functions. The phase functions are considered because these are the
+    imaginary part of the polynomial exponents in the complex sinusoidal model.
+    The error exhibited by the McAulay \textendash Quatieri interpolation is
+    misleading because phase values should be compared after computing the
+    remaineder when dividing by $2\pi$. This means there are only brief segments
+    where the phase error is significant (compare with
+    Figure~\ref{plot:mqcubicerror}). The plot is shown without adjusting the
+    values to show the accuracy of the proposed methods in the interpolated
+    regions.
+    \label{plot:mqmoderrcompphaseerr}}
 \end{figure}
 
 \begin{figure}
-    \caption{\label{plot:mqmoderrcompphasefunc}}
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_func.eps}
+    \caption{\label{plot:mqmoderrcompphasefunc}}
+\end{figure}
+
+\subsubsection{Conclusion}
+
+Out of the three proposed methods it appears that the modified cubic
+interpolation method works superiorily for the signal model considered. The
+reduced accuracy of the higher-order quintic model can perhaps be explained by
+the ``overfitting" of the log-amplitude function (see
+Figure~\ref{plot:mqmoderrcomplogampfunc}). Indeed, even the proposed cubic model
+shows some overfitting in this case. From Figure~\ref{plot:mqmoderrcompphaseerr}
+it is clear that the DDM based methods provide superior estimation of the phase
+function -- this is not the case for the log-amplitude function. Depending on
+the underlying signal, perhaps better results can be obtained by postulating a
+lower-order amplitude function and higher-order phase function. The possiblity
+of errors arising from numerical accuracy when evaluating the quintic
+polynomials has been ruled out. We evalutated these polynomials using an
+implementation of Horner's method that keeps track of the error bound
+\cite[p.~95]{higham2002accuracy}: the
+errors are negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the
+results.
+
+\section{Experiment: Separation of two sources using partial decay rate}
+
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
+    \caption{\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}
 
 \bibliographystyle{plain}
