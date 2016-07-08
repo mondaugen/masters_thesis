@@ -4,7 +4,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
-\usepackage[dvips]{graphicx}
+\usepackage[final]{graphicx}
 \usepackage{algorithm2e}
 \usepackage{hyperref}
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
@@ -835,7 +835,7 @@ suitable for estimating missing data from known ones. First, define
 \]
 the probability that $\boldsymbol{x}_n$ given distribution $p$ (see
 Appendix~\ref{apdx:gaussian_dist} for the definition of $\mathcal{N} \left(
-\boldsymbol{\mu}^{k} , \boldsymbol{\Sigma}^{k} \right)$). The superscript $k$
+\boldsymbol{x} ; \boldsymbol{\mu}^{k} , \boldsymbol{\Sigma}^{k} \right)$). The superscript $k$
 indicates the value of this parameter on iteration $k$. To update $w^{k}_p$:
 \[
     w^{k+1}_p = \frac{1}{N} \sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n |
@@ -1435,12 +1435,171 @@ results.
 
 \section{Experiment: Separation of two sources using partial decay rate}
 
+In this section we demonstrate how the techniques described above can be used to
+perform audio source separation. We start with a recording of an acoustic guitar
+playing $a_{3}$ and a xylophone playing $f_{4}^{\sharp}$. The recordings are
+from \cite{opolko1987mcgill} and have been mixed down to one channel (by simply
+adding the two signals together) and resampled at 16 KHz, coded simply as a
+stream of 64-bit floating-point numbers. Spectrograms of the original signals are
+shown in Figure~\ref{plot:acgtra3specgram} and
+Figure~\ref{plot:xylofs4specgram}. The spectrograms were produced with a
+window and DFT size of 4096 samples and a hop size of 512 samples.
 
+The mixture of the two signals was analysed using the DDM for finding the
+coefficients of a cubic complex phase polynomial. Local maxima in each frame
+were found using the technique described in \cite[p.~42]{serra1989system}. For
+each of these local maxima, the polynomial coefficients were estimated. The
+analysis used the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window. To obtain
+partials it was then necessary to connect the local maxima. As the partials of
+these two sound sources are quite stable in frequency it sufficed to use the
+Viterbi algorithm \cite{forney1973viterbi} to connect local maxima in sub-bands
+of the spectrum. The cost function is simply the Euclidean distance between the
+frequencies of two local maxima. Partial starting points are considered in
+sub-bands of width 15 Hz and these sub-bands overlap by 7.5 Hz. A partial path
+starts on the first local maximum in the band exceeding -100 dB and ends at the
+last maximum exceeding -100 dB. The path search algorithm will also look ahead
+to further frames if no maximum is present in the next frame. Because of this,
+sometimes unrealistic paths are discovered that jump between spurious maxima.
+These are filtered out by discarding paths whose cost-length ratio is excessive.
+See Figure~\ref{plot:acgtra3xylofs4costlengththresh} to see a plot of these
+values and the thresholding function. 
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.eps}
+    \caption{Paths (represented as circles) are considered only if their
+    path cost is smaller than the threshold function (represented in black).\label{plot:acgtra3xylofs4costlengththresh}}
+\end{figure}
+The spectrogram of
+the mixture can be seen in Figure~\ref{plot:acgtra3xylofs4specgram} and the
+partial paths in Figure~\ref{plot:acgtra3xylofs4partials}.
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_specgram.eps}
+    \caption{\label{plot:acgtra3xylofs4specgram}}
+\end{figure}
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_specgram_partials.eps}
+    \caption{\label{plot:acgtra3xylofs4partials}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/ac_gtr_orig_spec.eps}
+    \caption{\label{plot:acgtra3specgram}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/xylo_orig_spec.eps}
+    \caption{\label{plot:xylofs4specgram}}
+\end{figure}
+
+A line function is fit via least-squares to each partial, as shown in
+Figure~\ref{plot:parclassaxpartialtrajectories}. Our goal is to classify based
+on the amplitude modulation of each partial, or to an approximation, the slope of these line-functions. We found that examining the log-length of the
+partials gives better results than examining the slope directly. This is perhaps
+because the log-length encodes both the starting amplitude and the slope -- recall
+that the partials start on the first local maxium exceeding an amplitude
+threshold. To motivate the use of this metric, we plot the log-length vs. the
+starting frequency of
+partials from separate analyses of the guitar and xlyophone signals and overlay
+the plots (Figure~\ref{plot:partialclassificationacgtrxyloseptruememberships}).
+The data points have the form
+\[
+    \boldsymbol{a}_i = \begin{pmatrix}
+        a_{i,0} \\
+        a_{i,1}
+    \end{pmatrix}
+\]
+where $a_{i,0}$ is the first PC and $a_{i,1}$ the second. The set of PC data
+points will be denoted $\{\boldsymbol{a}\}$.
+We see that, for the most part, the partials belonging to the two sources are
+separated appropriately into two clusters. The partials from the xylophone
+present in the guitar cluster belong to higher partials, whose omission in the
+final rendering of the xylophone source would not be detrimental to its
+perceptual quality. Similarly, partials belonging to the guitar present in the
+xylophone cluster are short and most likely belong to briefly excited modes
+of the guitar body. Our intention is now to use GMM on a set of unclassified
+partials to yield a plausible source separation.
+
+GMM fitting is sensitive to its initial guess of the parameters as the algorithm
+only finds a local maximum of the likelihood function
+\cite{kay1993fundamentals}.
+% Need to add page to citation
+To find an initial guess we convolve the scatter plot with Gaussian kernels,
+giving a continuous function. We use the two local maxima of this function as
+the initial means for the two sought classifying Gaussian distributions. The
+convolution function is defined as
+\[
+    f(\boldsymbol{\hat{a}}) = \sum_{\boldsymbol{a}_i \in \{\boldsymbol{a}\}}
+    \mathcal{N} \left( \boldsymbol{\hat{a}} ; \boldsymbol{a}_i,
+    \boldsymbol{\Sigma}_{\boldsymbol{a}} \right)
+\]
+%(see
+%Appendix~\ref{apdx:gaussian_dist} for the definition of $\mathcal{N} \left(
+%    \boldsymbol{x} ; \boldsymbol{\mu}, \boldsymbol{\Sigma} \right)$)
+(see
+Appendix~\ref{apdx:gaussian_dist} for the definition of $\mathcal{N}$).
+$\boldsymbol{\Sigma}_{\boldsymbol{a}}$ is defined as
+\[
+    \boldsymbol{\Sigma}_{\boldsymbol{a}}
+    =
+    \begin{pmatrix}
+        \frac{\Delta_{\boldsymbol{a}_1}}{\Delta_{\boldsymbol{a}_0
+        +\Delta_{\boldsymbol{a}_1}}}
+            \theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}}
+        & 0 \\
+        0 & \frac{\Delta_{\boldsymbol{a}_0}}{\Delta_{\boldsymbol{a}_0
+    +\Delta_{\boldsymbol{a}_1}}}
+            \theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}}
+    \end{pmatrix}
+\]
+where
+\[
+    \Delta_{\boldsymbol{a}_0} = \max \left( \boldsymbol{a}_0 \right)
+        - \min \left( \boldsymbol{a}_0 \right)
+\]
+\[
+    \Delta_{\boldsymbol{a}_1} = \max \left( \boldsymbol{a}_1 \right)
+        - \min \left( \boldsymbol{a}_1 \right)
+\]
+and $\theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}}$ is a parameter to control
+the smoothness of the resulting function, here
+$\theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}} = 1.2$. A contour plot of the
+resulting function is shown in
+Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}.
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_sep_true_memberships.eps}
+    \caption{\label{plot:partialclassificationacgtrxyloseptruememberships}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_estimated_memberships.eps}
+    \caption{\label{plot:partialclassificationacgtrxylosepestimatedmemberships}}
+\end{figure}
+
+
+Spectrograms of the source separated signals
+are shown in Figure~\ref{plot:acgtra3specgramss} and
+Figure~\ref{plot:xylofs4specgramss}. 
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/ac_gtr_ss_spec.eps}
+    \caption{\label{plot:acgtra3specgramss}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/xylo_ss_spec.eps}
+    \caption{\label{plot:xylofs4specgramss}}
+\end{figure}
 
 \begin{figure}
     \includegraphics[width=\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
     \caption{\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_partial_trajectories.pdf}
+    \caption{\label{plot:parclassaxpartialtrajectories}}
+\end{figure}
+
 
 \bibliographystyle{plain}
 \bibliography{thesis}

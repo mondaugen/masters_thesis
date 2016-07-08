@@ -2,8 +2,8 @@
 
 # Builds the thesis.tex file complete with bibliography.
 
-latex thesis/thesis.tex
+pdflatex thesis/thesis.tex
 BIBINPUTS=bib bibtex thesis.aux
-latex thesis/thesis.tex
-latex thesis/thesis.tex
-dvipdf thesis.dvi
+pdflatex thesis/thesis.tex
+pdflatex thesis/thesis.tex
+#dvipdf thesis.dvi
