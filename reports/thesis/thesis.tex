@@ -1448,7 +1448,7 @@ belong to any sources).
 \subsection{Methodology}
 We synthesize theoretical sets of parameters as described above. On each frame
 of analysis data, i.e., for parameters belonging to the same time instant, we
-consider each data point as a multi-dimensional random variable. With these
+consider each data-point as a multi-dimensional random variable. With these
 random variables, we compute principal components in order to produce a variable
 with maximum variance. This variable is classified using a clustering algorithm
 and we evalutate the results. A summary follows:
@@ -1485,7 +1485,7 @@ frequency values are in $Hz$ and phase values are in radians.
     \item
         $N$ length of signal in samples.
     \item
-        $H$ duration between data point calculations in samples (i.e., the hop
+        $H$ duration between data-point calculations in samples (i.e., the hop
         size).
     \item
         $N_{p}$ number of sources.
@@ -1639,8 +1639,8 @@ substituting the random variables:
 The $\theta_{no}$ (where $\theta$ is replaced by $\omega$ etc.) specifies the
 variance of the particular parameter.
 
-We also add spurious data points as a fraction $r_{s}$ of the number of true
-data points. Their values are drawn from uniform distributions with boundaries
+We also add spurious data-points as a fraction $r_{s}$ of the number of true
+data-points. Their values are drawn from uniform distributions with boundaries
 $\theta_{s,min}$ and $\theta_{s,max}$, where $\theta$ is some parameter above,
 e.g., $\omega_{s,min}$ and $\omega_{s,max}$ for the $\omega$ parameter.
 
@@ -1649,14 +1649,14 @@ H}{f_{s}},\ldots,\frac{\left\lfloor \frac{N}{H} \right\rfloor H}{f_{s}}$.
 
 \subsection{Computation of Principal Components}
 
-At each time $t$ we have $L$ data points. As the source of each data point is
+At each time $t$ we have $L$ data-points. As the source of each data-point is
 now unknown, we replace the $k$ and $p$ indices with index $l$. We only consider
 the amplitude and frequency modulation. According to our model, the frequency
 modulation is greater for harmonics of greater centre frequency. To take this
 into consideration, we divide the frequency modulation estimate $\psi_{l}(t)$ by
 the constant frequency estimate $\omega_{l}(t)$ (see thesis by Creager).  The amplitude modulation
 $\mu_{l}(t)$ remains constant for all harmonics of the same source, only its initial value
-changes according to $k_{60,p}$.  We compile the data points at one time into a
+changes according to $k_{60,p}$.  We compile the data-points at one time into a
 set of observations
 \begin{equation}
     \mathbf{x}_{l}(t) = \begin{pmatrix}
@@ -1747,10 +1747,10 @@ samples.
 \includegraphics[width=\textwidth,height=\textheight]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
 \end{figure}
 
-The data points are represented as line segments to show the frequency slope.
+The data-points are represented as line segments to show the frequency slope.
 Data points classified as coming from the same source are dark blue and cyan,
 respectively.  Data points classified as spurious are in black. Note that the
-classification is done on a frame by frame basis so it could be that data points
+classification is done on a frame by frame basis so it could be that data-points
 adjacent in time that seem to come from the same source are in different
 colours. This is to be addressed in the sequel.
 (TODO: how do we choose levels of noise to test against? My current method is to
@@ -1829,7 +1829,7 @@ threshold. To motivate the use of this metric, we plot the log-length vs. the
 starting frequency of
 partials from separate analyses of the guitar and xlyophone signals and overlay
 the plots (Figure~\ref{plot:partialclassificationacgtrxyloseptruememberships}).
-The data points have the form
+The data-points have the form
 \[
     \boldsymbol{a}_i = \begin{pmatrix}
         a_{i,0} \\
