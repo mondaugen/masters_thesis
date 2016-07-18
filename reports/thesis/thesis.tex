@@ -1443,8 +1443,8 @@ results.
 \subsection{Introduction}
 To evaluate whether the grouping of partials with common AM and FM parameters is
 plausible, we synthesize a set of parameters and test by corrupting the
-parameters with noise and adding spurious sets of parameters (that should not
-belong to any sources).
+parameters with noise and adding spurious sets of parameters that should not
+belong to any sources.
 \subsection{Methodology}
 We synthesize theoretical sets of parameters as described above. On each frame
 of analysis data, i.e., for parameters belonging to the same time instant, we
@@ -1516,8 +1516,10 @@ frequency values are in $Hz$ and phase values are in radians.
 \end{itemize}
 
 To incorporate inharmonicity often observed in real string instruments where the
-strings exhibit some stiffness, we define the \emph{stretched} harmonic numbers
+strings exhibit some stiffness, we define the \textit{stretched} harmonic numbers
 as follows
+\cite{paspweb2010}\footnote{
+\texttt{http://ccrma.stanford.edu/\~{}jos/pasp/Dispersion\_Filter\_Design\_I.html}}
 
 \begin{equation}
     K_{B}(k) = k (1+Bk^{2})^{\frac{1}{2}}
@@ -1541,23 +1543,23 @@ where
     \end{cases}
 \end{equation}
 \begin{equation}
-    a_{60,p} = \frac{\log_{10}(10^{-3})}{k_{60,p}}
+    a_{60,p} = \frac{\log(10^{-3})}{t_{60,p}}
 \end{equation}
 \begin{equation}
-    a_{k,60,p} = \frac{\log_{10}(10^{-3})}{t_{60,p}} 
+    a_{k,60,p} = \frac{\log(10^{-3})}{k_{60,p}} 
 \end{equation}
 The piecewise amplitude function is based on the amplitude function of the FOF.
 
 The estimation of these parameters is a separate problem addressed by the
-Derivative or Reassignment Methods (DM and RM). We use theoretical values calculated
+DDM (see Section~\ref{sec:ddm_description}). We use theoretical values calculated
 directly from the model signals. For interpretation, and to make it possible to
 simply replace the theoretical values with those obtained from an analysis, we
 compute parameters that correspond to the model of these methods.
 
-The DM and RM seek signals $s_k \in \mathbb{C}$ of the following form:
+The DDM seeks signals $s_k \in \mathbb{C}$ of the following form:
 \begin{equation}
     s_{k}(n) = \exp(\log(A_{k} + \mu_{k}n + j(\phi_{k} + \omega_{k}n +
-    \frac{1}{2} \psi_{k} n^{2}))) \label{rm_model}
+    \frac{1}{2} \psi_{k} n^{2}))) \label{eq:rm_model}
 \end{equation}
 Here $n$ is the sample number. Typically when performing a short-time analysis,
 the time corresponding to $n = 0$ is made to be the centre of the window,
@@ -1574,7 +1576,7 @@ are given by
 for the part of the signal after the attack portion.
 
 For the attack portion, we estimate the parameters using least-squares on a
-(rectangular) windowed signal. Let
+rectangular-windowed signal. Let
 \begin{equation}
     \hat{\mathbf{s}}(t) =
     \begin{pmatrix}
@@ -1601,7 +1603,7 @@ then $\log(A_{k,p})$ and $\mu_{k,p}$ are found as the least-squares solution of
     = \log{\hat{\mathbf{s}}(t)}
 \end{equation}
 
-for the argument parameters (those multiplied by $j$ in \eqref{rm_model})
+for the argument parameters (those multiplied by $j$ in \eqref{eq:rm_model})
 
 \begin{equation}
     \omega_{k,p}(t) = \frac{2 \pi}{f_{s}} ( f_{0,p} + A_{f,p} \sin(2 \pi f_{f,p} t +
@@ -1621,14 +1623,11 @@ parameters from an arbitrary signal, we create noise corrupted values by
 substituting the random variables:
 \begin{itemize}
     \item
-        $\tilde{\omega}_{k,p}(t) \sim
-        \mathcal{N}(\omega_{k,p}(t),\omega_{no})$
-    \item
-        $\tilde{\psi}_{k,p}(t) \sim
+        $\tilde{\Psi}_{k,p}(t) \sim
         \mathcal{N}(\psi_{k,p}(t),\psi_{no})$
     \item
-        $\tilde{\phi}_{k,p}(t) \sim
-        \mathcal{N}(\phi_{k,p}(t),\phi_{no})$
+        $\tilde{\Omega}_{k,p}(t) \sim
+        \mathcal{N}(\omega_{k,p}(t),\omega_{no})$
     \item
         $\tilde{\mu}_{k,p}(t) \sim
         \mathcal{N}(\mu_{k,p}(t),\mu_{no})$
@@ -1636,6 +1635,25 @@ substituting the random variables:
         $\tilde{A}_{k,p}(t) \sim
         \mathcal{N}(A_{k,p}(t),A_{no})$
 \end{itemize}
+%% If using correlated random variables
+%\begin{itemize}
+%    \item
+%        $\tilde{\Psi}_{k,p}(t) \sim
+%        \mathcal{N}(\psi_{k,p}(t),\psi_{no})$
+%    \item
+%        $\tilde{\Omega}_{k,p}(t) \sim
+%        \mathcal{N}(\omega_{k,p}(t),\omega_{no})
+%        + \tilde{\psi}_{k,p}(t-\Delta t) \Delta t)$
+%    \item
+%        $\tilde{\Phi}_{k,p}(t) =
+%        \tilde{\omega}_{k,p}(t - \Delta t) \Delta t$
+%    \item
+%        $\tilde{\mu}_{k,p}(t) \sim
+%        \mathcal{N}(\mu_{k,p}(t),\mu_{no})$
+%    \item
+%        $\tilde{A}_{k,p}(t) \sim
+%        \mathcal{N}(A_{k,p}(t),A_{no})$
+%\end{itemize}
 The $\theta_{no}$ (where $\theta$ is replaced by $\omega$ etc.) specifies the
 variance of the particular parameter.
 
@@ -1742,10 +1760,10 @@ following parameters:
 The length of the signal $N$ is 8000 samples and the anlaysis hop size $H$ is 256
 samples.
 
-\begin{figure}
-    \centering
-\includegraphics[width=\textwidth,height=\textheight]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
-\end{figure}
+%\begin{figure}
+%    \centering
+%\includegraphics[width=\textwidth,height=\textheight]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
+%\end{figure}
 
 The data-points are represented as line segments to show the frequency slope.
 Data points classified as coming from the same source are dark blue and cyan,
