@@ -18,7 +18,7 @@
 \maketitle
 \tableofcontents
 
-\section{Introduction}
+\chapter{Introduction}
 In signal processing, a common task is the separation of a signal with known
 deterministic or statistical characteristics from another. This task has been
 well studied \cite{kay1993fundamentals} \cite{hayes2009statistical}
@@ -37,7 +37,7 @@ of instruments actually designed to blend well; to sound as one instrument.
 Ironically, it is this criterion that we use to guide the source separation
 techniques described in the following.
 
-\section{Methodology}
+\chapter{Methodology}
 Perceptual studies have shown that sounds modulated synchronously in amplitude
 or frequency are heard as one sound, whereas asynchronously modulated sounds are
 heard as distinct \cite{mcadams1989segregation} \cite{marin1991segregation}.
@@ -70,9 +70,9 @@ therefore comprises the following tasks:
 This thesis describes various approaches to the above tasks and utilises some of
 them in source separation experiments.
 
-\section{Signal Modeling}
+\chapter{Signal Modeling}
 
-\subsection{Time-Frequency Representations}
+\section{Time-Frequency Representations}
 
 As most musical instruments are resonating media and excited resonating media
 are well described as linear time-invariant (LTI) auto-regressive (AR)
@@ -169,7 +169,7 @@ This transformation of a signal of time $n$ in to one of time $\tau$ and
 frequency $\omega$ is known as the \textit{Discrete-time Short-time Fourier
 Transform} (DTSTFT).
 
-\subsection{Polynomial Phase Models}
+\section{Polynomial Phase Models}
 
 The DTFT and DTSTFT are very useful because they are invertible
 \cite{portnoff1976implementation} and fast algorithms exist for their 
@@ -186,7 +186,7 @@ alternatives (see \cite{kereliuk2011sparse} for a review). In the case of
 musical signals, however, we have some prior information and can make certain
 assumptions about the underlying functions.
 
-\subsubsection{Sinusoidal Representations}
+\subsection{Sinusoidal Representations}
 \label{sec:mqfmfromphase}
 Many musical acoustic signals are quasi-harmonic, meaning that they consist of a
 sum of sinusoids whose frequencies are roughly integer multiples of a
@@ -275,7 +275,7 @@ determined as
     \end{pmatrix}
 \end{equation}
 
-\subsubsection{Polynomial phase parameter estimation}
+\subsection{Polynomial phase parameter estimation}
 \label{sec:ddm_description}
 More recently a set of techniques have been developed that use some combination
 of derivatives of the analysis window $w$ or the signal $x$ to estimate the
@@ -354,7 +354,7 @@ so we can estimate $c_0$ as
 The estimation of the coefficients of a phase polynomial
 using this method is known as the \textit{Distribution Derivative Method (DDM)}.
 
-\subsubsection{The choice of atom $\psi$ \label{sec:optblackman}}
+\subsection{The choice of atom $\psi$ \label{sec:optblackman}}
 
 As we are dealing with mixtures of sinusoids of small bandwidth, in addition to
 the finite time support constraint, we desire atoms whose inner-product is only
@@ -464,7 +464,7 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
     \includegraphics[width=\textwidth]{plots/c1_blackman_fd.eps}
 \end{figure}
 
-\subsection{\label{sec:partialtracking}Partial Tracking}
+\section{\label{sec:partialtracking}Partial Tracking}
 
 In Section~\ref{sec:mqfmfromphase} we discussed how to determine reasonable
 values for the coefficients of a cubic phase polynomial by using the frequency,
@@ -473,7 +473,7 @@ discuss possible ways of determining which local maxima are connected. This is
 referred to as \textit{peak matching} \cite{mcaulay1986speech}
 or \textit{partial tracking} \cite{smith1987parshl} \cite{depalle1993tracking}.
 
-\subsubsection{A Greedy Method}
+\subsection{A Greedy Method}
 
 The original method of connecting peaks in the spectrogram is from
 \cite{mcaulay1986speech}. This method is simple and fast but, as we will see,
@@ -537,7 +537,7 @@ with $K$. Nevertheless, the method is simple to implement, computationally
 negligble, and works well with a variety of signals encountered in audio
 \cite{mcaulay1986speech} \cite{smith1987parshl}.
 
-\subsubsection{An Optimal Method}
+\subsection{An Optimal Method}
 
 There is a way to find a set of paths over multiple frames ($K > 2$) having the
 lowest total cost if
@@ -728,10 +728,10 @@ searched an algorithm exists that requires on the order of $N^{2}T$ calculations
 $T$ is the number of frames (assuming the same number of nodes in each frame):
 this algorithm is known as the Viterbi algorithm \cite{forney1973viterbi}.
 
-\subsubsection{Partial paths on example signal\label{sec:mq_lp_compare_chirp}}
+\subsection{Partial paths on example signal\label{sec:mq_lp_compare_chirp}}
 % Add plots of crossing partials
 
-\subsection{Classification}
+\section{Classification}
 
 If data-points consist of more than two dimensions (say $p$), it becomes
 burdensome to try and find the single best or two best dimensions on which to
@@ -743,7 +743,7 @@ and their $p$ variances such that the resulting variable with the highest
 variance will have the maximum variance acheivable, under some constraints that
 will be explained shortly. 
 
-\subsubsection{Principal components analysis (PCA)}
+\subsection{Principal components analysis (PCA)}
 
 The following development is based on \cite{jolliffe2002principal}. Say we have
 a set $\left\{ \boldsymbol{x} \right\}$ of data-points and their covariance
@@ -808,7 +808,7 @@ reason we opt for classification algorithms that give discrete indicators as
 output, purely as a function of the input dataset. The algorithm we consider is the
 \textit{Gaussian mixture model (GMM)}.
 
-\subsubsection{Gaussian Mixture Models (GMM)}
+\subsection{Gaussian Mixture Models (GMM)}
 
 Consider the data-points $\boldsymbol{X}$ as realizations of the vector Gaussian
 distributed random variable
@@ -872,7 +872,7 @@ classification $p^{\ast}$ of the data-point $\boldsymbol{x}$ is simply
     p^{\ast} = \argmax_{p} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
 \]
 
-\subsection{Partial synthesis}
+\section{Partial synthesis}
 
 Once the parameters have been estimated, the partials have been determined, and
 the partials have been grouped into sources, we can now synthesize a single
@@ -915,7 +915,7 @@ for phase. From Equation~\ref{eq:ddmsyseq} we know we can estimate a polynomial
 of arbitrary order for phase. We will see that using this additional information
 can give us an interpolating function closer to the underlying model.
 
-\subsection{Extended phase model}
+\chapter{Extended phase model}
 
 In Section~\ref{sec:mqfmfromphase} it was shown how a cubic phase function could
 be postulated from two connected measurements (see
@@ -925,7 +925,7 @@ estimated using DDM in calculating a phase function. In a later section we will
 compare the synthesis quality of the classical McAulay \textendash Quatieri
 approach with our new method.
 
-\subsubsection{Cubic phase polynomial\label{sec:cubicphasepoly} }
+\section{Cubic phase polynomial\label{sec:cubicphasepoly} }
 
 In this section we describe how to obtain a cubic phase polynomial from
 local estimations of the coefficients of a quadratic phase polynomial.
@@ -1095,7 +1095,7 @@ and then $\tilde{U}$ is determined using Equation~\ref{eq:minfmcubic} to be
 \]
 and then rounded to obtain $U^{\ast}$.
 
-\subsubsection{Cubic amplitude polynomial \label{sec:cubicamppoly}}
+\section{Cubic amplitude polynomial \label{sec:cubicamppoly}}
 
 Solving for the cubic polynomial describing the local amplitude function
 \begin{equation}
@@ -1166,7 +1166,7 @@ subject to
 This can be solved using numerical methods, in particular, using a specific
 interpretation of weighted least-squares \cite[p.~266]{golub1996matrix}.
 
-\subsubsection{Quintic phase polynomial\label{sec:quinticphasepoly}}
+\section{Quintic phase polynomial\label{sec:quinticphasepoly}}
 
 Solving for the coefficients of a quintic phase polynomial is done very
 similarly to Section~\ref{sec:cubicphasepoly}. The quintic phase polynomial is
@@ -1214,7 +1214,7 @@ The smoothness maximizing $\tilde{U}$ is found as
 \]
 and then rounded to produce $U^{\ast}$ as above.
 
-\subsubsection{Quintic amplitude polynomial}
+\section{Quintic amplitude polynomial}
 
 Solving for the quintic amplitude polynomial
 \begin{equation}
@@ -1258,7 +1258,7 @@ The quintic interpolating phase polynomial has been proposed in a previous paper
 slope, choosing instead to derive it using the difference in frequency between
 two analysis frames.
 
-\subsubsection{Evaluation}
+\section{Evaluation}
 
 We compared the quality of an analysis-synthesis system using the
 original method proposed by McAulay and Quatieri, the cubic interpolation
@@ -1414,7 +1414,7 @@ Section~\ref{sec:optblackman}).
     \caption{\label{plot:mqmoderrcompphasefunc}}
 \end{figure}
 
-\subsubsection{Conclusion}
+\section{Conclusion}
 
 Out of the three proposed methods it appears that the modified cubic
 interpolation method works superiorily for the signal model considered. The
@@ -1438,14 +1438,14 @@ results.
     \caption{\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}
 
-\section{Experiment 2: Partial grouping in one frame}
+\chapter{Experiment 2: Partial grouping in one frame}
 
-\subsection{Introduction}
+\section{Introduction}
 To evaluate whether the grouping of partials with common AM and FM parameters is
 plausible, we synthesize a set of parameters and test by corrupting the
 parameters with noise and adding spurious sets of parameters that should not
 belong to any sources.
-\subsection{Methodology}
+\section{Methodology}
 We synthesize theoretical sets of parameters as described above. On each frame
 of analysis data, i.e., for parameters belonging to the same time instant, we
 consider each data-point as a multi-dimensional random variable. With these
@@ -1471,10 +1471,10 @@ and we evalutate the results. A summary follows:
         The EM algorithm for Gaussian mixture models is carried out to classify
         the sources.
 \end{itemize}
-\subsection{Evaluation}
+\section{Evaluation}
 The algorithm is run on a typical source separation problem to evaluate its
 plausibility.
-\subsection{Synthesis}
+\section{Synthesis}
 Our model makes available the following parameters. Time values are in seconds,
 frequency values are in $Hz$ and phase values are in radians.
 \begin{itemize}
@@ -1665,7 +1665,7 @@ e.g., $\omega_{s,min}$ and $\omega_{s,max}$ for the $\omega$ parameter.
 Data points are computed for the times $t = 0,\frac{H}{f_{s}},\frac{2
 H}{f_{s}},\ldots,\frac{\left\lfloor \frac{N}{H} \right\rfloor H}{f_{s}}$.
 
-\subsection{Computation of Principal Components}
+\section{Computation of Principal Components}
 
 At each time $t$ we have $L$ data-points. As the source of each data-point is
 now unknown, we replace the $k$ and $p$ indices with index $l$. We only consider
@@ -1713,7 +1713,7 @@ with sufficiently separated means and small enough variances, this separation
 will be most observable in the principal components corresponding to the
 greatest eigenvalues.
 
-\subsection{Preparing data for clustering}
+\section{Preparing data for clustering}
 The Expectation Maximization underlying the Gaussian mixture model parameter
 estimation will only converge to a local maximum (see Dempster et al), therefore, for the best
 results, we compute a good initial guess and remove obvious outliers before
@@ -1729,7 +1729,7 @@ standard deviations from the mean (roughly 99.7 percent of values drawn from one
 distribution will lie within this interval if they indeed follow a normal
 distribution). The initial guesses for the weights are simply $\frac{1}{N_{p}}$.
 
-\subsection{Clustering}
+\section{Clustering}
 Gaussian mixture model parameter estimation will be discussed in an appendix of
 this document. After convergence we have an estimated probability
 $p(a_{1,l}(t) \text{ from distribution }p)$. We choose the
@@ -1775,7 +1775,7 @@ colours. This is to be addressed in the sequel.
 multiply the value by a random number drawn from a normal distribution + 1. The amount
 of change is nicely interpretable as a percentage deviating from the original
 
-\section{Experiment: Separation of two sources using partial decay rate}
+\chapter{Experiment: Separation of two sources using partial decay rate}
 
 In this section we demonstrate how the techniques described above can be used to
 perform audio source separation. We start with a recording of an acoustic guitar
@@ -1871,7 +1871,7 @@ partials to yield a plausible source separation.
 
 GMM fitting is sensitive to its initial guess of the parameters as the algorithm
 only finds a local maximum of the likelihood function
-\cite{kay1993fundamentals}.
+\cite[p.~187]{kay1993fundamentals}.
 % Need to add page to citation
 To find an initial guess we convolve the scatter plot with Gaussian kernels,
 giving a continuous function. We use the two local maxima of this function as
@@ -1972,7 +1972,7 @@ Figure~\ref{plot:xylofs4specgramss}.
     \caption{\label{plot:xylofs4specgramss}}
 \end{figure}
 
-\subsubsection{Conclusion}
+\subsection{Conclusion}
 
 After an informal listening, the
 source separation is perceptually convincing.\footnote{Soundfiles can be
