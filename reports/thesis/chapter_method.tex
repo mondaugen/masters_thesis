@@ -1,0 +1,33 @@
+\chapter{Methodology}
+Perceptual studies have shown that sounds modulated synchronously in amplitude
+or frequency are heard as one sound, whereas asynchronously modulated sounds are
+heard as distinct \cite{mcadams1989segregation} \cite{marin1991segregation}.
+Here we define the modulation of parameters $\theta_i$ and $\theta_j$ as being
+synchronous if they are given as functions of time, $\theta_i=f_i(t)$ and
+$\theta_j=f_j(t)$ and there is an affine transform $\mathscr{A}$ such that
+$\mathscr{A}\{f_i\}(t) \approx A f_j(t) + B$ where $A$ and $B$ are constants
+that do not vary with time (at least for the time that we observe the signal).
+If we can accurately measure these parameters and they are typical of the sounds
+we are trying to separate, then we can design techniques to reliably separate
+these sounds from acoustic mixtures. This involves picking those parameters
+classified as belonging to the same sound, discarding the rest, and
+resynthesizing from these parameters. The task of audio source separation
+therefore comprises the following tasks:
+
+\begin{itemize}
+    \item
+        Decide on a signal model for the sound of interest, with parameters that
+        can be estimated and that are similar for similar sounds.
+    \item
+        Estimate the signal parameters.
+    \item
+        Classify the parameters and group them as sets of parameters coming from
+        the same source: the sound of interest.
+    \item
+        Choose a group of parameters and synthesize the separated signal from
+        them.
+\end{itemize}
+
+This thesis describes various approaches to the above tasks and utilises some of
+them in source separation experiments.
+

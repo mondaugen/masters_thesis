@@ -1,0 +1,844 @@
+\chapter{Signal Modeling}
+
+\section{Time-Frequency Representations}
+
+As most musical instruments are resonating media and excited resonating media
+are well described as linear time-invariant (LTI) auto-regressive (AR)
+structures, popular models of musical audio are some variation of this
+description.
+% Need citation
+
+An LTI auto-regressive structure is a signal that can be desribed using the
+following \textit{difference equation}:
+
+\begin{equation}
+    x(n) = \sum_{k=1}^{K} a_k x(n-k) + b_0 v(n)
+\end{equation}
+
+Here $x$ is the output of the system (what is heard or measured) and $v$ is the
+input. $K$ is the order of the model. Both are general functions of time which,
+in the case of properly sampled digital audio, can be considered at times $n \in
+\mathbb{Z}$ without any loss of information. $a_k,b_0 \in \mathbb{C}$ and are
+constants. Casually (no pun intended) you can think of the output of the system
+at time $n$ as being a linear combination of past outputs, plus some of the
+scaled input.
+
+AR structures are excited in various ways: some are bowed, others struck, etc.
+To characterize the above structure we excite it with a simple signal, the
+\textit{delta function}
+
+\begin{equation}
+    \delta(n) = \begin{cases}
+        1 & n=0\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+This delta function input will yield its \textit{impulse
+response} from which we can derive many properties of the AR structure.
+
+As an example take the case where $K=1$ and $a_1 = r \exp(j\omega)$, 
+$r\text{,}\omega \in \mathbb{R}$, $|r|<1$ (recall that $j=\sqrt{-1}$ and is
+called the \textit{imaginary number}). Then the difference equation is
+
+\begin{equation}
+    x(n) = r \exp(j\omega) x(n-1) + v(n)
+\end{equation}
+
+Exciting this with the delta function we get
+\begin{equation}
+    \begin{array}{c}
+        x(0) = 1 \\
+        x(1) = r \exp(j\omega) \\
+        x(n) = r^n \exp(j\omega n)
+    \end{array}
+\end{equation}
+
+which is a complex exponential starting at $n=0$ and periodic in
+$n_T=\frac{2\pi}{\omega}$ multiplied by the real-valued
+exponential $r^n$. In other words, the output is a damped exponential. From this
+it is not hard to see that if we can estimate the coefficients $a_k$, we can
+then know the frequencies, amplitudes and damping factors of the sinusoids that
+are output when this structure is excited by an impulse (the delta function).
+This technique is presented as a motivation for the following techniques and is
+not pursued here. The interested reader is referred to \cite{makhoul1975linear}
+for more information.
+
+An alternative method for determining the frequencies and amplitudes of
+sinusoids in mixture is to take the inner-product of the signal with a complex
+exponential of known frequency and see what you get
+
+\begin{equation}
+    X(\omega) = \sum_{n=-\infty}^{\infty} x(n) \exp(-j \omega n)
+\end{equation}
+
+The function $X(\omega)$ will be large if $x(n)$ contains a complex exponential of
+frequency $\omega$ and small if it doesn't, effectively indicating which
+sinusoidal functions are present in the signal. This transformation of a signal
+as a function of time $n$ into one as a function of frequency $\omega$ is known
+as the \textit{Discrete-time Fourier Transform} (DTFT). 
+
+To create a variety of pitches and timbres, typically the media of musical
+instruments are not static, but vary in time. That means the sets of sinusoids
+describing the state of the media and its excitation also change in time. To
+account for this we consider many small intervals of signal where we assume its
+characteristics are roughly static. We can then piece these time-intervals
+together afterwards to get a description of the signal in both time and
+frequency. To do this, we multiply the signal by a window $w$ which makes the signal
+0 outside of the interval of interest. We then test what sinusoids with
+frequencies $\omega$ are present at different times $\tau$, giving a function of
+two variables
+
+\begin{equation}
+    X(\tau,\omega) = \sum_{n=-\infty}^{\infty} x(n) w(n - \tau) \exp(-j \omega n)
+\end{equation}
+
+This transformation of a signal of time $n$ in to one of time $\tau$ and
+frequency $\omega$ is known as the \textit{Discrete-time Short-time Fourier
+Transform} (DTSTFT).
+
+\section{Polynomial Phase Models}
+
+The DTFT and DTSTFT are very useful because they are invertible
+\cite{portnoff1976implementation} and fast algorithms exist for their 
+computation by digital computer \cite{van1992computational}. If the presence of
+a sinusoid is determined, e.g., by finding $\tau^{\ast}$ and $\omega^{\ast}$ such that
+$X$ is maximized, that signal can be removed or altered easily.
+
+One drawback of these transforms is they only project onto sinusoidal functions
+of linear phase, i.e., functions of constant frequency. In general, musical
+signals are not linear combinations of sinusoids of constant frequency
+(consider, for example, vibrato). We could decide to project onto a different
+family of functions and considerable effort has been devoted to finding
+alternatives (see \cite{kereliuk2011sparse} for a review). In the case of
+musical signals, however, we have some prior information and can make certain
+assumptions about the underlying functions.
+
+\subsection{Sinusoidal Representations}
+\label{sec:mqfmfromphase}
+Many musical acoustic signals are quasi-harmonic, meaning that they consist of a
+sum of sinusoids whose frequencies are roughly integer multiples of a
+fundamental frequency. For these kinds of signals, most of the energy can be
+attributed to sinusoids and so, if we neglect the noisy part of the signal, the
+signal can be described by a small number of sinusoids with slowly varying
+amplitude and phase, plus some noise. The model is
+
+\begin{equation}
+    x(n)=\sum_{p=1}^{P} A_p(n) \exp(j \phi_p(n)) + \varepsilon
+\end{equation}
+
+where $\varepsilon \sim \mathcal{N}(0,\sigma)$ and $A_p \in \mathbb{R}$ and
+$\phi_p \in \mathbb{R}$ are functions of amplitude and phase respectively. In the
+following, we consider equivalent sinusoidal mixtures of complex-valued
+polynomial phase exponentials
+\begin{equation}
+    x(n)=\sum_{p=1}^{P} \exp(\mathcal{P}_p(n)) + \varepsilon
+\end{equation}
+where
+\begin{equation}
+    \mathcal{P}_p(n) = \sum_{q=0}^{Q} c_q n^{q}
+\end{equation}
+
+and $c_q \in \mathbb{C}$.
+
+The sum-of-sinusoids model of McAulay and Quatieri estimates these coefficients
+in an indirect way \cite{mcaulay1986speech}. Given two local maxima of the
+DTSTFT $X(\tau_0,\omega_0)$ and $X(\tau_1,\omega_1)$, where $H = \tau_1 -
+\tau_0$ we can conjecture a cubic
+polynomial phase function for the imaginary part of the phase argument
+
+\begin{equation}
+    \tilde{\phi}(n) = c_3 (n-\tau_0)^3 + c_2 (n-\tau_0)^2 + c_1 (n-\tau_0) + c_0
+\end{equation}
+
+By noting that we have 2 measurements of the phase and frequency,
+$\angle\{X(\tau_0,\omega_0)\}$ and $\angle\{X(\tau_1,\omega_1)\}$, and the frequency
+is the derivative of the phase, we can solve for the coefficients of the
+polynomial phase function using the following linear system of equations
+\begin{equation}
+    \begin{pmatrix}
+        0   & 0     & 0 & 1 \\
+        H^3 & H^2   & H & 1 \\
+        0   & 0     & 1 & 0 \\
+        3 H^2 & 2 H & 1 & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Im\{c_3\} \\
+        \Im\{c_2\} \\
+        \Im\{c_1\} \\
+        \Im\{c_0\}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \angle\{X(\tau_0,\omega_0)\} \\
+        \angle\{X(\tau_1,\omega_1)\} + 2 \pi M \\
+        \omega_0 \\
+        \omega_1        
+    \end{pmatrix}
+\end{equation}
+and choosing $M$ so that
+\begin{equation}
+    \label{eq:minfmmq}
+    \int_{0}^{H}(\tilde{\phi}^{\prime\prime}(t))^{2}dt
+\end{equation}
+is minimized.
+
+As only two measurements of the amplitude of the sinusoid are available,
+$|X(\tau_0,\omega_0)|$ and $|X(\tau_1,\omega_1)|$, the coefficients
+$c_3$ and $c_2$ are purely imaginary and the real parts of $c_1$ and $c_0$ are
+determined as
+\begin{equation}
+    \begin{pmatrix}
+        0 & 1 \\
+        H & 1
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Re\{c_1\} \\
+        \Re\{C_0\}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \log(|X(\tau_0,\omega_0)|) \\
+        \log(|X(\tau_1,\omega_1)|)
+    \end{pmatrix}
+\end{equation}
+
+\subsection{Polynomial phase parameter estimation}
+\label{sec:ddm_description}
+More recently a set of techniques have been developed that use some combination
+of derivatives of the analysis window $w$ or the signal $x$ to estimate the
+polynomial coefficients directly \cite{hamilton2011non}. For this thesis we will
+only consider a technique that does not estimate derivatives of the signal and
+only requires a once-differentiable analysis window as it is relatively easy to
+implement and suits our purposes.
+
+The following is adapted from \cite{betser2009sinusoidal}. Consider the inner
+product of the signal $x(n) = \exp(\mathcal{P}_p(n)) $ and a
+known analysis \textit{atom} $\psi(n)$
+\[
+    f(n) = \left\langle x,\psi \right\rangle =
+    \int_{-\infty}^{\infty}x(n)\overline{\psi}(n)dn
+\]
+Differentiating with respect to $n$ we obtain
+\[
+    \frac{df}{dn}(n) = \frac{dx}{dn}(n)\overline{\psi}(n)
+    + x(n)\frac{d\overline{\psi}}{dn}(n)
+    = \left( \sum_{q=1}^{Q} q c_q n^{q-1} \right) x(n)\overline{\psi}(n)
+    + x(n)\frac{d\overline{\psi}}{dn}(n)
+\]
+
+If $\psi(t)$ is 0 outside of some interval $n \in [-T,T]$ then
+\[
+    \int_{-T}^{T} \frac{dx}{dn}(n)\overline{\psi}(n) dn
+    = \sum_{q=1}^{Q} q c_q \int_{-T}^{T} n^{q-1} x(n) \overline{\psi}(n) dn
+    + \left\langle x, \frac{d\overline{\psi}}{dn} \right\rangle = 0
+\]
+which after rearranging is
+\[ 
+    \sum_{q=1}^{Q} q c_q 
+    \left\langle n^{q-1} x(n) , \overline{\psi}(n) dn \right\rangle
+    = -\left\langle x, \frac{d\overline{\psi}}{dn} \right\rangle
+\]
+From this we can see that to estimate the coefficients $c_q$, $ 1 \leq q \leq Q
+$ we simply need $R$ atoms with $R \geq Q$ to solve the linear system of
+equations
+\begin{equation}
+    \label{eq:ddmsyseq}
+    \sum_{q=1}^{Q} q c_q 
+    \left\langle n^{q-1} x(n) , \overline{\psi_{r}}(n) dn \right\rangle
+    = -\left\langle x, \frac{d\overline{\psi_{r}}}{dn} \right\rangle
+\end{equation}
+for $1 \leq r \leq R$. To estimate $c_0$ we write the signal we are analysing as
+\[
+    s(n) = \exp(c_0) \exp \left( \sum_{q=1}^{Q} c_q n^{q} \right) + \eta (n)
+\]
+$\eta (n)$ is the error signal, or the part of the signal that is not explained
+by our model. We also define the function $\gamma (n)$, the part of the signal
+whose coefficients have already been estimated
+\[
+    \gamma(n) = \exp \left( \sum_{q=1}^{Q} c_q n^{q} \right)
+\]
+Computing the inner-product $\left\langle s , \gamma \right\rangle$, we have
+\[
+    \left\langle s , \gamma \right\rangle
+    =
+    \left\langle \exp(c_0) \gamma , \gamma \right\rangle + 
+        \left\langle \eta , \gamma \right\rangle
+\]
+The inner-product between $\eta$ and $\gamma$ is $0$, by the orthogonality
+principle \cite{kay1993fundamentals}. Furthermore, because $\exp(c_0)$ does not
+depend on $n$, we have
+\[
+    \left\langle s , \gamma \right\rangle
+    =
+    \exp(c_0) \left\langle \gamma , \gamma \right\rangle
+\]
+so we can estimate $c_0$ as
+\begin{equation}
+    \label{eq:ddmestc0}
+    c_0 = \log \left( \left\langle s , \gamma \right\rangle \right)
+        - \log \left( \left\langle \gamma , \gamma \right\rangle \right)
+\end{equation}
+The estimation of the coefficients of a phase polynomial
+using this method is known as the \textit{Distribution Derivative Method (DDM)}.
+
+\subsection{The choice of atom $\psi$ \label{sec:optblackman}}
+
+As we are dealing with mixtures of sinusoids of small bandwidth, in addition to
+the finite time support constraint, we desire atoms whose inner-product is only
+significant within a finite bandwidth of interest. To construct these atoms, we
+multiply the Fourier atom by the window $w$
+\[
+    \psi_{\tau,\omega}^{\mathcal{F}_{w}}(n) = w(n-\tau) \exp(-j\omega(n-\tau))
+\]
+
+A good overview of different windows and their properties is given in
+\cite{harris1978use}. We require that the window be at least
+once-differentiable and zero outside of a certain interval, therefore, somewhat
+informally, we require
+\[
+    \lim_{n \rightarrow T} \psi(n) = \psi(T) = 0
+\]
+The \textit{Hann} window possesses this property
+\[
+    w_{h}(n) = \begin{cases}
+        0.5 + 0.5 \cos \left( \frac{n}{T}\pi \right) & -T \leq n \leq T \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+
+The Hann window is a member of a class of windows constructed by summing scaled
+harmonically related cosine functions, subject to the constraint that the
+scaling coefficients sum to 1 so that the window have a value of 1 at $n=0$.
+Letting $T=N/2$, where $N$ is the length of the window
+\[
+    w(n) = \begin{cases}
+        \sum_{m=0}^{M-1}a_{m}\cos \left( \frac{2\pi}{N}mn \right) & -\frac{N}{2} \leq n
+        \leq \frac{N}{2} \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+With $M=2$ and $a_0 = a_1 = 0.5$, we have the Hann window. The
+\textit{Blackman-Harris} family of windows are also sum-of-cosine windows. For
+these windows, optimization techniques were used to search for coefficients
+giving optimum properties, such as minimum height of the highest side-lobe
+(maximum out-of-band rejection) \cite{rabiner1970approach}. The 4-term window
+whose coefficients $a$ are listed in table~\ref{tab:optblackman} has a maximum
+side-lobe level of 92 dB, lower than the quantization noise of a 16-bit linear
+pulse code modulated signal. This window has a very large main-lobe which means
+two sinusoids of similar frequency will be difficult to resolve. Furthermore,
+the window has a discontinuity at its boundaries, e.g.,
+$w \left( \frac{N}{2} \right) \neq 0$ and is not once-differentiable. In any
+case the window is valuble in that it essentially nulls any influence of signals
+outside of a bandwidth of interest.
+
+To find a window with properties similar to the 4-term Blackman-Harris window
+but without a discontinuity, we solve the optimization problem
+\[
+        \min||a-\tilde{a}||_2 \\
+\]
+subject to
+\[
+        w_{\tilde{a}} \left( \frac{N}{2} \right)
+            = w_{\tilde{a}} \left( \frac{-N}{2} \right) = 0
+\]
+\[
+        \sum_{m}^{M-1} a_{m} = 1
+\]
+where
+\[
+    w_{\tilde{a}}(n) = \begin{cases}
+        \sum_{m=0}^{M-1}\tilde{a}_{m}\cos \left( \frac{2\pi}{N}mn \right) & -\frac{N}{2} \leq n
+        \leq \frac{N}{2} \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+The solution $\tilde{a}^{\ast}$ is given in Table~\ref{tab:optblackman} and
+plots are given in Figure~\ref{plot:optblackman}. This window will be referred
+to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
+
+\begin{table}
+    \caption{\label{tab:optblackman}}
+    \begin{center}
+        \begin{tabular}{l c c c c }
+            Window & $a_0$ & $a_1$ & $a_2$ & $a_3$ \\
+            \hline
+            Minimum 4-term Blackman-Harris & 0.35857 & 0.48829 & 0.14128 &
+            0.01168 \\
+            $\mathcal{C}^{1}$ 4-Term Blackman-Harris & 0.35874 & 0.48831 &
+            0.14127 & 0.01170
+        \end{tabular}
+    \end{center}
+\end{table}
+
+% Plots made with continuous_blackman_1.py
+\begin{figure}
+    \caption{\label{plot:opt_blackman}}
+    \includegraphics[width=\textwidth]{plots/min4_blackman_td.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{}
+    \includegraphics[width=\textwidth]{plots/min4_blackman_fd.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{}
+    \includegraphics[width=\textwidth]{plots/c1_blackman_td.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{}
+    \includegraphics[width=\textwidth]{plots/c1_blackman_fd.eps}
+\end{figure}
+
+\section{\label{sec:partialtracking}Partial Tracking}
+
+In Section~\ref{sec:mqfmfromphase} we discussed how to determine reasonable
+values for the coefficients of a cubic phase polynomial by using the frequency,
+phase and time difference of two local maxima in the DTSTFT. In this section we
+discuss possible ways of determining which local maxima are connected. This is
+referred to as \textit{peak matching} \cite{mcaulay1986speech}
+or \textit{partial tracking} \cite{smith1987parshl} \cite{depalle1993tracking}.
+
+\subsection{A Greedy Method}
+
+The original method of connecting peaks in the spectrogram is from
+\cite{mcaulay1986speech}. This method is simple and fast but, as we will see,
+can be sensitive to spurious peaks.
+
+Typically the DTSTFT is computed for a block of contiguous samples, called a
+\textit{frame} and these frames are computed every $H$ samples, $H$ being the
+\textit{hop-size}. Consider the parameters of local maxima in adjacent frames
+$k$ and $k+1$ with $M$ maxima in frame $k$ and $N$ maxima in frame $k+1$. In
+\cite{mcaulay1986speech}  the parameters are the instantaneous amplitude, phase
+and frequency and are indexed by frequency as $\omega_0^{k}, \dotsc,
+\omega_{M-1}^{k}$ and $\omega_0^{k+1}, \dotsc, \omega_{N-1}^{k+1}$, but here we
+allow for an arbitrary set of parameters $\theta_0^{k}, \dotsc,
+\theta_{M-1}^{k}$ and $\theta_0^{k+1}, \dotsc,
+\theta_{N-1}^{k+1}$, such as the coefficients of a phase polynomial. Define a
+distance function $\mathcal{D} \left( \theta_{i},\theta_{j} \right)$ that computes the
+similarity between two sets of parameters. We will now consider a method that
+finds $L$ pairs of parameters that are closest.
+
+We compute the cost matrix $C$
+\[
+    C = \theta^{k} \otimes_{\mathcal{D}} \theta^{k+1}
+\]
+so that the $i$th row and $j$th column contain $C_{i,j} = \mathcal{D} \left(
+\theta_{i}^{k},\theta_{j}^{k+1} \right)$.  For each $l \in \left[0 \dotsc L-1
+\right]$, find the indices $i_{l}$ and $j_{l}$ corresponding to the shortest
+distance, then remove the $i_{l}$th row and $j_{l}$th column from consideration
+and continue until $L$ pairs have been determined or the distances exceed some
+threshold $\Delta$. This is summarized in Algorithm~\ref{alg:mq_peak_match}
+
+\begin{algorithm}[H]
+    \caption{\label{alg:mq_peak_match}}
+    \KwIn{the cost matrix $C$}
+    \KwOut{$L$ index pairs $\Gamma_{i}$ and $\Gamma_{j}$}
+    $\Gamma_{i} \leftarrow \varnothing$\;
+    $\Gamma_{j} \leftarrow \varnothing$\;
+    \For{$l \leftarrow 0$ to $L-1$}{
+        $i_{l},j_{l}=\argmin_{i \in \left[ 0,\dotsc,M-1 \right] \setminus
+        \Gamma_{i}, j \in \left[ 0,\dotsc,M-1 \right] \setminus \Gamma_{j}}
+        C_{i,j}$\;
+        \If{$ C_{i_{l},j_{l}} > \Delta$}{
+            \KwRet{$\Gamma_{i},\Gamma_{j}$}
+        }
+        $\Gamma_{i} \leftarrow \Gamma{i} \cup i_{l}$\;
+        $\Gamma_{j} \leftarrow \Gamma{i} \cup j_{l}$\;
+    }
+    \KwRet{$\Gamma_{i},\Gamma_{j}$}
+\end{algorithm}
+
+This is a greedy algorithm because on every iteration the smallest cost is
+identified and its indices are removed from consideration. Perhaps choosing a
+slightly higher cost in one iteration would allow smaller costs to be chosen in
+successive iterations. This algorithm does not allow for that. In other terms,
+the algorithm does not find a set of pairs that represent a globally minimal sum of
+costs.
+Another drawback of the algorithm is that it only works between two sucessive
+frames. The cost function could be extended to consider $K$ sets of parameters,
+constructing an $K$-dimensional tensor instead of a matrix, but assuming equal
+numbers of parameter sets in all frames, the search space would grow exponentially
+with $K$. Nevertheless, the method is simple to implement, computationally
+negligble, and works well with a variety of signals encountered in audio
+\cite{mcaulay1986speech} \cite{smith1987parshl}.
+
+\subsection{An Optimal Method}
+
+There is a way to find a set of paths over multiple frames ($K > 2$) having the
+lowest total cost if
+we restrict the search to exactly $L$ paths. Instead of indexing parameters by
+their frame number $k$, we make $k$ part of the parameter set so that it can be
+used by the distance function $\mathcal{D}$. Assume that over $K$ frames there
+are $M$ total parameter sets. We define the vector $\boldsymbol{c} \in \mathbb{R}^{M^2}$
+where the entry $\boldsymbol{c}_{i + Mj} = \mathcal{D} \left( \theta_{i}, \theta_{j}
+\right)$. If we have a set of connections $\Gamma_{i,j}$ we can calculate the
+total cost of these connections by defining the vector
+\[
+    \boldsymbol{x}_{i + Mj} = \begin{cases}
+        1 & \text{there is a connection between }i\text{ and }j\\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+and then forming the inner product
+\[
+    c_{\text{total}}=\boldsymbol{c}^{T}\boldsymbol{x}
+\]
+Note that a node cannot be connected to itself. The question is how to find
+$\boldsymbol{x}^{\ast}$ so that $c_{\text{total}}$ is minimized. If no
+constraints are placed on $\boldsymbol{x}$, the solution is trivial, but not
+useful. How do we constrain $\boldsymbol{x}$ to give us a solution to the
+partial tracking problem? Let us consider an example.
+
+In Figure~\ref{plot:simple_graph} we have an example of a simple graph or
+lattice. The numbers are indices of nodes in the graph and the possible
+connections between them are indicated by lines, or \textit{edges}. We would like to find the two
+shortest paths based on different criteria. In
+Figure~\ref{plot:simple_graph_greedy_paths} we find the paths using an algorithm
+similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a tensor
+of distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry $C_{i,j,k}$
+represents the cost of travelling on the path connecting the $i$th node in layer
+0, the $j$th node in layer 1 and the $k$th node in layer 2. This is the greedy
+method of searching for the best paths whose optimality criterion is to find the
+set of best paths containing the absolute best path. We see in
+Figure~\ref{plot:simple_graph_greedy_paths} that the absolute shortest path, $1
+\rightarrow 4 \rightarrow 8$, is discovered, followed by the second shortest
+path not using the nodes of the first path.
+
+\begin{figure}
+    \caption{\label{plot:simple_graph}}
+    \includegraphics[width=\textwidth]{plots/small_graph_ex.eps}
+\end{figure}
+
+\begin{figure}
+    \caption{\label{plot:simple_graph_greedy_paths}}
+    \includegraphics[width=\textwidth]{plots/small_graph_ex_greedy_paths.eps}
+\end{figure}
+
+To find a set of paths minimizing the total cost, we instead search for total
+solutions $\boldsymbol{x}$ that describe all paths in the graph. Assume for now
+that we can guarantee that the entries of $\boldsymbol{x}$ will be either 0 or
+1. To find a set of constraints for our search, we consider the structure of a
+valid solution $\boldsymbol{x}^{\ast}$. To maintain that paths not overlap, a
+valid solution's nodes are only allowed to have one edge entering \textemdash
+coming from a node in a previous frame \textemdash and one edge leaving
+\textemdash going to a node in a successive frame. To translate this into a
+constraint, consider the node $i$ and its possible $R$ successive connecting
+nodes $j_{0} \dotsc j_{R-1}$. Define the vector
+\[
+    \boldsymbol{a}^{s,i}_{i + Mj_{r}} \begin{cases}
+        1 & \forall j_{r} \in \left[ j_{0} \dotsc j_{R-1} \right] \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+As all the entries of $\boldsymbol{x}$ are either 0 or 1, we have
+\[
+    0 \leq \left\langle \boldsymbol{a}^{s,i}, \boldsymbol{x} \right\rangle \leq 1
+\]
+so we can make this a constraint to ensure that a node has at most one path
+leaving. Similarly, if we consider the node $j$ and its possible R previous connecting
+nodes $i_{0} \dotsc i_{R-1}$, the vector
+\[
+    \boldsymbol{a}^{p,j}_{i_{r} + Mj} \begin{cases}
+        1 & \forall i_{r} \in \left[ i_{0} \dotsc i_{R-1} \right] \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+constrains that node $j$ have only one path entering through the constraint
+\[
+    0 \leq \left\langle \boldsymbol{a}^{p,j} , \boldsymbol{x} \right\rangle \leq 1
+\]
+A node on a path will also have an edge entering and an edge leaving. To
+translate this into a constraint, we define a vector that counts the number of
+edges entering a node and subtracts then the number of edges leaving a node. The
+result should always be 0. If $r$ is the index of the node considered, the vector is simply
+\[
+    \boldsymbol{a}^{b,r} = \boldsymbol{a}^{p,r} - \boldsymbol{a}^{s,r}
+\]
+and the constraint
+\[
+    \left\langle \boldsymbol{a}^{b,r}, \boldsymbol{x} \right\rangle = 0
+\]
+Finally we want to constrain that there be only $L$ paths. We do this by
+noticing that if this is true, there will be $L$ edges between frames $k$ and
+$k+1$. We constrain the number of paths going from edges
+$\Gamma_{k}$ in frame $k$ to $\Gamma_{k+1}$ by forming the vector
+\[
+    \boldsymbol{a}^{c,k} = \sum_{j \in \Gamma_{k}} \boldsymbol{a}^{s,j}
+\]
+and asserting the constraint
+\[
+    \left\langle \boldsymbol{a}^{c,k} , \boldsymbol{x} \right\rangle = 1
+\]
+The length of $\boldsymbol{x}$ is $M^{2}$ so the total size of all the
+constraints is not insignificant, but most entries in the constraint vectors will
+be 0 and therefore the resulting constraint matrices very sparse, so sparse
+linear algebra routines can be used in computations. Furthermore, the
+$\boldsymbol{a}^{b}$ and $\boldsymbol{a}^{c}$ constraints are derived from
+$\boldsymbol{a}^{p}$ and $\boldsymbol{a}^{s}$, so only the latter need to be
+stored.
+
+The complete \textit{linear program (LP)} solving the $L$ shortest paths problem is then
+\begin{samepage}
+\[
+        \min \boldsymbol{c}^{T}\boldsymbol{x}
+\]
+subject to
+\[
+    \boldsymbol{0} \leq
+    \begin{bmatrix}
+        \boldsymbol{A}_{s} \\
+        \boldsymbol{A}_{p}
+    \end{bmatrix} \boldsymbol{x}
+    \leq \boldsymbol{1}
+\]
+\[
+    \begin{bmatrix}
+        \boldsymbol{A}_{b} \\
+        \boldsymbol{A}_{c}
+    \end{bmatrix}
+    \boldsymbol{x}
+    =
+    \begin{bmatrix}
+        \boldsymbol{0} \\
+        \boldsymbol{1}
+    \end{bmatrix}
+\]
+\[
+    \boldsymbol{0} \leq \boldsymbol{x} \leq \boldsymbol{1}
+\]
+\end{samepage}
+where $\boldsymbol{A}_{s}$ is the matrix with $\boldsymbol{a}^{s,m}$ as its rows
+for $m \in [0 \dotsc M-1]$ and $\boldsymbol{A}_{p}$ is the matrix with
+$\boldsymbol{a}^{p,m}$ as its rows, etc.
+
+\begin{figure}
+    \caption{\label{plot:simple_graph_lp_paths}}
+    \includegraphics[width=\textwidth]{plots/small_graph_ex_lp_paths.eps}
+\end{figure}
+
+The solution of the two best paths using the LP formulation
+is shown in Figure~\ref{plot:simple_graph_lp_paths} and a comparison of the
+total costs is shown in Table~\ref{tab:greedy_lp_cost_compare}
+
+\begin{table}
+    \caption{\label{tab:greedy_lp_cost_compare} Comparison of total costs}
+    \begin{center}
+        \begin{tabular}{c c}
+            Greedy & LP \\
+            \hline
+            \input{plots/small_graph_ex_greedy_cost.txt} &
+            \input{plots/small_graph_ex_lp_cost.txt} \\
+        \end{tabular}
+    \end{center}
+\end{table}
+
+The LP formulation is based on a multiple object tracking algorithm for video
+\cite{jiang2007linear}. A proof that the solution $\boldsymbol{x}^{\ast}$ will
+have entries equal to either $0$ or $1$ can be found in
+\cite[p.~167]{parker1988discrete}. The theoretical computational complexity of
+the linear program is polynomial in the number of variables, see
+\cite{karmarkar1984new} for a proof and the demonstration of a fast algorithm
+for finding its solution. In practice, to extract paths from the solution, we do
+not test equality with $0$ or $1$ but rather test if the solution vector's
+values are greather than some threshold. This may mean that suboptimal solutions
+may still be close enough. The tolerance of the solutions to suboptimality
+should be investigated, as if they are tolerant, fewer iterations of a
+barrier-based algorithm would be required to solve the problem. More information
+on linear programming and optimization in general can be found in
+\cite{boyd2004convex}.
+
+It should be noted that in the special case that only 1 shortest path is
+searched an algorithm exists that requires on the order of $N^{2}T$ calculations
+\cite{rabiner1989tutorial} where $N$ is the number of nodes in each frame and
+$T$ is the number of frames (assuming the same number of nodes in each frame):
+this algorithm is known as the Viterbi algorithm \cite{forney1973viterbi}.
+
+\subsection{Partial paths on example signal\label{sec:mq_lp_compare_chirp}}
+% Add plots of crossing partials
+
+\section{Classification}
+
+If data-points consist of more than two dimensions (say $p$), it becomes
+burdensome to try and find the single best or two best dimensions on which to
+examine for grouping. If we consider variables on each of the dimensions that
+take on the data-point's corresponding values, we are interested in the
+variables that capture most of the data-points's variance. In turns out we can
+determine a linear transformation of our original dataset giving $p$ variables
+and their $p$ variances such that the resulting variable with the highest
+variance will have the maximum variance acheivable, under some constraints that
+will be explained shortly. 
+
+\subsection{Principal components analysis (PCA)}
+
+The following development is based on \cite{jolliffe2002principal}. Say we have
+a set $\left\{ \boldsymbol{x} \right\}$ of data-points and their covariance
+matrix $\boldsymbol{S}$. A linear function of $\boldsymbol{x}$,
+$f_1(\boldsymbol{x})=\boldsymbol{a}_{1}^{T}\boldsymbol{x}$ has variance
+$\sigma_{\boldsymbol{a}_{1}^{T}\boldsymbol{x}}=\boldsymbol{a}_{1}^{T}\boldsymbol{S}\boldsymbol{a}_{1}$.
+Therefore, we desire a vector $a$ that maximizes
+$\sigma_{\boldsymbol{a}_{1}^{T}\boldsymbol{x}}$. We can find this via the program
+\[
+        \max \boldsymbol{a}_{1}^{T}\boldsymbol{S}\boldsymbol{a}_{1}
+\]
+subject to
+\[
+    \boldsymbol{a}_{1}^{T}\boldsymbol{S}\boldsymbol{a}_{1}=1
+\]
+(to obtain a bounded solution).
+
+The resulting function of $\boldsymbol{x}$,
+$f_1(\boldsymbol{x})=\boldsymbol{a}_{1}^{\ast T}\boldsymbol{x}$ is called the first
+\textit{principal component}. The second principal component
+$f_2(\boldsymbol{x})=\boldsymbol{a}_{2}^{\ast T}\boldsymbol{x}$ is found similary
+to the first, except with the additional constraint that it be uncorrelated
+(orthogonal) to the first component, i.e.,
+$\boldsymbol{a}_{2}^{\ast T}\boldsymbol{a}_{1}=0$, and the third is found by
+requiring orthognality with the first two principal components, etc.
+
+The principal components (PCs) now allow us to examine for grouping more easily as the
+total variance of the dataset has been captured in the first few principal component
+variables. These transformed data-points can now be classified using a
+classification algorithm.
+
+Before we continue describing classification techniques we will briefly discuss
+the nature of our classification problem. If accurate and consistent
+measurements of data-points can be made, and a large enough sample of
+data-points is available to train a model, then to predict the classification of
+new points, a function $g=\hat{h} \left( \boldsymbol{x} \right)$ is postulated,
+giving the classification $g$ of a data-point $\boldsymbol{x}$. There are many
+ways to determine $\hat{h}$ based on its assumed form. For example, if it is
+assumed that $h \left( \boldsymbol{x} \right) =
+\boldsymbol{\hat{\beta}}^{T}\boldsymbol{x}$ then a common estimator of
+$\boldsymbol{\hat{\beta}}$, given $\boldsymbol{X}$, a matrix of observations of
+$\boldsymbol{x}$ with the observations as its rows, and the classifications
+$\boldsymbol{y}$, is \cite[p.~12]{friedman2001elements}
+\begin{equation}
+    \label{eq:least_squares}
+    \boldsymbol{\hat{\beta}} = \left( \boldsymbol{X}^{T}\boldsymbol{X}
+    \right)^{-1} \boldsymbol{X}^{T} \boldsymbol{y}
+\end{equation}
+Here we do not have a sample dataset because of the large number of possible
+situations and the difficulty of consistently estimating underlying model
+parameters (see, for example, Section~\ref{sec:mq_lp_compare_chrip}). To automate
+classification we treat the dataset beforehand to increase the robustness of the
+classification algorithm, and allow the algorithm to estimate some
+class memberships. The classification algorithm will give some estimated $\hat{h}$
+as above, but it is doubtful that we would find a situation to use it to
+classify new data-points. In the case that the classification gives a continuous
+variable as in Equation~\ref{eq:least_squares}, thresholding values are
+required to convert $\hat{h} \left( \boldsymbol{x} \right)$ to discrete values.
+Because we would have to choose these values beforehand, this sort of
+classification algorithm is probably not very useful in practice. For this
+reason we opt for classification algorithms that give discrete indicators as
+output, purely as a function of the input dataset. The algorithm we consider is the
+\textit{Gaussian mixture model (GMM)}.
+
+\subsection{Gaussian Mixture Models (GMM)}
+
+Consider the data-points $\boldsymbol{X}$ as realizations of the vector Gaussian
+distributed random variable
+$X$. With a large enough sample and a small enough covariance, we will observe
+realizations of $X$ as a cluster with some mean (centre point) $\boldsymbol{\mu}$ and a shape
+described by the covariance matrix $\boldsymbol{\Sigma}$. If we observe multiple
+clusters this might imply that there are $P$ different distributions each with
+mean $\boldsymbol{\mu}_p$ and covariance matrix $\boldsymbol{\Sigma}_p$ and on each
+iteration one is chosen with probability $w_p$. With $N$ observations
+$\boldsymbol{x}_{n}$ we can estimate, via maximum likelihood, the $P$ sets of
+parameters using a form of the \textit{expectation maximization (EM)} algorithm
+\cite{moon1996expectation}, \cite{dempster1977maximum}, which is an algorithm
+suitable for estimating missing data from known ones. First, define
+\[
+    \mathrm{p} \left( \boldsymbol{x}_{n} | p \right)
+    \doteq
+    \ddfrac{
+        \mathcal{N} \left( \boldsymbol{x}_{n}; \boldsymbol{\mu}^{k}_{p} ,
+        \boldsymbol{\Sigma}^{k}_{p} \right) w^{k}_{p}
+    }{
+        \sum_{l=1}^{P}
+        \mathcal{N} \left( \boldsymbol{x}_{n}; \boldsymbol{\mu}^{k}_{l} ,
+        \boldsymbol{\Sigma}^{k}_{l} \right) w^{k}_{l}
+    }
+\]
+the probability that $\boldsymbol{x}_n$ given distribution $p$ (see
+Appendix~\ref{apdx:gaussian_dist} for the definition of $\mathcal{N} \left(
+\boldsymbol{x} ; \boldsymbol{\mu}^{k} , \boldsymbol{\Sigma}^{k} \right)$). The superscript $k$
+indicates the value of this parameter on iteration $k$. To update $w^{k}_p$:
+\[
+    w^{k+1}_p = \frac{1}{N} \sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n |
+    p \right)
+\]
+which means intuitively that the probability of a data-point having been
+generated by distribution $p$ is the average probability of observing any
+$\boldsymbol{x}_n$ given $p$. To update $\boldsymbol{\mu}^{k+1}_p$:
+\[
+    \boldsymbol{\mu}^{k+1}_p
+    =
+    \ddfrac{\sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n |
+    p \right) \boldsymbol{x}_n }{\sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n |
+    p \right)}
+\]
+which is a weighted mean of all the data-points. Those less likely for a
+given $p$ will weight the mean less and vice versa. A similar computation is
+made for $\boldsymbol{\Sigma}^{k+1}_p$:
+\[
+    \boldsymbol{\Sigma}^{k+1}_p
+    =
+    \ddfrac{\sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
+        \left( \boldsymbol{x}_n - \boldsymbol{\mu}^{k+1}_p \right) \left(
+        \boldsymbol{x}_n - \boldsymbol{\mu}^{k+1}_p \right)^{T}
+    }{
+        \sum_{n=1}^{N} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
+    }
+\]
+The algorithm is halted after some number of iterations or when convergence is
+reached (the parameters change little each iteration). After convergence, the
+classification $p^{\ast}$ of the data-point $\boldsymbol{x}$ is simply
+\[
+    p^{\ast} = \argmax_{p} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
+\]
+
+\section{Partial synthesis}
+
+Once the parameters have been estimated, the partials have been determined, and
+the partials have been grouped into sources, we can now synthesize a single
+source by choosing only those partials belonging to a single source and
+resynthesizing from the parameters in some fashion. A popular technique that is
+straightforward to implement is the \textit{overlap-and-add} procedure
+\cite{portnoff1976implementation}, \cite{moore1990elements}. We assume that in
+the neighbourhood of $\tau_{r}$ the signal is approximately described by the
+function $x(n) \approx f_{\tau_{r}}(n-\tau_{r})$. To synthesize an approximation of $x$
+we sum windowed $f_{\tau_{r}}$ at multiple locations, windowed by a function $w$
+with finite support so
+the resulting signal has finite energy and the piecewise assumption is
+maintained. For simplicity we assume the $\tau_{r}$ are equally spaced by $H$
+samples, and $\tau_{0}=0$, so we have $\tau_{r} = rH$. The length of the window
+function $w$ is $M$ samples. The approximate signal at sample $n$ is then
+\[
+    \tilde{x}(n) = \sum_{l=L_{-}}^{L^{+}} w(n-lH) f_{\tau_l}(n-\tau_l)
+\]
+where
+\[
+    L_{-} = \left\lfloor \frac{n-M}{H} + 1 \right\rfloor
+\]
+and
+\[
+    L_{+} = \left\lfloor \frac{n}{H} \right\rfloor
+\]
+This method has some drawbacks. Usually the function $f$ is an approximation
+$\tilde{f}$ of the true underlying function. In the case of partial tracking,
+often partials that are too short are discarded or missed. At amplitude
+transients, these short partials are important for reproducing sharp attacks
+that are shorter than the window length. If these partials are missing, the
+resulting signal takes on a transient similar to the window shape. This could be
+overcome by choosing a window with a shape similar to the overall amplitude
+envelope in the attack region when resynthesizing an attack transient.
+
+Another drawback is that no attempt is made to interpolate between the functions
+estimated at $\tau_{r}$ and $\tau_{r+1}$. This is what is carried out in
+Section~\ref{sec:mqfmfromphase} and results in a cubic interpolating polynomial
+for phase. From Equation~\ref{eq:ddmsyseq} we know we can estimate a polynomial
+of arbitrary order for phase. We will see that using this additional information
+can give us an interpolating function closer to the underlying model.
