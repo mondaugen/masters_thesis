@@ -122,8 +122,8 @@ compute parameters that correspond to the model of these methods.
 
 The DDM seeks signals $s_k \in \mathbb{C}$ of the following form:
 \begin{equation}
-    s_{k}(n) = \exp(\log(A_{k} + \mu_{k}n + j(\phi_{k} + \omega_{k}n +
-    \frac{1}{2} \psi_{k} n^{2}))) \label{eq:rm_model}
+    s_{k}(n) = \exp(\log(A_{k}) + \alpha_{k}n + j(\phi_{k} + \omega_{k}n +
+    \frac{1}{2} \psi_{k} n^{2})) \label{eq:rm_model}
 \end{equation}
 Here $n$ is the sample number. Typically when performing a short-time analysis,
 the time corresponding to $n = 0$ is made to be the centre of the window,
@@ -132,7 +132,7 @@ is the length of the middle (usually non-zero) portion of the window. The
 coefficents of the $k$th harmonic of the $p$th source from our synthetic model
 are given by
 \begin{equation}
-    \mu_{k,p}(t) = \frac{a_{60,p}}{f_{s}}
+    \alpha_{k,p}(t) = \frac{a_{60,p}}{f_{s}}
 \end{equation}
 \begin{equation}
     A_{k,p}(t) = \exp(a_{60,p} t + a_{k,60,p} k)
@@ -142,7 +142,7 @@ for the part of the signal after the attack portion.
 For the attack portion, we estimate the parameters using least-squares on a
 rectangular-windowed signal. Let
 \begin{equation}
-    \hat{\mathbf{s}}(t) =
+    \hat{\mathbf{s}}_{k,p}(t) =
     \begin{pmatrix}
         \exp \left(\displaystyle a_{60,p} \left( t - \frac{N_{w}}{2f_{s}} \right)  +
         a_{k,60,p} k \right) \cos^{2} \left(\displaystyle \frac{\pi}{2} \left(
@@ -155,7 +155,7 @@ rectangular-windowed signal. Let
         + \frac{N_{w}}{2f_{s}}  }{ t_{\text{attack},p}} - 1 \right) \right)
     \end{pmatrix}
 \end{equation}
-then $\log(A_{k,p})$ and $\mu_{k,p}$ are found as the least-squares solution of
+then $\log(A_{k,p})$ and $\alpha_{k,p}$ are found as the least-squares solution of
 \begin{equation}
     \begin{bmatrix}
         1 & \frac{-N_{w}}{2} \\
@@ -164,9 +164,9 @@ then $\log(A_{k,p})$ and $\mu_{k,p}$ are found as the least-squares solution of
     \end{bmatrix}
     \begin{pmatrix}
         \log(A_{k,p}(t)) \\
-        \mu_{k,p}(t)
+        \alpha_{k,p}(t)
     \end{pmatrix}
-    = \log{\hat{\mathbf{s}}(t)}
+    = \log{\hat{\mathbf{s}}_{k,p}(t)}
 \end{equation}
 
 for the argument parameters (those multiplied by $j$ in Equation~\eqref{eq:rm_model})
@@ -198,8 +198,8 @@ substituting the random variables:
         $\tilde{\Omega}_{k,p}(t) \sim
         \mathcal{N}(\omega_{k,p}(t),\omega_{no})$
     \item
-        $\tilde{\mu}_{k,p}(t) \sim
-        \mathcal{N}(\mu_{k,p}(t),\mu_{no})$
+        $\tilde{\alpha}_{k,p}(t) \sim
+        \mathcal{N}(\alpha_{k,p}(t),\alpha_{no})$
     \item
         $\tilde{A}_{k,p}(t) \sim
         \mathcal{N}(A_{k,p}(t),A_{no})$
@@ -217,22 +217,38 @@ substituting the random variables:
 %        $\tilde{\Phi}_{k,p}(t) =
 %        \tilde{\omega}_{k,p}(t - \Delta t) \Delta t$
 %    \item
-%        $\tilde{\mu}_{k,p}(t) \sim
-%        \mathcal{N}(\mu_{k,p}(t),\mu_{no})$
+%        $\tilde{\alpha}_{k,p}(t) \sim
+%        \mathcal{N}(\alpha_{k,p}(t),\alpha_{no})$
 %    \item
 %        $\tilde{A}_{k,p}(t) \sim
 %        \mathcal{N}(A_{k,p}(t),A_{no})$
 %\end{itemize}
 The $\theta_{no}$ (where $\theta$ is replaced by $\omega$ etc.) specifies the
 variance of the particular parameter. Most-likely in practice these random
-variables would be correlated but we cannot at this point say anything about
-this correlation. Therefore the noisy parameters are uncorrelated random
-variables for this experiment.
+variables would be correlated but not knowing the estimation method, we cannot
+at this point say anything about this correlation. Therefore the noisy
+parameters are uncorrelated random variables for this experiment.
 
-We also add spurious data-points as a fraction $r_{s}$ of the number of true
-data-points. Their values are drawn from uniform distributions with boundaries
-$\theta_{s,min}$ and $\theta_{s,max}$, where $\theta$ is some parameter above,
-e.g., $\omega_{s,min}$ and $\omega_{s,max}$ for the $\omega$ parameter.
+We also add spurious data-points as a fraction $r$ of the number of true
+data-points.  Their values are drawn from uniform distributions with boundaries
+$\theta_{\text{min}}$ and $\theta_{\text{max}}$, where $\theta$ is some
+parameter above, e.g., $\omega_{\text{min}}$ and $\omega_{\text{max}}$ for the
+$\omega$ parameter. For this experiment $r = 0.25$. The parameters of the
+uniformly distributed random variables are given in
+Table~\ref{tab:amfmspuriousuniformparams}.
+
+\begin{table}
+    \caption{Comparison of total costs\label{tab:amfmspuriousuniformparams}}
+    \begin{center}
+        \begin{tabular}{l r r}
+            Parameter & $\theta_{\text{min}}$ & $\theta_{\text{max}}$ \\
+            \hline
+            $\omega$  & $0$ & $\pi$ \\
+            $\psi$    & $-1 \times 10^{-4}$ & $1 \times 10^{-4}$ \\
+            $\alpha$    & $-1 \times 10^{-3}$ & $1 \times 10^{-3}$ \\
+        \end{tabular}
+    \end{center}
+\end{table}
 
 Data points are computed for the times $t = 0,\frac{H}{f_{s}},\frac{2
 H}{f_{s}},\ldots,\frac{\left\lfloor \frac{N}{H} \right\rfloor H}{f_{s}}$.
@@ -244,14 +260,15 @@ now unknown, we replace the $k$ and $p$ indices with index $l$. We only consider
 the amplitude and frequency modulation. According to our model, the frequency
 modulation is greater for harmonics of greater centre frequency. To take this
 into consideration, we divide the frequency modulation estimate $\psi_{l}(t)$ by
-the constant frequency estimate $\omega_{l}(t)$ (see thesis by Creager).  The amplitude modulation
-$\mu_{l}(t)$ remains constant for all harmonics of the same source, only its initial value
+the constant frequency estimate $\omega_{l}(t)$. This is similar to the approach
+taken in \cite{creager2016musicalsource}. The amplitude modulation $\alpha_{l}(t)$
+remains constant for all harmonics of the same source, only its initial value
 changes according to $k_{60,p}$.  We compile the data-points at one time into a
-set of observations
+set of observations.
 \begin{equation}
     \mathbf{x}_{l}(t) = \begin{pmatrix}
         \frac{\psi_{l}(t)}{\omega_{l}(t)} \\
-        \mu_{l}
+        \alpha_{l}
     \end{pmatrix}
 \end{equation}
 \begin{equation}
@@ -260,13 +277,15 @@ set of observations
     \end{bmatrix}
 \end{equation}
 From these $L$ observations the correlation matrix $\mathbf{S}$ is computed. We
-use the correlation matrix because the values in each row of $\mathbf{x}_{l}(t)$ do
-not have the same units (see Jolliffe for a discussion about this). 
+use the correlation matrix because the values in each row of $\mathbf{x}_{l}(t)$
+do not have the same units, see \cite[p.~22]{jolliffe2002principal} for a
+discussion about this. 
 
-Following the standard technique for producing principal components (see
-Jolliffe), we obtain a matrix $\mathbf{V}(t)$ of eigenvectors sorted so that the
-eigenvector corresponding to the largest eigenvalue is in the first column, etc.
-The principal components $\mathbf{A}(t)$ are then computed as
+Following the standard technique for producing principal components
+\cite[p.~11]{jolliffe2002principal}, we obtain a matrix $\mathbf{V}(t)$ of
+eigenvectors sorted so that the eigenvector corresponding to the largest
+eigenvalue is in the first column, etc.  The principal components
+$\mathbf{A}(t)$ are then computed as
 \begin{equation}
     \mathbf{A}(t) = \mathbf{V}^{T}(t)\mathbf{X}(t)
 \end{equation}
@@ -285,11 +304,11 @@ with sufficiently separated means and small enough variances, this separation
 will be most observable in the principal components corresponding to the
 greatest eigenvalues.
 
-\section{Preparing data for clustering}
+\section{Preparing data for clustering \label{sec:amfmseppreparecluster}}
 The Expectation Maximization underlying the Gaussian mixture model parameter
-estimation will only converge to a local maximum (see Dempster et al), therefore, for the best
-results, we compute a good initial guess and remove obvious outliers before
-carrying out the clustering algorithm.
+estimation will only converge to a local maximum (see Dempster et al),
+therefore, for the best results, we compute a good initial guess and remove
+obvious outliers before carrying out the clustering algorithm.
 
 The $a_{1,l}(t)$ are compiled into a histogram of $N_{b}$ bins. The minimum and
 maximum bin boundaries are computed from the maximum and minimum values of
@@ -302,21 +321,23 @@ distribution will lie within this interval if they indeed follow a normal
 distribution). The initial guesses for the weights are simply $\frac{1}{N_{p}}$.
 
 \section{Clustering}
-Gaussian mixture model parameter estimation will be discussed in an appendix of
-this document. After convergence we have an estimated probability
-$p(a_{1,l}(t) \text{ from distribution }p)$. We choose the
-distribution $p$ for each $a_{1,l}(t)$ that gives the highest probability of it
-having occured. The values $\mathbf{x}_{t}(t)$ corresponding to the $a_{1,l}(t)$
-have this same classification. Those sharing the same classification can be
-interpreted as coming from the same source. The figure shows the results of the
-above steps carried out on a mixture of two sources synthesized with the
-following parameters:
+GMM parameter estimation is discussed in Section~\ref{sec:gmm}. After
+convergence we have an estimated probability $p(a_{1,l}(t) \text{ from
+distribution }p)$. We choose the distribution $p$ for each $a_{1,l}(t)$ that
+gives the highest probability of it having occured. The values
+$\mathbf{x}_{t}(t)$ corresponding to the $a_{1,l}(t)$ have this same
+classification. Those sharing the same classification can be interpreted as
+coming from the same source. The figure shows the results of the above steps
+carried out on a mixture of two sources synthesized with the following
+parameters:
 \begin{table}
     \begin{center}
         \begin{tabular}{c c c }
             Parameter & Source 1 value & Source 2 value \\
             \hline
-            $f_{0,p}$ & 261.63 & 277.18 \\
+            $f_{0,p}$ & 261.63 & 277.18 \footnote{These are the fundamental
+            frequencies of a $c_{4}$
+            and $c_{4}^{\sharp}$ respectively.} \\
             $K_{p}$ & 20 & 20 \\
             $k_{60,p}$ & 20 & 20 \\
             $B_{p}$ & 0.001 & 0.001 \\
@@ -324,26 +345,137 @@ following parameters:
             $\phi_{0,f,p}$ & 0 & 0.8 \\
             $t_{60,p}$ & 0.5 & 0.75 \\
             $t_{\text{attack},p}$ & 0.1 & 0.1 \\
-            $A_{f,p}$ & 11.486 & 11.486 \\
+            $A_{f,p}$ & 7.666 & 8.1220 \footnote{These values are found by
+            computing $f_{0,p}2^{1/24}-f_{0,p}$ giving a quarter-tone of
+            frequency modulation centred around the fundamental frequency.} \\
             $f_{f,p}$ & 3 & 2
         \end{tabular}
     \end{center}
 \end{table}
 The length of the signal $N$ is 8000 samples and the anlaysis hop size $H$ is 256
-samples.
+samples. The figures in \ref{sec:amfmsepresults} summarize the results of the
+source separation experiment.
 
 %\begin{figure}
-%    \centering
-%\includegraphics[width=\textwidth,height=\textheight]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
+%    %\centering
+%\includegraphics[width=\textwidth]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
 %\end{figure}
+\section{Results \label{sec:amfmsepresults}}
 
-The data-points are represented as line segments to show the frequency slope.
-Data points classified as coming from the same source are dark blue and cyan,
-respectively.  Data points classified as spurious are in black. Note that the
-classification is done on a frame by frame basis so it could be that data-points
-adjacent in time that seem to come from the same source are in different
-colours. This is to be addressed in the sequel.
-(TODO: how do we choose levels of noise to test against? My current method is to
-multiply the value by a random number drawn from a normal distribution + 1. The amount
-of change is nicely interpretable as a percentage deviating from the original
+\subsection{Results for $\psi_{no} = \omega_{no} = \alpha_{no} = 1
+\times 10^{-3}$ and $A_{no} = 1 \times 10^{-5}$}
+        
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_orig_data}.eps}
+    \caption{Line-segments describing the frequency and frequency modulation
+    of both sources.\label{plot:hsrp_test_7_0.001_0.00001_plot_orig_data}}
+\end{figure}
+
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_orig_spur_data}.eps}
+    \caption{Line-segments describing the frequency and frequency modulation
+        of the original data and the spurious data.
+    \label{plot:hsrp_test_7_0.001_0.00001_plot_orig_spur_data}}
+\end{figure}
+
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_class_pcs}.eps}
+    \caption{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
+        $\sigma_{i}^{0}$ are respectively
+    the initial mean and standard deviation guesses for the EM algorithm fitting
+    the GMM parameters to the $i$th source. These values are also visible on the
+    plot. The spurious points rejected using the process described in
+    Section~\ref{sec:amfmseppreparecluster} are included for comparison. The
+    plot is of a subsection of the analysis to better show the process.
+    \label{plot:hsrp_test_7_0.001_0.00001_plot_class_pcs}}
+\end{figure}
+
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_1_est}.eps}
+    \caption{Line-segments classified as belonging to Source 1. The
+        classification is done on each frame so classifications in consecutive
+        frames may not belong to the same true source. This is because the
+        ordering of the clusters in each frame in
+        Figure~\ref{plot:hsrp_test_7_0.001_0.00001_plot_class_pcs} is not predictible.
+    \label{plot:hsrp_test_7_0.001_0.00001_plot_source_1_est}}
+\end{figure}
+
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_2_est}.eps}
+    \caption{Line-segments classified as belonging to Source 2. See
+        Figure~\ref{plot:hsrp_test_7_0.001_0.00001_plot_source_2_est} for more
+        information.
+    \label{plot:hsrp_test_7_0.001_0.00001_plot_source_2_est}}
+\end{figure}
+
+As seen in Figure~\ref{plot:hsrp_test_7_0.001_0.00001_plot_source_1_est} and
+\ref{plot:hsrp_test_7_0.001_0.00001_plot_source_2_est}, while
+classified well in individual frames, the overall classification does not
+correspond to a single source. We must find a collection of frames with high
+plausibility of belonging to one source. We consider the collections of
+classified data-points corresponding to each source as a node in a lattice. Each
+``frame'' of the lattice contains two nodes, one for each source. A best path
+through the lattice should connect together those nodes belonging to a single
+source. We use the results of
+Section~\ref{sec:lppathsearch} to find the two best paths through this lattice.
+We compare two distance metrics for the cost function.
+
+The first prefers
+smoothness in frequency between two frames. For frame $t$ with initial
+classification $\tilde{p}$ we have frequency measurements
+$\omega_{k,\tilde{p}}^{t}$
+and frequency slope measurements $\psi_{k,\tilde{p}}^{t}$. The set of parameters
+at time $t$ from initially classified source $\tilde{p}$ we will denote
+$\boldsymbol{\theta}_{\tilde{p}}^{t}$. Between frame $t$ and frame $t-1$ we use
+Algorithm~\ref{alg:mq_peak_match} on the pairs $\left\{ \boldsymbol{\theta}_{\tilde{m}}^{t},
+\boldsymbol{\theta}_{\tilde{n}}^{t+1} \right\}$ with $(m,n) \in \{0,1\} \times
+\{0,1\}$. For
+each pair, $L$ is set to $\min(\# \boldsymbol{\theta}_{\tilde{m}}^{t} ,
+\# \boldsymbol{\theta}_{\tilde{n}}^{t+1})$\footnote{Here, the threshold parameter $\Delta
+= \infty$, i.e., a connection of any cost is possible.}. The cost function is the absolute error
+in predicting the frequency in the next frame from parameters in the current
+frame, i.e.,
+\[
+    \mathcal{D}_{f} \left( \theta_{i,\tilde{m}}^{t},
+    \theta_{j,\tilde{n}}^{t+1} \right) = | \omega_{i,\tilde{m}}^{t} +
+    \psi_{i,\tilde{m}}^{t} H - \omega_{j,\tilde{n}}^{t+1} |
+\]
+where $H$ is the
+hop-size in samples between the two frames.
+The second distance metric prefers smoothness in amplitude between two frames.
+It is given as
+\[
+    \mathcal{D}_{a} \left( \theta_{i,\tilde{m}}^{t},
+    \theta_{j,\tilde{n}}^{t+1} \right) = | \log(A_{i,\tilde{m}}^{t}) +
+    \psi_{i,\tilde{m}}^{t} H - \log(A_{j,\tilde{n}}^{t+1}) |
+\].
+We have found the absolute error to
+give better results than the squared error.
+
+The costs of these connections
+are summed over the index pairs $\Gamma_{t}$ to give the entries of the cost
+vector $\boldsymbol{c}$ in the LP
+\[
+    \boldsymbol{c}_{4t + 2m + n} = \sum_{i^{\ast},j^{\ast} \in \Gamma_{t}}
+    \mathcal{D} \left( \theta_{i^{\ast},\tilde{m}}^{t}, \theta_{j^{\ast},\tilde{n}}^{t+1}
+    \right)
+\].
+
+The specification of the constraint matrices is done according to the topology
+of the lattice and the requirement that we find 2 non-overlapping paths (see
+Section~\ref{sec:lppathsearch}). An example of discovered paths is given in
+Figure~\ref{plot:hsrp_test_7_0.001_0.00001_smooth_freq_amp_sol}.
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_smooth_freq_amp_sol}.eps}
+    \caption{The
+    \label{plot:hsrp_test_7_0.001_0.00001_smooth_freq_amp_sol}}
+\end{figure}
+The estimated sources after smoothing in frequency or amplitude are shown in
+Figures~\ref{}
 

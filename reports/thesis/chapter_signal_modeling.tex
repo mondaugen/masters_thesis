@@ -40,11 +40,9 @@ response} from which we can derive many properties of the AR structure.
 As an example take the case where $K=1$ and $a_1 = r \exp(j\omega)$, 
 $r\text{,}\omega \in \mathbb{R}$, $|r|<1$ (recall that $j=\sqrt{-1}$ and is
 called the \textit{imaginary number}). Then the difference equation is
-
 \begin{equation}
     x(n) = r \exp(j\omega) x(n-1) + v(n)
 \end{equation}
-
 Exciting this with the delta function we get
 \begin{equation}
     \begin{array}{c}
@@ -53,7 +51,6 @@ Exciting this with the delta function we get
         x(n) = r^n \exp(j\omega n)
     \end{array}
 \end{equation}
-
 which is a complex exponential starting at $n=0$ and periodic in
 $n_T=\frac{2\pi}{\omega}$ multiplied by the real-valued
 exponential $r^n$. In other words, the output is a damped exponential. From this
@@ -111,8 +108,9 @@ signals are not linear combinations of sinusoids of constant frequency
 (consider, for example, vibrato). We could decide to project onto a different
 family of functions and considerable effort has been devoted to finding
 alternatives (see \cite{kereliuk2011sparse} for a review). In the case of
-musical signals, however, we have some prior information and can make certain
-assumptions about the underlying functions.
+musical signals, however, we have some prior information about the mechanics of
+the their production and can make certain assumptions about the underlying
+functions.
 
 \subsection{Sinusoidal Representations}
 \label{sec:mqfmfromphase}
@@ -323,7 +321,7 @@ With $M=2$ and $a_0 = a_1 = 0.5$, we have the Hann window. The
 these windows, optimization techniques were used to search for coefficients
 giving optimum properties, such as minimum height of the highest side-lobe
 (maximum out-of-band rejection) \cite{rabiner1970approach}. The 4-term window
-whose coefficients $a$ are listed in table~\ref{tab:optblackman} has a maximum
+whose coefficients $a$ are listed in Table~\ref{tab:optblackman} has a maximum
 side-lobe level of 92 dB, lower than the quantization noise of a 16-bit linear
 pulse code modulated signal. This window has a very large main-lobe which means
 two sinusoids of similar frequency will be difficult to resolve. Furthermore,
@@ -410,23 +408,23 @@ can be sensitive to spurious peaks.
 Typically the DTSTFT is computed for a block of contiguous samples, called a
 \textit{frame} and these frames are computed every $H$ samples, $H$ being the
 \textit{hop-size}. Consider the parameters of local maxima in adjacent frames
-$k$ and $k+1$ with $M$ maxima in frame $k$ and $N$ maxima in frame $k+1$. In
+$t$ and $t+1$ with $M$ maxima in frame $t$ and $N$ maxima in frame $t+1$. In
 \cite{mcaulay1986speech}  the parameters are the instantaneous amplitude, phase
-and frequency and are indexed by frequency as $\omega_0^{k}, \dotsc,
-\omega_{M-1}^{k}$ and $\omega_0^{k+1}, \dotsc, \omega_{N-1}^{k+1}$, but here we
-allow for an arbitrary set of parameters $\theta_0^{k}, \dotsc,
-\theta_{M-1}^{k}$ and $\theta_0^{k+1}, \dotsc,
-\theta_{N-1}^{k+1}$, such as the coefficients of a phase polynomial. Define a
+and frequency and are indexed by frequency as $\omega_0^{t}, \dotsc,
+\omega_{M-1}^{t}$ and $\omega_0^{t+1}, \dotsc, \omega_{N-1}^{t+1}$, but here we
+allow for an arbitrary set of parameters $\theta_0^{t}, \dotsc,
+\theta_{M-1}^{t}$ and $\theta_0^{t+1}, \dotsc,
+\theta_{N-1}^{t+1}$, such as the coefficients of a phase polynomial. Define a
 distance function $\mathcal{D} \left( \theta_{i},\theta_{j} \right)$ that computes the
 similarity between two sets of parameters. We will now consider a method that
 finds $L$ pairs of parameters that are closest.
 
 We compute the cost matrix $C$
 \[
-    C = \theta^{k} \otimes_{\mathcal{D}} \theta^{k+1}
+    C = \theta^{t} \otimes_{\mathcal{D}} \theta^{t+1}
 \]
 so that the $i$th row and $j$th column contain $C_{i,j} = \mathcal{D} \left(
-\theta_{i}^{k},\theta_{j}^{k+1} \right)$.  For each $l \in \left[0 \dotsc L-1
+\theta_{i}^{t},\theta_{j}^{t+1} \right)$.  For each $l \in \left[0 \dotsc L-1
 \right]$, find the indices $i_{l}$ and $j_{l}$ corresponding to the shortest
 distance, then remove the $i_{l}$th row and $j_{l}$th column from consideration
 and continue until $L$ pairs have been determined or the distances exceed some
@@ -465,12 +463,12 @@ with $K$. Nevertheless, the method is simple to implement, computationally
 negligble, and works well with a variety of signals encountered in audio
 \cite{mcaulay1986speech} \cite{smith1987parshl}.
 
-\subsection{An Optimal Method}
+\subsection{An Optimal Method \label{sec:lppathsearch}}
 
 There is a way to find a set of paths over multiple frames ($K > 2$) having the
 lowest total cost if
 we restrict the search to exactly $L$ paths. Instead of indexing parameters by
-their frame number $k$, we make $k$ part of the parameter set so that it can be
+their frame number $t$, we make $t$ part of the parameter set so that it can be
 used by the distance function $\mathcal{D}$. Assume that over $K$ frames there
 are $M$ total parameter sets. We define the vector $\boldsymbol{c} \in \mathbb{R}^{M^2}$
 where the entry $\boldsymbol{c}_{i + Mj} = \mathcal{D} \left( \theta_{i}, \theta_{j}
@@ -494,13 +492,13 @@ partial tracking problem? Let us consider an example.
 
 In Figure~\ref{plot:simple_graph} we have an example of a simple graph or
 lattice. The numbers are indices of nodes in the graph and the possible
-connections between them are indicated by lines, or \textit{edges}. We would like to find the two
-shortest paths based on different criteria. In
+connections between them are indicated by lines, or \textit{edges}. We would
+like to find the two shortest paths based on different criteria. In
 Figure~\ref{plot:simple_graph_greedy_paths} we find the paths using an algorithm
-similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a tensor
-of distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry $C_{i,j,k}$
+similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a tensor of
+distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry $C_{i,j,t}$
 represents the cost of travelling on the path connecting the $i$th node in layer
-0, the $j$th node in layer 1 and the $k$th node in layer 2. This is the greedy
+0, the $j$th node in layer 1 and the $t$th node in layer 2. This is the greedy
 method of searching for the best paths whose optimality criterion is to find the
 set of best paths containing the absolute best path. We see in
 Figure~\ref{plot:simple_graph_greedy_paths} that the absolute shortest path, $1
@@ -562,15 +560,15 @@ and the constraint
     \left\langle \boldsymbol{a}^{b,r}, \boldsymbol{x} \right\rangle = 0
 \]
 Finally we want to constrain that there be only $L$ paths. We do this by
-noticing that if this is true, there will be $L$ edges between frames $k$ and
-$k+1$. We constrain the number of paths going from edges
-$\Gamma_{k}$ in frame $k$ to $\Gamma_{k+1}$ by forming the vector
+noticing that if this is true, there will be $L$ edges between frames $t$ and
+$t+1$. We constrain the number of paths going from edges
+$\Gamma_{t}$ in frame $t$ to $\Gamma_{t+1}$ by forming the vector
 \[
-    \boldsymbol{a}^{c,k} = \sum_{j \in \Gamma_{k}} \boldsymbol{a}^{s,j}
+    \boldsymbol{a}^{c,t} = \sum_{j \in \Gamma_{t}} \boldsymbol{a}^{s,j}
 \]
 and asserting the constraint
 \[
-    \left\langle \boldsymbol{a}^{c,k} , \boldsymbol{x} \right\rangle = 1
+    \left\langle \boldsymbol{a}^{c,t} , \boldsymbol{x} \right\rangle = 1
 \]
 The length of $\boldsymbol{x}$ is $M^{2}$ so the total size of all the
 constraints is not insignificant, but most entries in the constraint vectors will
@@ -656,6 +654,27 @@ searched an algorithm exists that requires on the order of $N^{2}T$ calculations
 $T$ is the number of frames (assuming the same number of nodes in each frame):
 this algorithm is known as the Viterbi algorithm \cite{forney1973viterbi}.
 
+The LP formulation of the $L$-best paths problem gives results equivalent to the
+solution to the $L$-best paths problem proposed in \cite{wolf1989finding}. The
+complexity of our algorithm is different from that in this paper, however.
+Assuming we use the algorithm in \cite{karmarkar1984new} to solve the LP, our
+program has a complexity of $O(M^{7}B^{2})$ where $M$ is the number of nodes
+(parameter sets) and $B$ is the number of bits used to represent each number in
+the input. The complexity of the algorithm in \cite{wolf1989finding} is
+equivalent to the Viterbi algorithm for finding the single best path through a
+trellis whose $t$th frame has $\binom{N_{t}}{L}\binom{N_{t+1}}{L}L!$ where $N_{t}$
+and $N_{t+1}$ are the number of nodes in two consecutive frames of the original
+lattice. Therefore, assuming a constant number $N$ of nodes in each frame, its
+complexity is $O((\binom{N}{L}^{2}L!)^{2}T)$. If there
+are few nodes in each frame and a small number of paths are searched, the
+Viterbi formulation is superior as its complexity increases linearly with the
+number of frames in the lattice. On the other hand, if each frame has a large
+number of nodes or many paths are searched, the LP formulation is superior.
+Informally we have found this to agree with reality -- both algorithms were
+tried when producing the figures in Section~\ref{sec:mq_lp_compare_chirp}.
+Indeed the Viterbi formulation took prohibitvely long to compute when many paths
+were desired, as did the LP when many frames were considered.
+
 \subsection{Partial paths on example signal\label{sec:mq_lp_compare_chirp}}
 % Add plots of crossing partials
 
@@ -736,7 +755,7 @@ reason we opt for classification algorithms that give discrete indicators as
 output, purely as a function of the input dataset. The algorithm we consider is the
 \textit{Gaussian mixture model (GMM)}.
 
-\subsection{Gaussian Mixture Models (GMM)}
+\subsection{Gaussian Mixture Models (GMM) \label{sec:gmm}}
 
 Consider the data-points $\boldsymbol{X}$ as realizations of the vector Gaussian
 distributed random variable
