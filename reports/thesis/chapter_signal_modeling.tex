@@ -327,7 +327,7 @@ pulse code modulated signal. This window has a very large main-lobe which means
 two sinusoids of similar frequency will be difficult to resolve. Furthermore,
 the window has a discontinuity at its boundaries, e.g.,
 $w \left( \frac{N}{2} \right) \neq 0$ and is not once-differentiable. In any
-case the window is valuble in that it essentially nulls any influence of signals
+case the window is valuble in that it effectively nulls any influence of signals
 outside of a bandwidth of interest.
 
 To find a window with properties similar to the 4-term Blackman-Harris window
@@ -408,23 +408,23 @@ can be sensitive to spurious peaks.
 Typically the DTSTFT is computed for a block of contiguous samples, called a
 \textit{frame} and these frames are computed every $H$ samples, $H$ being the
 \textit{hop-size}. Consider the parameters of local maxima in adjacent frames
-$t$ and $t+1$ with $M$ maxima in frame $t$ and $N$ maxima in frame $t+1$. In
+$h$ and $h+1$ with $M$ maxima in frame $h$ and $N$ maxima in frame $h+1$. In
 \cite{mcaulay1986speech}  the parameters are the instantaneous amplitude, phase
-and frequency and are indexed by frequency as $\omega_0^{t}, \dotsc,
-\omega_{M-1}^{t}$ and $\omega_0^{t+1}, \dotsc, \omega_{N-1}^{t+1}$, but here we
-allow for an arbitrary set of parameters $\theta_0^{t}, \dotsc,
-\theta_{M-1}^{t}$ and $\theta_0^{t+1}, \dotsc,
-\theta_{N-1}^{t+1}$, such as the coefficients of a phase polynomial. Define a
+and frequency and are indexed by frequency as $\omega_0^{h}, \dotsc,
+\omega_{M-1}^{h}$ and $\omega_0^{h+1}, \dotsc, \omega_{N-1}^{h+1}$, but here we
+allow for an arbitrary set of parameters $\theta_0^{h}, \dotsc,
+\theta_{M-1}^{h}$ and $\theta_0^{h+1}, \dotsc,
+\theta_{N-1}^{h+1}$, such as the coefficients of a phase polynomial. Define a
 distance function $\mathcal{D} \left( \theta_{i},\theta_{j} \right)$ that computes the
 similarity between two sets of parameters. We will now consider a method that
 finds $L$ pairs of parameters that are closest.
 
 We compute the cost matrix $C$
 \[
-    C = \theta^{t} \otimes_{\mathcal{D}} \theta^{t+1}
+    C = \theta^{h} \otimes_{\mathcal{D}} \theta^{h+1}
 \]
 so that the $i$th row and $j$th column contain $C_{i,j} = \mathcal{D} \left(
-\theta_{i}^{t},\theta_{j}^{t+1} \right)$.  For each $l \in \left[0 \dotsc L-1
+\theta_{i}^{h},\theta_{j}^{h+1} \right)$.  For each $l \in \left[0 \dotsc L-1
 \right]$, find the indices $i_{l}$ and $j_{l}$ corresponding to the shortest
 distance, then remove the $i_{l}$th row and $j_{l}$th column from consideration
 and continue until $L$ pairs have been determined or the distances exceed some
@@ -458,17 +458,17 @@ costs.
 Another drawback of the algorithm is that it only works between two sucessive
 frames. The cost function could be extended to consider $K$ sets of parameters,
 constructing an $K$-dimensional tensor instead of a matrix, but assuming equal
-numbers of parameter sets in all frames, the search space would grow exponentially
-with $K$. Nevertheless, the method is simple to implement, computationally
-negligble, and works well with a variety of signals encountered in audio
-\cite{mcaulay1986speech} \cite{smith1987parshl}.
+numbers of parameter sets in all frames, the search space would grow
+exponentially with $K$. Nevertheless, the method is simple to implement,
+computationally negligble when $K$ is small, and works well with a variety of
+signals encountered in audio \cite{mcaulay1986speech} \cite{smith1987parshl}.
 
 \subsection{An Optimal Method \label{sec:lppathsearch}}
 
 There is a way to find a set of paths over multiple frames ($K > 2$) having the
 lowest total cost if
 we restrict the search to exactly $L$ paths. Instead of indexing parameters by
-their frame number $t$, we make $t$ part of the parameter set so that it can be
+their frame number $h$, we make $h$ part of the parameter set so that it can be
 used by the distance function $\mathcal{D}$. Assume that over $K$ frames there
 are $M$ total parameter sets. We define the vector $\boldsymbol{c} \in \mathbb{R}^{M^2}$
 where the entry $\boldsymbol{c}_{i + Mj} = \mathcal{D} \left( \theta_{i}, \theta_{j}
@@ -496,9 +496,9 @@ connections between them are indicated by lines, or \textit{edges}. We would
 like to find the two shortest paths based on different criteria. In
 Figure~\ref{plot:simple_graph_greedy_paths} we find the paths using an algorithm
 similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a tensor of
-distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry $C_{i,j,t}$
+distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry $C_{i,j,h}$
 represents the cost of travelling on the path connecting the $i$th node in layer
-0, the $j$th node in layer 1 and the $t$th node in layer 2. This is the greedy
+0, the $j$th node in layer 1 and the $h$th node in layer 2. This is the greedy
 method of searching for the best paths whose optimality criterion is to find the
 set of best paths containing the absolute best path. We see in
 Figure~\ref{plot:simple_graph_greedy_paths} that the absolute shortest path, $1
@@ -560,15 +560,15 @@ and the constraint
     \left\langle \boldsymbol{a}^{b,r}, \boldsymbol{x} \right\rangle = 0
 \]
 Finally we want to constrain that there be only $L$ paths. We do this by
-noticing that if this is true, there will be $L$ edges between frames $t$ and
-$t+1$. We constrain the number of paths going from edges
-$\Gamma_{t}$ in frame $t$ to $\Gamma_{t+1}$ by forming the vector
+noticing that if this is true, there will be $L$ edges between frames $h$ and
+$h+1$. We constrain the number of paths going from edges
+$\Gamma_{h}$ in frame $h$ to $\Gamma_{h+1}$ by forming the vector
 \[
-    \boldsymbol{a}^{c,t} = \sum_{j \in \Gamma_{t}} \boldsymbol{a}^{s,j}
+    \boldsymbol{a}^{c,h} = \sum_{j \in \Gamma_{h}} \boldsymbol{a}^{s,j}
 \]
 and asserting the constraint
 \[
-    \left\langle \boldsymbol{a}^{c,t} , \boldsymbol{x} \right\rangle = 1
+    \left\langle \boldsymbol{a}^{c,h} , \boldsymbol{x} \right\rangle = 1
 \]
 The length of $\boldsymbol{x}$ is $M^{2}$ so the total size of all the
 constraints is not insignificant, but most entries in the constraint vectors will
@@ -662,8 +662,8 @@ program has a complexity of $O(M^{7}B^{2})$ where $M$ is the number of nodes
 (parameter sets) and $B$ is the number of bits used to represent each number in
 the input. The complexity of the algorithm in \cite{wolf1989finding} is
 equivalent to the Viterbi algorithm for finding the single best path through a
-trellis whose $t$th frame has $\binom{N_{t}}{L}\binom{N_{t+1}}{L}L!$ where $N_{t}$
-and $N_{t+1}$ are the number of nodes in two consecutive frames of the original
+trellis whose $h$th frame has $\binom{N_{h}}{L}\binom{N_{h+1}}{L}L!$ where $N_{h}$
+and $N_{h+1}$ are the number of nodes in two consecutive frames of the original
 lattice. Therefore, assuming a constant number $N$ of nodes in each frame, its
 complexity is $O((\binom{N}{L}^{2}L!)^{2}T)$. If there
 are few nodes in each frame and a small number of paths are searched, the
@@ -676,7 +676,95 @@ Indeed the Viterbi formulation took prohibitvely long to compute when many paths
 were desired, as did the LP when many frames were considered.
 
 \subsection{Partial paths on example signal\label{sec:mq_lp_compare_chirp}}
-% Add plots of crossing partials
+
+We compare the greedy and LP based methods for peak matching on a synthetic
+signal. The signal is composed of $K=6$ chirps of constant amplitude, the $k$th
+chirp $s$ at sample $n$ described by the equation
+\[
+    s_{k}(n) = \exp(j(\phi_{k} + \omega_{k}n +
+    \frac{1}{2} \psi_{k} n^{2}))
+\]
+The parameters for the 6 chirps are presented in
+Table~\ref{tab:ptrackexamplechirpparams}.
+\begin{table}
+    \caption{Parameters of $k$th chirp. $f_{0}$ and $f_{1}$ are the initial and
+    final frequncy of the chirp in Hz. \label{tab:ptrackexamplechirpparams}}
+    \begin{center}
+        \begin{tabular}{l c c c c c}
+            $k$ & $\phi_{k}$ & $\omega_{k}$ & $\psi_{k}$ & $f_{0}$ & $f_{1}$ \\
+            \hline
+            \input{plots/mq_lp_compare_chirp_params.txt}
+        \end{tabular}
+    \end{center}
+\end{table}
+
+A 1 second long signal is synthesized at a sampling rate of 16000 Hz. We add
+Gaussian distributed white noise at several SNR to evalute the technique.
+
+A spectrogram of the signal is computed with an analysis window length of 1024
+samples and a hop-size $H$ of 256 samples. Local maxima are searched in 150 Hz
+wide bands space 75 Hz apart. A local maximum is only accepted if its amplitude
+is greater than -20 dB. At each local maximum the DDM is used to estimate the
+local chirp parameters, the $i$th set of parameters in frame $h$ denoted
+$\theta_{i}^{h} = \left\{ \phi_{i}^{h} , \omega_{i}^{h} , \psi_{i}^{h} \right\}$.
+
+We search for partial tracks using both the greedy and LP strategies. Both
+algorithms use the distance metric $\mathcal{D}$ between two parameters sets:
+\[
+    \mathcal{D} \left( \theta_{i}^{h},
+    \theta_{j,}^{h+1} \right) = \left( \omega_{i}^{h} +
+    \psi_{i}^{h} H - \omega_{j}^{h+1} \right)
+\]
+For the greedy method, the search for partial paths is restricted to one frame
+ahead like in \cite{mcaulay1986speech}. For the LP method, to keep the
+computation time reasonable, we search over 6 frames for 6 best
+paths\footnote{The number of paths does not affect the computation time}. To
+maintain connected paths, the search on the next frames uses the end nodes of
+the last search as starting points. For both methods, the search is restricted
+to nodes between frequencies 250 to 2250 Hz.
+
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_20.eps}
+    \caption{ Line-segments representing the discovered partial paths.
+    \label{plot:mq_lp_compare_chirp_20}}
+\end{figure}
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_15.eps}
+    \caption{ Line-segments representing the discovered partial paths.
+    \label{plot:mq_lp_compare_chirp_15}}
+\end{figure}
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_10.eps}
+    \caption{ Line-segments representing the discovered partial paths.
+    \label{plot:mq_lp_compare_chirp_10}}
+\end{figure}
+%\begin{figure}
+%    %\centering
+%    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_20.eps}
+%    \caption{ Line-segments representing the discovered partial paths.
+%    \label{plot:mq_lp_compare_chirp_hint20}}
+%\end{figure}
+%\begin{figure}
+%    %\centering
+%    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_15.eps}
+%    \caption{ Line-segments representing the discovered partial paths.
+%    \label{plot:mq_lp_compare_chirp_hint15}}
+%\end{figure}
+Figures~\ref{plot:mq_lp_compare_chirp_10},~\ref{plot:mq_lp_compare_chirp_15}~and~\ref{plot:mq_lp_compare_chirp_20}
+show discovered partial trajectories for signals with SNR of 10, 15 and 20 dB
+respectively. We can see that while the greedy method begins to perform poorly
+at an SNR of 15dB, the LP method still gives plausible partial trajectories for
+SNRs of 10 and 15 dB.
+% Could also try and maximize smoothness of trajectories by adding second order
+% differences as a cost.
+
+%As a further test, we give the algorithms a hint by
+%removing all spurious data-points from the first frame. We can see in
+%Figures~\ref{plot:mq_lp_compare_chirp_hint15}~and~\ref{plot:mq_lp_compare_chirp_hint20}
+%that this improves the results for the LP method.
 
 \section{Classification}
 
@@ -819,7 +907,7 @@ classification $p^{\ast}$ of the data-point $\boldsymbol{x}$ is simply
     p^{\ast} = \argmax_{p} \mathrm{p} \left( \boldsymbol{x}_n | p \right)
 \]
 
-\section{Partial synthesis}
+\section{Partial synthesis \label{sec:partialsynthesis}}
 
 Once the parameters have been estimated, the partials have been determined, and
 the partials have been grouped into sources, we can now synthesize a single
