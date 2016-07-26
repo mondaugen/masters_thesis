@@ -59,7 +59,7 @@ the $P$ underlying sources, it is proposed
 that the distribution is actually the distribution of $K$ random variables each
 being chosen with probability $\mathrm{p}(Z=k)$. The pair of random variables
 from component $k$, $T_{k}$ and $F_{k}$ are assumed independent, i.e.,
-$\mathrm{p}_(t,f|Z=k)=\mathrm{p}_(t|Z=k)\mathrm{p}_(f|Z=k)$. Each random variable, it is
+$\mathrm{p}(t,f|Z=k)=\mathrm{p}(t|Z=k)\mathrm{p}(f|Z=k)$. Each random variable, it is
 hoped, describes a source ($K=P$) or a part of a source ($K>P$). In addition,
 each of these underlying distributions has marginal distributions $\mathrm{p}(t
 | Z=k)$ and $\mathrm{p}(f | Z=k)$. The marginal distributions and
@@ -82,7 +82,7 @@ algorithm \cite{smaragdis2006probabilistic}
 \[
     \mathrm{p}_{l+1}(f|Z=k)
     =
-    \frac{\sum_{f}\mathrm{p}(t,f)\mathrm{p}_{l+1}(Z=k|t,f)}
+    \frac{\sum_{t}\mathrm{p}(t,f)\mathrm{p}_{l+1}(Z=k|t,f)}
     {\sum_{t}\sum_{g}\mathrm{p}(t,g)\mathrm{p}_{l+1}(Z=k|t,g)}
 \]
 \[
@@ -98,10 +98,11 @@ set of components $\{ \tilde{k} \}$ belonging to the $p$th source has been
 determined, we can synthesize the spectrogram of this source as
 \[
     \boldsymbol{X}_{p}(t,f) = \frac{1}{c}
-    \sum_{j \in \{\tilde{k}\}}\mathrm{p}_(t,f|Z=j)\mathrm{p}_(Z=j)
+    \sum_{j \in
+    \{\tilde{k}\}}\mathrm{p}_{l^{\ast}}(t,f|Z=j)\mathrm{p}_{l^{\ast}}(Z=j)
 \]
 
-\section{NMF}
+\subsection{NMF}
 
 Instead of considering $\boldsymbol{X}(t,f)$ as a probability distribution, we
 consider it at discrete frequencies $mc_{f}$ and times $nc_{t}$ with $m,n \in
@@ -131,9 +132,9 @@ The particular choice of function $\mathcal(D)$ that measures divergence leads
 to different update equations in the iterative procedure for finding
 $\boldsymbol{W}$ and $\boldsymbol{H}$.
 
-\subsubsection{The Kullbach-Leibler divergence \cite{lee2001algorithms}}
+\subsubsection{The Kullback-Leibler divergence \cite{lee2001algorithms}}
 
-The \textit{Kullbach-Leibler} divergence function
+The \textit{Kullback-Leibler} divergence function
 \[
     \mathcal{D}_{\text{KL}} =
     \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} V_{m,n}\log((WH)_{m,n})-(WH)_{m,n}
@@ -141,13 +142,13 @@ The \textit{Kullbach-Leibler} divergence function
 can be minimzed using the following update equations for the $l$th iteration
 \[
     H_{a,b}^{l+1} =
-    H_{a,b}^{l} \frac{\sum{j=0}^{M-1}W_{j,a}^{l}V_{j,b}^{l} / (W^{l}H^{l})_{j,m}}
-    {\sum{j=0}^{M-1}W_{j,a}^{l}}
+    H_{a,b}^{l} \frac{\sum_{j=0}^{M-1}W_{j,a}^{l}V_{j,b}^{l} / (W^{l}H^{l})_{j,m}}
+    {\sum_{j=0}^{M-1}W_{j,a}^{l}}
     W_{a,b}^{l+1} =
-    W_{a,b}^{l} \frac{\sum{j=0}^{N-1}H_{b,j}^{l+1}V_{a,j}^{l} / (W^{l}H^{l+1})_{a,j}}
-    {\sum{j=0}^{N-1}H_{b,j}^{l+1}}
+    W_{a,b}^{l} \frac{\sum_{j=0}^{N-1}H_{b,j}^{l+1}V_{a,j}^{l} / (W^{l}H^{l+1})_{a,j}}
+    {\sum_{j=0}^{N-1}H_{b,j}^{l+1}}
 \]
-It can be shown that these update equations are equivalent to those for PCLA
+It can be shown that these update equations are equivalent to those for PLCA 
 \cite{shashanka2008probabilistic}.
 
 \subsubsection{The Itakura-Saito divergence \cite{fevotte2009nonnegative}}
@@ -170,15 +171,15 @@ The Itakura-Saito divergence is minimized through the following update equations
     \boldsymbol{H}^{l+1}
     =
     \boldsymbol{H}^{l}.
-    \frac{\boldsymbol{W}^{lT}((\boldsymbol{W}^{l}\boldsymbol{H}^{l})^{.-2}.\boldsymbol{V}^{l}})
-    {\boldsymbol{W}^{l}^{T}(\boldsymbol{W}^{l}\boldsymbol{H}^{l})^{.-1}}
+    \frac{\boldsymbol{W}^{lT}((\boldsymbol{W}^{l}\boldsymbol{H}^{l})^{.-2}.\boldsymbol{V}^{l})}
+    {\boldsymbol{W}^{lT}(\boldsymbol{W}^{l}\boldsymbol{H}^{l})^{.-1}}
 \]
 \[
     \boldsymbol{W}^{l+1}
     =
     \boldsymbol{W}^{l}.
-    \frac{((\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-2}.\boldsymbol{V}^{l}})\boldsymbol{H}^{l+1T}
-    {(\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-1}\boldsymbol{H}^{l+1}^{T}}
+    \frac{((\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-2}.\boldsymbol{V}^{l})\boldsymbol{H}^{l+1T}}
+    {(\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-1}\boldsymbol{H}^{l+1T}}
 \]
 Once convergence has been obtained the $k$th column of matrix $W$ will contain
 values representing the level of activation of the $k$th component at the
@@ -187,7 +188,7 @@ activation of the $k$th component at the time corresponding to the column index.
 If the set of components $\{ \tilde{k} \}$ belonging to the $p$th source has
 been determined, we can synthesize the spectrogram of this source as
 \[
-    \boldsymbol{X}_{p}(nc_{t},mc_{f}) =
+    \boldsymbol{X}_{p}(c_{t}n,c_{f}m) =
     \sum_{j \in \{\tilde{k}\}}W_{,j}H_{j,}
 \]
  

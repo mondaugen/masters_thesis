@@ -757,7 +757,23 @@ Figures~\ref{plot:mq_lp_compare_chirp_10},~\ref{plot:mq_lp_compare_chirp_15}~and
 show discovered partial trajectories for signals with SNR of 10, 15 and 20 dB
 respectively. We can see that while the greedy method begins to perform poorly
 at an SNR of 15dB, the LP method still gives plausible partial trajectories for
-SNRs of 10 and 15 dB.
+SNRs of 10 and 15 dB. At lower signal to noise ratios, the LP formulation gives
+some paths that do not correspond to an underlying partial. These could be filtered
+out by examining the cost of these paths and comparing them to the costs of the
+others. Those that deviate from a mean cost more than a certain amount should be
+rejected. This is the strategy used in Chapter~\ref{chap:decaysep} and
+illustrated in Figure~\ref{plot:acgtra3xylofs4costlengththresh}.
+
+But why did the LP discover a path that wasn't existent in the underlying
+signal? This is due to the cost function, which finds a path with minimum
+prediction error in using the frequency and frequency slope coefficients of one
+node to predict another node's frequency coefficient. When there are many nodes
+in the original analysis it is not surprising that some unexpected path exists.
+An attribute of these erroneous paths is that they are not smooth. To deter the
+algorithm from finding such paths, regularization could be used like in
+Section~\ref{sec:mqfmfromphase} that minimizes the integral of the squared
+estimate of the path's second derivative. More on regularization in optimization
+can be found in \cite[ch.~6.3]{boyd2004convex}.
 % Could also try and maximize smoothness of trajectories by adding second order
 % differences as a cost.
 
