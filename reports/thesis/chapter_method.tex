@@ -1,4 +1,213 @@
 \chapter{Methodology}
+
+\section{Previous work on auditory source separation}
+
+As this thesis is primarily concerned with musical signals, it would not be
+relevant to give an overview of all audio source separation techniques presented
+in the literature. The following is a brief overview of those applicable to
+musical signals.
+
+\section{Multiple fundamental frequency estimation}
+
+This technique assumes the signal considered can be described in a format akin
+to the musical score --- a collection of notes each with times indexing their
+beginning and end and a frequency, the fundamental, describing the perveived
+pitch of the note. Multiple fundamental frequency estimation for the purposes of music
+transcription dates back to the 1970s \cite[ch.~20]{havelock2008handbook}
+\cite{moorer1977transcription}. This
+is related to audio source separation because the resulting high-level
+representation --- the estimated score --- can be used to synthesize signals
+corresponding to subsets of
+notes in the score, e.g., if a particular instrument is desired, its notes are
+extracted and then a signal is synthesized using stored recordings of the
+instrument or instrument-modeling synthesis techniques. The technique has become
+quite developed, see \cite[ch.~20]{havelock2008handbook} for a review of
+modern techniques.
+
+There are some drawbacks to the technique. Many musical signals of interest such
+as unpitched percussion, do not always have a perceiveable fundamental
+frequency. A musical score describes notes as having distinct boundaries in time
+and frequency, which is not always true when one considers
+musical gestures such as portamento or \textit{dal niente}\footnote{``Out of
+    nothing'': usually accompanying a crescendo and indicating that the player
+start from silence and gradually increase their playing dynamic.}. Nevertheless,
+the production of even a crude score from a musical signals is useful in
+applications such as automated music transcription (e.g.,
+\cite{ryynanen2008automatic}) or music catalogue query
+\cite{mcnab1996towards}.
+
+\section{Principal latent component analysis (PLCA) and non-negative matrix
+factorizations (NMF)}
+
+The power spectrum of a signal and consequently its spectrogram are always
+non-negative valued. If a signal is considered as consisting of a sum of
+original source signals, these source signals will have non-negative
+spectrograms as well. The following two techniques attempt to determine these
+spectrograms solely from a spectrogram of their mixture.
+
+\subsection{PLCA}
+
+In this formulation, the spectrogram, being non-negative like a probability
+distribution, is considered as such
+\[
+    c\boldsymbol{X}(t,f) = \mathrm{p} (t,f)
+\]
+where c is a constant so that the distrubution integrate to 1. Explicitly,
+we consider the probability that energy in the spectrogram lie in the vicinity
+of time $t$ and frequency $f$. With the hope of retrieving the spectrograms of
+the $P$ underlying sources, it is proposed
+that the distribution is actually the distribution of $K$ random variables each
+being chosen with probability $\mathrm{p}(Z=k)$. The pair of random variables
+from component $k$, $T_{k}$ and $F_{k}$ are assumed independent, i.e.,
+$\mathrm{p}_(t,f|Z=k)=\mathrm{p}_(t|Z=k)\mathrm{p}_(f|Z=k)$. Each random variable, it is
+hoped, describes a source ($K=P$) or a part of a source ($K>P$). In addition,
+each of these underlying distributions has marginal distributions $\mathrm{p}(t
+| Z=k)$ and $\mathrm{p}(f | Z=k)$. The marginal distributions and
+$\mathrm{p}(Z=k)$ can be estimated using the expectation maximization
+algorithm
+with the following update rules for the $l$th iteration of the
+algorithm \cite{smaragdis2006probabilistic}
+\[
+    \mathrm{p}_{l+1}(Z=k | t, f)
+    =
+    \frac{\mathrm{p}_{l}(Z=k)\mathrm{p}_{l}(t|Z=k)\mathrm{p}_{l}(f|Z=k)}
+    {\sum_{j=0}^{K-1}{\mathrm{p}_{l}(Z=j)\mathrm{p}_{l}(t|Z=j)\mathrm{p}_{l}(f|Z=j)}}
+\]
+\[
+    \mathrm{p}_{l+1}(t|Z=k)
+    =
+    \frac{\sum_{f}\mathrm{p}(t,f)\mathrm{p}_{l+1}(Z=k|t,f)}
+    {\sum_{s}\sum_{f}\mathrm{p}(s,f)\mathrm{p}_{l+1}(Z=k|s,f)}
+\]
+\[
+    \mathrm{p}_{l+1}(f|Z=k)
+    =
+    \frac{\sum_{f}\mathrm{p}(t,f)\mathrm{p}_{l+1}(Z=k|t,f)}
+    {\sum_{t}\sum_{g}\mathrm{p}(t,g)\mathrm{p}_{l+1}(Z=k|t,g)}
+\]
+\[
+    \mathrm{p}_{l+1}(Z=k)
+    \frac{\sum_{t}\sum_{f}\mathrm{p}(t,f)\mathrm{p}_{l+1}(Z=k|t,f)}
+    {\sum_{j=0}^{K-1}\sum_{t}\sum_{f}\mathrm{p}(t,f)\mathrm{p}_{l+1}(Z=j|t,f)}
+\]
+After convergence, the marginal distribution $\mathrm{p}_{l^{\ast}}(t|Z=k)$
+gives the distribution of energy of the $k$th component over time. Similarly, 
+the marginal distribution $\mathrm{p}_{l^{\ast}}(f|Z=k)$
+gives the distribution of energy of the $k$th component over frequency. Once the
+set of components $\{ \tilde{k} \}$ belonging to the $p$th source has been
+determined, we can synthesize the spectrogram of this source as
+\[
+    \boldsymbol{X}_{p}(t,f) = \frac{1}{c}
+    \sum_{j \in \{\tilde{k}\}}\mathrm{p}_(t,f|Z=j)\mathrm{p}_(Z=j)
+\]
+
+\section{NMF}
+
+Instead of considering $\boldsymbol{X}(t,f)$ as a probability distribution, we
+consider it at discrete frequencies $mc_{f}$ and times $nc_{t}$ with $m,n \in
+\mathbb{N}$, the entry at the $m$th row and $n$th column of matrix
+$V_{m,n}=\boldsymbol{X}(mc_{f},nc_{t})$ with non-negative entries. We seek an
+approximate factorization of $\boldsymbol{V} \in \mathbb{R}^{M \times N}_{+}$
+into matrices $\boldsymbol{W} \in \mathbb{R}^{M \times K}_{+}$ and
+$\boldsymbol{H} \in \mathbb{R}^{K \times N}_{+}$ such that
+\[
+    \boldsymbol{V} \approx \boldsymbol{W}\boldsymbol{H}
+\]
+This can be done by solving the program
+\[
+    \min \mathcal(D)(\boldsymbol{V},\boldsymbol{W}\boldsymbol{H})
+\]
+subject to
+\[
+    \boldsymbol{V} \geq \boldsymbol{0}
+\]
+\[
+    \boldsymbol{W} \geq \boldsymbol{0}
+\]
+\[
+    \boldsymbol{H} \geq \boldsymbol{0}
+\]
+The particular choice of function $\mathcal(D)$ that measures divergence leads
+to different update equations in the iterative procedure for finding
+$\boldsymbol{W}$ and $\boldsymbol{H}$.
+
+\subsubsection{The Kullbach-Leibler divergence \cite{lee2001algorithms}}
+
+The \textit{Kullbach-Leibler} divergence function
+\[
+    \mathcal{D}_{\text{KL}} =
+    \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} V_{m,n}\log((WH)_{m,n})-(WH)_{m,n}
+\]
+can be minimzed using the following update equations for the $l$th iteration
+\[
+    H_{a,b}^{l+1} =
+    H_{a,b}^{l} \frac{\sum{j=0}^{M-1}W_{j,a}^{l}V_{j,b}^{l} / (W^{l}H^{l})_{j,m}}
+    {\sum{j=0}^{M-1}W_{j,a}^{l}}
+    W_{a,b}^{l+1} =
+    W_{a,b}^{l} \frac{\sum{j=0}^{N-1}H_{b,j}^{l+1}V_{a,j}^{l} / (W^{l}H^{l+1})_{a,j}}
+    {\sum{j=0}^{N-1}H_{b,j}^{l+1}}
+\]
+It can be shown that these update equations are equivalent to those for PCLA
+\cite{shashanka2008probabilistic}.
+
+\subsubsection{The Itakura-Saito divergence \cite{fevotte2009nonnegative}}
+
+Another divergence popular for factorizing spectrograms is the
+\textit{Itakura-Saito} divergence 
+\[
+    \mathcal{D}_{\text{IS}} =
+    \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} \frac{V_{m,n}}{(WH)_{m,n}}
+    - \log \left(\frac{V_{m,n}}{(WH)_{m,n}}\right) -1
+\]
+This divergence is scale-invariant, meaning that
+$\mathcal{D}_{\text{IS}}(cx,cy)=\mathcal{D}_{\text{IS}}(x,y)$, which makes it
+well suited for audio signals which have a large dynamic range. Put another way,
+divergences involving large values in $\boldsymbol{V}$ and
+$\boldsymbol{W}\boldsymbol{H}$ will be weighted similarly to divergences
+involving small values, which is not the case with the Kulback-Leibler divergence.
+The Itakura-Saito divergence is minimized through the following update equations
+\[
+    \boldsymbol{H}^{l+1}
+    =
+    \boldsymbol{H}^{l}.
+    \frac{\boldsymbol{W}^{lT}((\boldsymbol{W}^{l}\boldsymbol{H}^{l})^{.-2}.\boldsymbol{V}^{l}})
+    {\boldsymbol{W}^{l}^{T}(\boldsymbol{W}^{l}\boldsymbol{H}^{l})^{.-1}}
+\]
+\[
+    \boldsymbol{W}^{l+1}
+    =
+    \boldsymbol{W}^{l}.
+    \frac{((\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-2}.\boldsymbol{V}^{l}})\boldsymbol{H}^{l+1T}
+    {(\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-1}\boldsymbol{H}^{l+1}^{T}}
+\]
+Once convergence has been obtained the $k$th column of matrix $W$ will contain
+values representing the level of activation of the $k$th component at the
+frequency corresponding to the row index and the $k$th row of $H$ the level of
+activation of the $k$th component at the time corresponding to the column index.
+If the set of components $\{ \tilde{k} \}$ belonging to the $p$th source has
+been determined, we can synthesize the spectrogram of this source as
+\[
+    \boldsymbol{X}_{p}(nc_{t},mc_{f}) =
+    \sum_{j \in \{\tilde{k}\}}W_{,j}H_{j,}
+\]
+ 
+\subsection{Synthesis of factorized spectrograms}
+
+Synthesizing the original signal is less straightforward as the phase
+information contained in the STFT was discarded to obtain a non-negative
+spectrogram. We can simply use the
+original phases of the STFT used to compute the spectrum with the new magnitude
+information from $X_{p}(t,f)$ but the resulting signal may have artifacts due to
+the phase information of unwanted sources that remains in the STFT. A technique
+to lessen these artifacts using constrained Wiener filtering has been proposed in
+\cite{le2013consistent}. One may also choose to invert the spectrogram without
+any phase information by using an algorithm that iteratively reconstructs the
+phase part of the STFT while minimizing the error
+between the spectrogram of the reconstructed signal and its original power
+spectrum, starting from an initial guess \cite{griffin1984signal}.
+
+\section{An approach using amplitude- and frequency-modulation}
+
 Perceptual studies have shown that sounds modulated synchronously in amplitude
 or frequency are heard as one sound, whereas asynchronously modulated sounds are
 heard as distinct \cite{mcadams1989segregation} \cite{marin1991segregation}.
