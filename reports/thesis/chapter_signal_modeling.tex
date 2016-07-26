@@ -370,22 +370,22 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
 \end{table}
 
 % Plots made with continuous_blackman_1.py
-\begin{figure}
+\begin{figure}[!t]
     \caption{\label{plot:opt_blackman}}
     \includegraphics[width=\textwidth]{plots/min4_blackman_td.eps}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \caption{}
     \includegraphics[width=\textwidth]{plots/min4_blackman_fd.eps}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \caption{}
     \includegraphics[width=\textwidth]{plots/c1_blackman_td.eps}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \caption{}
     \includegraphics[width=\textwidth]{plots/c1_blackman_fd.eps}
 \end{figure}
@@ -505,12 +505,12 @@ Figure~\ref{plot:simple_graph_greedy_paths} that the absolute shortest path, $1
 \rightarrow 4 \rightarrow 8$, is discovered, followed by the second shortest
 path not using the nodes of the first path.
 
-\begin{figure}
+\begin{figure}[!t]
     \caption{\label{plot:simple_graph}}
     \includegraphics[width=\textwidth]{plots/small_graph_ex.eps}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \caption{\label{plot:simple_graph_greedy_paths}}
     \includegraphics[width=\textwidth]{plots/small_graph_ex_greedy_paths.eps}
 \end{figure}
@@ -612,7 +612,7 @@ where $\boldsymbol{A}_{s}$ is the matrix with $\boldsymbol{a}^{s,m}$ as its rows
 for $m \in [0 \dotsc M-1]$ and $\boldsymbol{A}_{p}$ is the matrix with
 $\boldsymbol{a}^{p,m}$ as its rows, etc.
 
-\begin{figure}
+\begin{figure}[!t]
     \caption{\label{plot:simple_graph_lp_paths}}
     \includegraphics[width=\textwidth]{plots/small_graph_ex_lp_paths.eps}
 \end{figure}
@@ -723,31 +723,31 @@ maintain connected paths, the search on the next frames uses the end nodes of
 the last search as starting points. For both methods, the search is restricted
 to nodes between frequencies 250 to 2250 Hz.
 
-\begin{figure}
+\begin{figure}[!t]
     %\centering
     \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_20.eps}
     \caption{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_20}}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
     %\centering
     \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_15.eps}
     \caption{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_15}}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
     %\centering
     \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_10.eps}
     \caption{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_10}}
 \end{figure}
-%\begin{figure}
+%\begin{figure}[!t]
 %    %\centering
 %    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_20.eps}
 %    \caption{ Line-segments representing the discovered partial paths.
 %    \label{plot:mq_lp_compare_chirp_hint20}}
 %\end{figure}
-%\begin{figure}
+%\begin{figure}[!t]
 %    %\centering
 %    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_15.eps}
 %    \caption{ Line-segments representing the discovered partial paths.
@@ -845,7 +845,7 @@ $\boldsymbol{y}$, is \cite[p.~12]{friedman2001elements}
 \end{equation}
 Here we do not have a sample dataset because of the large number of possible
 situations and the difficulty of consistently estimating underlying model
-parameters (see, for example, Section~\ref{sec:mq_lp_compare_chrip}). To automate
+parameters (see, for example, Section~\ref{sec:mq_lp_compare_chirp}). To automate
 classification we treat the dataset beforehand to increase the robustness of the
 classification algorithm, and allow the algorithm to estimate some
 class memberships. The classification algorithm will give some estimated $\hat{h}$

@@ -391,14 +391,14 @@ The signal was sampled with a sampling rate of 16000 Hz and was analysed every
 $\mathcal{C}^{1}$ 4-Term Blackman-Harris was used (see
 Section~\ref{sec:optblackman}).
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_cubic_original_spec.eps}
     \caption{This depicts the log spectrum. Darker regions represent greater
         values whereas lighter are smaller values.
     \label{plot:mqcubicoriginalspec}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_cubic_estimated_spec.eps}
     \caption{This depicts the log spectrum. Darker regions represent greater
         values whereas lighter are smaller values. The estimated signal is
@@ -406,7 +406,7 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqcubicestimatedspec}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_cubic_error.eps}
     \caption{
         The error when subtracting the original signal from the estimated
@@ -415,14 +415,14 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqcubicerror}}
 \end{figure}
 
-%\begin{figure}
+%\begin{figure}[!t]
 %    \includegraphics[width=\textwidth]{plots/mq_mod_cubic_original_spec.eps}
 %    \caption{This depicts the dB spectrum. Darker regions represent greater
 %        values whereas lighter are smaller values.
 %    \label{plot:mqmodcubicoriginalspec}}
 %\end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_cubic_estimated_spec.eps}
     \caption{This depicts the dB spectrum. Darker regions represent greater
         values whereas lighter are smaller values. The estimated signal is
@@ -430,7 +430,7 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqmodcubicestimatedspec}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_cubic_error.eps}
     \caption{The error when subtracting the original signal from the estimated
         signal. The estimated signal is computed using the cubic interpolation
@@ -438,14 +438,14 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqmodcubicerror}}
 \end{figure}
 
-%\begin{figure}
+%\begin{figure}[!t]
 %    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_original_spec.eps}
 %    \caption{This depicts the dB spectrum. Darker regions represent greater
 %        values whereas lighter are smaller values.
 %    \label{plot:mqmodcubicoriginalspec}}
 %\end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_quintic_estimated_spec.eps}
     \caption{This depicts the dB spectrum. Darker regions represent greater
         values whereas lighter are smaller values. The estimated signal is
@@ -453,7 +453,7 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqmodcubicestimatedspec}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_quintic_error.eps}
     \caption{The error when subtracting the original signal from the estimated
         signal. The estimated signal is computed using the quintic interpolation
@@ -461,14 +461,14 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqmodcubicerror}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
     \caption{This shows the error of the interpolated signals when compared
     with the original signal for the three proposed methods.
     \label{plot:mqmoderrcomplogamperr}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_logamp_func.eps}
     \caption{This compares the original log-amplitude function with the
     interpolated log-amplitude functions. The log-amplitude functions are
@@ -477,7 +477,7 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqmoderrcomplogampfunc}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
     \caption{This compares the phase functions with the interpolated phase
     functions. The phase functions are considered because these are the
@@ -492,7 +492,7 @@ Section~\ref{sec:optblackman}).
     \label{plot:mqmoderrcompphaseerr}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_func.eps}
     \caption{\label{plot:mqmoderrcompphasefunc}}
 \end{figure}
@@ -516,7 +516,7 @@ implementation of Horner's method that keeps track of the error bound
 errors are negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the
 results.
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
     \caption{\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}

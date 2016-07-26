@@ -356,7 +356,7 @@ The length of the signal $N$ is 8000 samples and the anlaysis hop size $H$ is 25
 samples. The figures in \ref{sec:amfmsepresults} summarize the results of the
 source separation experiment.
 
-%\begin{figure}
+%\begin{figure}[!t]
 %    %\centering
 %\includegraphics[width=\textwidth]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
 %\end{figure}
@@ -366,29 +366,46 @@ source separation experiment.
 
 Here we show source separation results for the synthesized signals with varying
 amounts of noise added to the synthesis parameters $\psi$, $\omega$, $\alpha$
-and $A$.
+and $A$. The amount of noise added and the corresponding plot title is
+summarized in Table~\ref{tab:amfmexpplotkey}.
 
-\subsection{Results for $\psi_{no} = \omega_{no} = \alpha_{no} = 1
-\times 10^{-3}$ and $A_{no} = 1 \times 10^{-5}$}
-        
-\begin{figure}
+\begin{table}
+    \begin{center}
+        \begin{tabular}{l c c c c}
+            Table number & $\psi_{no}$ & $\omega_{no}$ & $\alpha_{no}$ &
+            $A_{no}$ \\
+            \hline
+            1 & $1 \times 10^{-2}$ & $1 \times 10^{-2}$ & $1 \times 10^{-2}$ &
+            $1 \times 10^{-4}$ \\
+            2 & $1 \times 10^{-2}$ & $1 \times 10^{-2}$ & $1 \times 10^{-2}$ &
+            $1 \times 10^{-5}$ \\
+            3 & $1 \times 10^{-3}$ & $1 \times 10^{-3}$ & $1 \times 10^{-3}$ &
+            $1 \times 10^{-4}$ \\
+            4 & $1 \times 10^{-3}$ & $1 \times 10^{-3}$ & $1 \times 10^{-3}$ &
+            $1 \times 10^{-5}$ \\
+        \end{tabular}
+    \end{center}
+    \caption{\label{tab:amfmexpplotkey}}
+\end{table}
+
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_orig_data}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_orig_data}.eps}
     \caption{Line-segments describing the frequency and frequency modulation
-    of both sources.\label{plot:hsrp_test_7_0.001_0.00001_plot_orig_data}}
+    of both sources.\label{plot:hsrp_test_7_multi_orig_data}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_orig_spur_data}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_orig_spur_data}.eps}
     \caption{Line-segments describing the frequency and frequency modulation
         of the original data and the spurious data.
-    \label{plot:hsrp_test_7_0.001_0.00001_plot_orig_spur_data}}
+    \label{plot:hsrp_test_7_multi_orig_spur_data}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_class_pcs}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_class_pcs}.eps}
     \caption{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
         $\sigma_{i}^{0}$ are respectively
     the initial mean and standard deviation guesses for the EM algorithm fitting
@@ -396,31 +413,31 @@ and $A$.
     plot. The spurious points rejected using the process described in
     Section~\ref{sec:amfmseppreparecluster} are included for comparison. The
     plot is of a subsection of the analysis to better show the process.
-    \label{plot:hsrp_test_7_0.001_0.00001_plot_class_pcs}}
+    \label{plot:hsrp_test_7_multi_class_pcs}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_1_est}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_est}.eps}
     \caption{Line-segments classified as belonging to Source 1. The
         classification is done on each frame so classifications in consecutive
         frames may not belong to the same true source. This is because the
         ordering of the clusters in each frame in
-        Figure~\ref{plot:hsrp_test_7_0.001_0.00001_plot_class_pcs} is not predictible.
-    \label{plot:hsrp_test_7_0.001_0.00001_plot_source_1_est}}
+        Figure~\ref{plot:hsrp_test_7_multi_class_pcs} is not predictible.
+    \label{plot:hsrp_test_7_multi_source_1_est}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_2_est}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_2_est}.eps}
     \caption{Line-segments classified as belonging to Source 2. See
-        Figure~\ref{plot:hsrp_test_7_0.001_0.00001_plot_source_2_est} for more
+        Figure~\ref{plot:hsrp_test_7_multi_source_2_est} for more
         information.
-    \label{plot:hsrp_test_7_0.001_0.00001_plot_source_2_est}}
+    \label{plot:hsrp_test_7_multi_source_2_est}}
 \end{figure}
 
-As seen in Figure~\ref{plot:hsrp_test_7_0.001_0.00001_plot_source_1_est} and
-\ref{plot:hsrp_test_7_0.001_0.00001_plot_source_2_est}, while
+As seen in Figure~\ref{plot:hsrp_test_7_multi_source_1_est} and
+\ref{plot:hsrp_test_7_multi_source_2_est}, while
 classified well in individual frames, the overall classification does not
 correspond to a single source. We must find a collection of frames with high
 plausibility of belonging to one source. We consider the collections of
@@ -475,357 +492,72 @@ vector $\boldsymbol{c}$ in the LP
 The specification of the constraint matrices is done according to the topology
 of the lattice and the requirement that we find 2 non-overlapping paths (see
 Section~\ref{sec:lppathsearch}). An example of discovered paths is given in
-Figure~\ref{plot:hsrp_test_7_0.001_0.00001_smooth_freq_amp_sol}.
-\begin{figure}
+Figure~\ref{plot:hsrp_test_7_multi_smooth_freq_amp_sol}.
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_smooth_freq_amp_sol}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_smooth_freq_amp_sol}.eps}
     \caption{The points originally classified as source 1 are marked with
         circles and those originally classified as source 2 squares. The paths
         in black or grey connect the points for source 1 or source 2
         respectively with optimal smoothness.
-    \label{plot:hsrp_test_7_0.001_0.00001_smooth_freq_amp_sol}}
+    \label{plot:hsrp_test_7_multi_smooth_freq_amp_sol}}
 \end{figure}
 The estimated sources after smoothing in frequency are shown in
-Figures~\ref{plot:hsrp_test_7_0.001_0.00001_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_0.001_0.00001_source_2_smooth_freq}
-\begin{figure}
+Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_freq}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_1_smooth_freq}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_freq}.eps}
     \caption{Line-segments classified as belonging to source 1 after smoothing
         in frequency.
-    \label{plot:hsrp_test_7_0.001_0.00001_source_1_smooth_freq}}
+    \label{plot:hsrp_test_7_multi_source_1_smooth_freq}}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_2_smooth_freq}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_freq}.eps}
     \caption{Line-segments classified as belonging to source 2 after smoothing
         in frequency.
-    \label{plot:hsrp_test_7_0.001_0.00001_source_2_smooth_freq}}
+    \label{plot:hsrp_test_7_multi_source_2_smooth_freq}}
 \end{figure}
 The estimated sources after smoothing in amplitude are shown in
-Figures~\ref{plot:hsrp_test_7_0.001_0.00001_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_0.001_0.00001_source_2_smooth_amp}
-\begin{figure}
+Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_amp}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_1_smooth_amp}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_amp}.eps}
     \caption{Line-segments classified as belonging to source 1 after smoothing
         in amplitude.
-    \label{plot:hsrp_test_7_0.001_0.00001_source_1_smooth_amp}}
+    \label{plot:hsrp_test_7_multi_source_1_smooth_amp}}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_source_2_smooth_amp}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_amp}.eps}
     \caption{Line-segments classified as belonging to source 2 after smoothing
         in amplitude.
-    \label{plot:hsrp_test_7_0.001_0.00001_source_2_smooth_amp}}
+    \label{plot:hsrp_test_7_multi_source_2_smooth_amp}}
 \end{figure}
 We see that when smoothed in frequency, the results are acceptable. However,
 when both sets of parameters are close and give close costs, the spurious
 data-points can influence the cost function causing a false classification. This
 can be seen at around 0.35 seconds in
-Figures~\ref{plot:hsrp_test_7_0.001_0.00001_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_0.001_0.00001_source_2_smooth_freq}
+Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_freq}
 where it seems perhaps 3 frames should be classified as the other source. That
 these are difficult to classify is not surprising, comparing with
-Figures~\ref{plot:hsrp_test_7_0.001_0.00001_plot_orig_data} we see that at around
+Figures~\ref{plot:hsrp_test_7_multi_orig_data} we see that at around
 0.38 seconds the frequency slopes are close.
 
 When smoothed in amplitude, the results are less convincing. This is not
 surprsing as smoothness in amplitude is not the best criterion at all time
 points.
-\begin{figure}
+\begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.00001_plot_af}.eps}
+    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_af}.eps}
     \caption{ Line-segments representing the instantaneous amplitude and amplitude slope at
         analysis time points. 
-    \label{plot:hsrp_test_7_0.001_0.00001_af}}
+    \label{plot:hsrp_test_7_multi_af}}
 \end{figure}
-In Figure~\ref{plot:hsrp_test_7_0.001_0.00001_af} we see that the amplitudes of
+In Figure~\ref{plot:hsrp_test_7_multi_af} we see that the amplitudes of
 both sources are similar at many points, e.g., at around 0.05 and 0.15 seconds.
 Indeed it is here that the amplitude smoothness criterion fails, as we see in
-Figures~\ref{plot:hsrp_test_7_0.001_0.00001_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_0.001_0.00001_source_2_smooth_amp}.
-
-\subsection{Results for $\psi_{no} = \omega_{no} = \alpha_{no} = 1
-\times 10^{-3}$ and $A_{no} = 1 \times 10^{-4}$}
-        
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_orig_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
-    of both sources.\label{plot:hsrp_test_7_0.001_0.0001_plot_orig_data}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_orig_spur_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
-        of the original data and the spurious data.
-    \label{plot:hsrp_test_7_0.001_0.0001_plot_orig_spur_data}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_class_pcs}.eps}
-    \caption{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
-        $\sigma_{i}^{0}$ are respectively
-    the initial mean and standard deviation guesses for the EM algorithm fitting
-    the GMM parameters to the $i$th source. These values are also visible on the
-    plot. The spurious points rejected using the process described in
-    Section~\ref{sec:amfmseppreparecluster} are included for comparison. The
-    plot is of a subsection of the analysis to better show the process.
-    \label{plot:hsrp_test_7_0.001_0.0001_plot_class_pcs}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_source_1_est}.eps}
-    \caption{Line-segments classified as belonging to Source 1. The
-        classification is done on each frame so classifications in consecutive
-        frames may not belong to the same true source. This is because the
-        ordering of the clusters in each frame in
-        Figure~\ref{plot:hsrp_test_7_0.001_0.0001_plot_class_pcs} is not predictible.
-    \label{plot:hsrp_test_7_0.001_0.0001_plot_source_1_est}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_source_2_est}.eps}
-    \caption{Line-segments classified as belonging to Source 2. See
-        Figure~\ref{plot:hsrp_test_7_0.001_0.0001_plot_source_2_est} for more
-        information.
-    \label{plot:hsrp_test_7_0.001_0.0001_plot_source_2_est}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_smooth_freq_amp_sol}.eps}
-    \caption{The points originally classified as source 1 are marked with
-        circles and those originally classified as source 2 squares. The paths
-        in black or grey connect the points for source 1 or source 2
-        respectively with optimal smoothness.
-    \label{plot:hsrp_test_7_0.001_0.0001_smooth_freq_amp_sol}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_source_1_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
-        in frequency.
-    \label{plot:hsrp_test_7_0.001_0.0001_source_1_smooth_freq}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_source_2_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
-        in frequency.
-    \label{plot:hsrp_test_7_0.001_0.0001_source_2_smooth_freq}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_source_1_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
-        in amplitude.
-    \label{plot:hsrp_test_7_0.001_0.0001_source_1_smooth_amp}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_source_2_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
-        in amplitude.
-    \label{plot:hsrp_test_7_0.001_0.0001_source_2_smooth_amp}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.001_0.0001_plot_af}.eps}
-    \caption{ Line-segments representing the instantaneous amplitude and amplitude slope at
-        analysis time points. 
-    \label{plot:hsrp_test_7_0.001_0.0001_af}}
-\end{figure}
-
-\subsection{Results for $\psi_{no} = \omega_{no} = \alpha_{no} = 1
-\times 10^{-2}$ and $A_{no} = 1 \times 10^{-5}$}
-        
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_orig_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
-    of both sources.\label{plot:hsrp_test_7_0.01_0.00001_plot_orig_data}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_orig_spur_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
-        of the original data and the spurious data.
-    \label{plot:hsrp_test_7_0.01_0.00001_plot_orig_spur_data}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_class_pcs}.eps}
-    \caption{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
-        $\sigma_{i}^{0}$ are respectively
-    the initial mean and standard deviation guesses for the EM algorithm fitting
-    the GMM parameters to the $i$th source. These values are also visible on the
-    plot. The spurious points rejected using the process described in
-    Section~\ref{sec:amfmseppreparecluster} are included for comparison. The
-    plot is of a subsection of the analysis to better show the process.
-    \label{plot:hsrp_test_7_0.01_0.00001_plot_class_pcs}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_source_1_est}.eps}
-    \caption{Line-segments classified as belonging to Source 1. The
-        classification is done on each frame so classifications in consecutive
-        frames may not belong to the same true source. This is because the
-        ordering of the clusters in each frame in
-        Figure~\ref{plot:hsrp_test_7_0.01_0.00001_plot_class_pcs} is not predictible.
-    \label{plot:hsrp_test_7_0.01_0.00001_plot_source_1_est}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_source_2_est}.eps}
-    \caption{Line-segments classified as belonging to Source 2. See
-        Figure~\ref{plot:hsrp_test_7_0.01_0.00001_plot_source_2_est} for more
-        information.
-    \label{plot:hsrp_test_7_0.01_0.00001_plot_source_2_est}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_smooth_freq_amp_sol}.eps}
-    \caption{The points originally classified as source 1 are marked with
-        circles and those originally classified as source 2 squares. The paths
-        in black or grey connect the points for source 1 or source 2
-        respectively with optimal smoothness.
-    \label{plot:hsrp_test_7_0.01_0.00001_smooth_freq_amp_sol}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_source_1_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
-        in frequency.
-    \label{plot:hsrp_test_7_0.01_0.00001_source_1_smooth_freq}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_source_2_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
-        in frequency.
-    \label{plot:hsrp_test_7_0.01_0.00001_source_2_smooth_freq}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_source_1_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
-        in amplitude.
-    \label{plot:hsrp_test_7_0.01_0.00001_source_1_smooth_amp}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_source_2_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
-        in amplitude.
-    \label{plot:hsrp_test_7_0.01_0.00001_source_2_smooth_amp}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.00001_plot_af}.eps}
-    \caption{ Line-segments representing the instantaneous amplitude and amplitude slope at
-        analysis time points. 
-    \label{plot:hsrp_test_7_0.01_0.00001_af}}
-\end{figure}
-
-\subsection{Results for $\psi_{no} = \omega_{no} = \alpha_{no} = 1
-\times 10^{-2}$ and $A_{no} = 1 \times 10^{-4}$}
-        
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_orig_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
-    of both sources.\label{plot:hsrp_test_7_0.01_0.0001_plot_orig_data}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_orig_spur_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
-        of the original data and the spurious data.
-    \label{plot:hsrp_test_7_0.01_0.0001_plot_orig_spur_data}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_class_pcs}.eps}
-    \caption{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
-        $\sigma_{i}^{0}$ are respectively
-    the initial mean and standard deviation guesses for the EM algorithm fitting
-    the GMM parameters to the $i$th source. These values are also visible on the
-    plot. The spurious points rejected using the process described in
-    Section~\ref{sec:amfmseppreparecluster} are included for comparison. The
-    plot is of a subsection of the analysis to better show the process.
-    \label{plot:hsrp_test_7_0.01_0.0001_plot_class_pcs}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_source_1_est}.eps}
-    \caption{Line-segments classified as belonging to Source 1. The
-        classification is done on each frame so classifications in consecutive
-        frames may not belong to the same true source. This is because the
-        ordering of the clusters in each frame in
-        Figure~\ref{plot:hsrp_test_7_0.01_0.0001_plot_class_pcs} is not predictible.
-    \label{plot:hsrp_test_7_0.01_0.0001_plot_source_1_est}}
-\end{figure}
-
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_source_2_est}.eps}
-    \caption{Line-segments classified as belonging to Source 2. See
-        Figure~\ref{plot:hsrp_test_7_0.01_0.0001_plot_source_2_est} for more
-        information.
-    \label{plot:hsrp_test_7_0.01_0.0001_plot_source_2_est}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_smooth_freq_amp_sol}.eps}
-    \caption{The points originally classified as source 1 are marked with
-        circles and those originally classified as source 2 squares. The paths
-        in black or grey connect the points for source 1 or source 2
-        respectively with optimal smoothness.
-    \label{plot:hsrp_test_7_0.01_0.0001_smooth_freq_amp_sol}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_source_1_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
-        in frequency.
-    \label{plot:hsrp_test_7_0.01_0.0001_source_1_smooth_freq}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_source_2_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
-        in frequency.
-    \label{plot:hsrp_test_7_0.01_0.0001_source_2_smooth_freq}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_source_1_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
-        in amplitude.
-    \label{plot:hsrp_test_7_0.01_0.0001_source_1_smooth_amp}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_source_2_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
-        in amplitude.
-    \label{plot:hsrp_test_7_0.01_0.0001_source_2_smooth_amp}}
-\end{figure}
-\begin{figure}
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_0.01_0.0001_plot_af}.eps}
-    \caption{ Line-segments representing the instantaneous amplitude and amplitude slope at
-        analysis time points. 
-    \label{plot:hsrp_test_7_0.01_0.0001_af}}
-\end{figure}
+Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_amp}.
 
 \section{Conclusion}
 

@@ -1,5 +1,5 @@
 \chapter{Experiment: Separation of two sources using partial decay rate
-    \label{chap:decaysep}
+\label{chap:decaysep}}
 
 In this section we demonstrate how the techniques described above can be used to
 perform audio source separation. We start with a recording of an acoustic guitar
@@ -29,7 +29,7 @@ sometimes unrealistic paths are discovered that jump between spurious maxima.
 These are filtered out by discarding paths whose cost-length ratio is excessive.
 See Figure~\ref{plot:acgtra3xylofs4costlengththresh} to see a plot of these
 values and the thresholding function. 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.eps}
     \caption{Paths (represented as circles) are considered only if their
     path cost is smaller than the threshold function (represented in black).\label{plot:acgtra3xylofs4costlengththresh}}
@@ -37,26 +37,26 @@ values and the thresholding function.
 The spectrogram of
 the mixture can be seen in Figure~\ref{plot:acgtra3xylofs4specgram} and the
 partial paths in Figure~\ref{plot:acgtra3xylofs4partials}.
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_specgram.eps}
     \caption{\label{plot:acgtra3xylofs4specgram}}
 \end{figure}
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_specgram_partials.eps}
     \caption{\label{plot:acgtra3xylofs4partials}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/ac_gtr_orig_spec.eps}
     \caption{\label{plot:acgtra3specgram}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/xylo_orig_spec.eps}
     \caption{\label{plot:xylofs4specgram}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_partial_trajectories.pdf}
     \caption{\label{plot:parclassaxpartialtrajectories}}
 \end{figure}
@@ -80,7 +80,7 @@ The data-points have the form
 \]
 where $a_{i,0}$ is the first PC and $a_{i,1}$ the second. The set of PC data
 points will be denoted $\{\boldsymbol{a}\}$.
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_sep_true_memberships.eps}
     \caption{\label{plot:partialclassificationacgtrxyloseptruememberships}}
 \end{figure}
@@ -174,7 +174,7 @@ final estimated Gaussian distributions. The final classifications for this
 classification task can be seen in
 Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}.
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_estimated_memberships.eps}
     \caption{\label{plot:partialclassificationacgtrxylosepestimatedmemberships}}
 \end{figure}
@@ -186,12 +186,12 @@ Section~\label{sec:cubicphasepoly}. Spectrograms of the source separated signals
 are shown in Figure~\ref{plot:acgtra3specgramss} and
 Figure~\ref{plot:xylofs4specgramss}. 
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/ac_gtr_ss_spec.eps}
     \caption{\label{plot:acgtra3specgramss}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/xylo_ss_spec.eps}
     \caption{\label{plot:xylofs4specgramss}}
 \end{figure}
