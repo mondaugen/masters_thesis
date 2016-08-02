@@ -26,86 +26,86 @@ Probably need to cite fact that instruments are designed to blend well.
 
 Chapter 2.
 
-p. 4 "perveived"
+#p. 4 "perveived"
 
 sec. 2.3 cite actual musical applications
 
-p. 6 V_m,n = X(mcf,nct) is backwards
+#p. 6 V_m,n = X(mcf,nct) is backwards
 
-p. 6 note where spectrogram is defined, specifically is absolute value of later definition
+#p. 6 note where spectrogram is defined, specifically is absolute value of later definition
 
-p. 6. objective function looks funny in opt problem, should be mathcal D
+#p. 6. objective function looks funny in opt problem, should be mathcal D
 
-p. 6 KL divergence def wrong?
+#p. 6 KL divergence def wrong?
+#
+#You need to put the arguments of the function in, e.g.,
+#
+#D(x,y)=x-y or something
 
-You need to put the arguments of the function in, e.g.,
+#p. 7 Griffin-Lim requires considerable computational effort
 
-D(x,y)=x-y or something
+#p. 8 you can be more specific:
+#this thesis uses sum of partials with piecewise parabolic phase signal model, classified with common AM and FM
 
-p. 7 Griffin-Lim requires considerable computational effort
+#sec. 3.1 cite acoustics text 
 
-p. 8 you can be more specific:
-this thesis uses sum of partials with piecewise parabolic phase signal model, classified with common AM and FM
+#p. 9 discrete times n
+#
+#p. 9 casually joke as footnote
 
-sec. 3.1 cite acoustics text 
+#p. 9 imaginary number def elsewhere
 
-p. 9 discrete times n
+#p. 10 spectrogram should be bold X? (no)
 
-p. 9 casually joke as footnote
+#p. 11 bold X? (no)
 
-p. 9 imaginary number def elsewhere
+#sec. 3.2.1 need to cite acoustics text
 
-p. 10 spectrogram should be bold X?
+#sec 3.2 need \onepage (samepage)
 
-p. 11 bold X?
+#sec 3.2.1 sigma quantifies power of noisey part
 
-sec. 3.2.1 need to cite acoustics text
+#p. 11 remove space between equation and paragraph
 
-sec 3.2 need \onepage
+#p. 12 need lower case c in amplitude estimation equation
 
-sec 3.2.1 sigma quantifies power of noisey part
+#p. 12 bad indent after equation
 
-p. 11 remove space between equation and paragraph
-
-p. 12 need lower case c in amplitude estimation equation
-
-p. 12 bad indent after equation
-
-p. 15 figure not found
+#p. 15 figure not found
 
 (blackman harris figures far from description but maybe this is fine after splitting chapters)
 
-p 16 partial tracking its own chapter?
+p. 16 partial tracking its own chapter?
 maybe state: "We choose the parital model, now we need to track its partials."
 
-p. 17 cost matrix C should be capital C
-p. 18 too in algorithm 1
+#p. 17 cost matrix C should be bold C
+#p. 18 too in algorithm 1
 
-sec 3.3.2 use inner product notation instead of transpose
+#sec 3.3.2 use inner product notation instead of transpose
 
-p. 20 em dash looks funny
+#p. 20 em dash looks funny
 
-s,p,b,c superscripts on a should be \text{}
+#s,p,b,c superscripts on a should be \text{}
 
-p. 21 the result should always be 0 for equal number of entering and exiting nodes
+#p. 21 the result should always be 0 for equal number of entering and exiting nodes
 
-p. 22 a^c inner product should sum to L, no?
+#p. 22 a^c inner product should sum to L, no? (yes)
 
-p. 23 "in this paper" -> "in that paper"
+#p. 23 "in this paper" -> "in that paper" (opted not to change)
 
-p. 24 whose hth frame has ... connections?
+#p. 24 whose hth frame has ... connections?
 
-p. 24 need em dash instead of en dash
+#p. 24 need em dash instead of en dash
 
-p. 24 "space 75 Hz apart"
+#p. 24 "space 75 Hz apart"
 
-p. 25 distance metric needs explanation
+#p. 25 distance metric needs explanation
 
-p. 25 footnote needs period
+#p. 25 footnote needs period
 
-p. 25 indicate DDM of 2 signals added together
+#p. 25 indicate DDM of 2 signals added together
 
-p. 26 "that wasn't existent" -> "didn't exist", "not present"
+#p. 26 "that wasn't existent" -> "didn't exist", "not present"
 
 p. 28 for linear classifier, should use inequality. In this case, it gives what you want. We use the GMM because we have no training examples.
 

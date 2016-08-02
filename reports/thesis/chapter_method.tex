@@ -11,7 +11,7 @@ musical signals.
 
 This technique assumes the signal considered can be described in a format akin
 to the musical score --- a collection of notes each with times indexing their
-beginning and end and a frequency, the fundamental, describing the perveived
+beginning and end and a frequency, the fundamental, describing the perceived
 pitch of the note. Multiple fundamental frequency estimation for the purposes of music
 transcription dates back to the 1970s \cite[ch.~20]{havelock2008handbook}
 \cite{moorer1977transcription}. This
@@ -47,10 +47,10 @@ spectrograms solely from a spectrogram of their mixture.
 
 \subsection{PLCA}
 
-In this formulation, the spectrogram, being non-negative like a probability
-distribution, is considered as such
+In this formulation, the spectrogram (defined in Section~\ref{sec:timefreqrep}),
+being non-negative like a probability distribution, is considered as such
 \[
-    c\boldsymbol{X}(t,f) = \mathrm{p} (t,f)
+    c|X(t,f)| = \mathrm{p} (t,f)
 \]
 where c is a constant so that the distrubution integrate to 1. Explicitly,
 we consider the probability that energy in the spectrogram lie in the vicinity
@@ -97,17 +97,17 @@ gives the distribution of energy of the $k$th component over frequency. Once the
 set of components $\{ \tilde{k} \}$ belonging to the $p$th source has been
 determined, we can synthesize the spectrogram of this source as
 \[
-    \boldsymbol{X}_{p}(t,f) = \frac{1}{c}
+    |X_{p}(t,f)| = \frac{1}{c}
     \sum_{j \in
     \{\tilde{k}\}}\mathrm{p}_{l^{\ast}}(t,f|Z=j)\mathrm{p}_{l^{\ast}}(Z=j)
 \]
 
 \subsection{NMF}
 
-Instead of considering $\boldsymbol{X}(t,f)$ as a probability distribution, we
+Instead of considering $|X(t,f)|$ as a probability distribution, we
 consider it at discrete frequencies $mc_{f}$ and times $nc_{t}$ with $m,n \in
 \mathbb{N}$, the entry at the $m$th row and $n$th column of matrix
-$V_{m,n}=\boldsymbol{X}(mc_{f},nc_{t})$ with non-negative entries. We seek an
+$V_{m,n}=|X(nc_{t},mc_{f})|$ with non-negative entries. We seek an
 approximate factorization of $\boldsymbol{V} \in \mathbb{R}^{M \times N}_{+}$
 into matrices $\boldsymbol{W} \in \mathbb{R}^{M \times K}_{+}$ and
 $\boldsymbol{H} \in \mathbb{R}^{K \times N}_{+}$ such that
@@ -116,7 +116,7 @@ $\boldsymbol{H} \in \mathbb{R}^{K \times N}_{+}$ such that
 \]
 This can be done by solving the program
 \[
-    \min \mathcal(D)(\boldsymbol{V},\boldsymbol{W}\boldsymbol{H})
+    \min \mathcal{D}(\boldsymbol{V},\boldsymbol{W}\boldsymbol{H})
 \]
 subject to
 \[
@@ -134,10 +134,11 @@ $\boldsymbol{W}$ and $\boldsymbol{H}$.
 
 \subsubsection{The Kullback-Leibler divergence \cite{lee2001algorithms}}
 
-The \textit{Kullback-Leibler} divergence function
+The \textit{Kullback-Leibler} divergence function for measuring the divergence
+between two matrices $\boldsymbol{X}$ and $\boldsymbol{Y}$ is
 \[
-    \mathcal{D}_{\text{KL}} =
-    \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} V_{m,n}\log((WH)_{m,n})-(WH)_{m,n}
+    \mathcal{D}_{\text{KL}}(\boldsymbol{X},\boldsymbol{Y}) =
+    \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} X_{m,n}\log(Y_{m,n})-X_{m,n}+Y_{m,n}
 \]
 can be minimzed using the following update equations for the $l$th iteration
 \[
@@ -156,17 +157,18 @@ It can be shown that these update equations are equivalent to those for PLCA
 Another divergence popular for factorizing spectrograms is the
 \textit{Itakura-Saito} divergence 
 \[
-    \mathcal{D}_{\text{IS}} =
-    \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} \frac{V_{m,n}}{(WH)_{m,n}}
-    - \log \left(\frac{V_{m,n}}{(WH)_{m,n}}\right) -1
+    \mathcal{D}_{\text{IS}}(\boldsymbol{X},\boldsymbol{Y}) =
+    \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} \frac{X_{m,n}}{Y_{m,n}}
+    - \log \left(\frac{X_{m,n}}{Y_{m,n}}\right) -1
 \]
 This divergence is scale-invariant, meaning that
-$\mathcal{D}_{\text{IS}}(cx,cy)=\mathcal{D}_{\text{IS}}(x,y)$, which makes it
-well suited for audio signals which have a large dynamic range. Put another way,
-divergences involving large values in $\boldsymbol{V}$ and
+$\mathcal{D}_{\text{IS}}(c\boldsymbol{X},c\boldsymbol{Y})=\mathcal{D}_{\text{IS}}(\boldsymbol{X},\boldsymbol{Y})$,
+which makes it well suited for audio signals which have a large dynamic range.
+Put another way, divergences involving large values in $\boldsymbol{V}$ and
 $\boldsymbol{W}\boldsymbol{H}$ will be weighted similarly to divergences
-involving small values, which is not the case with the Kulback-Leibler divergence.
-The Itakura-Saito divergence is minimized through the following update equations
+involving small values, which is not the case with the Kulback-Leibler
+divergence.  The Itakura-Saito divergence is minimized through the following
+update equations
 \[
     \boldsymbol{H}^{l+1}
     =
@@ -188,7 +190,7 @@ activation of the $k$th component at the time corresponding to the column index.
 If the set of components $\{ \tilde{k} \}$ belonging to the $p$th source has
 been determined, we can synthesize the spectrogram of this source as
 \[
-    \boldsymbol{X}_{p}(c_{t}n,c_{f}m) =
+    |X_{p}(nc_{t},mc_{f})| =
     \sum_{j \in \{\tilde{k}\}}W_{,j}H_{j,}
 \]
  
@@ -198,14 +200,16 @@ Synthesizing the original signal is less straightforward as the phase
 information contained in the STFT was discarded to obtain a non-negative
 spectrogram. We can simply use the
 original phases of the STFT used to compute the spectrum with the new magnitude
-information from $X_{p}(t,f)$ but the resulting signal may have artifacts due to
+information from $|X_{p}(t,f)|$ but the resulting signal may have artifacts due to
 the phase information of unwanted sources that remains in the STFT. A technique
 to lessen these artifacts using constrained Wiener filtering has been proposed in
 \cite{le2013consistent}. One may also choose to invert the spectrogram without
 any phase information by using an algorithm that iteratively reconstructs the
 phase part of the STFT while minimizing the error
 between the spectrogram of the reconstructed signal and its original power
-spectrum, starting from an initial guess \cite{griffin1984signal}.
+spectrum, starting from an initial guess \cite{griffin1984signal}. Each
+iteration requires transforming a the signal to its spectrogram and then back to
+a time-domain signal, requiring considerable computational effort.
 
 \section{An approach using amplitude- and frequency-modulation}
 
@@ -238,6 +242,10 @@ therefore comprises the following tasks:
         them.
 \end{itemize}
 
-This thesis describes various approaches to the above tasks and utilises some of
-them in source separation experiments.
+In this thesis we model the signals of interest as sums of sinsuoids with
+polynomial phase. This model is chosen because the derivatives of this
+polynomial are readily interpreted as the amplitude- and frequency-modulation
+functions of the sinusoids and techniques exist for estimating the polynomial
+coefficients from realizations of these signals. The polynomial phase sinusoid
+is defined in Section~\ref{sec:polynomphasemodel}.
 
