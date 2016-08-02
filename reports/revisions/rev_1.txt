@@ -1,0 +1,164 @@
+Need section on notation
+
+remove all equation numbers unless needed
+
+need to add appendix describing normal distribution
+
+need to fix argmax so argument is directly beneath
+
+add NMF problem example
+
+check big equations against code
+
+be cosisent abount hyphenating frequency-modulation
+
+check ordering of terms and abbreviations
+
+Introduction:
+
+Give specific descriptions of techniques, for example when you speak of vehicles, you mean the example of using Kalman filtering to track a vehicle. This is maybe the removal of wide-sense-stationary noise from a deterministic signal.
+
+Probably need to cite fact that instruments are designed to blend well.
+
+Chapter 2.
+
+p. 4 "perveived"
+
+sec. 2.3 cite actual musical applications
+
+p. 6 V_m,n = X(mcf,nct) is backwards
+
+p. 6 note where spectrogram is defined, specifically is absolute value of later definition
+
+p. 6. objective function looks funny in opt problem, should be mathcal D
+
+p. 6 KL divergence def wrong?
+
+You need to put the arguments of the function in, e.g.,
+
+D(x,y)=x-y or something
+
+p. 7 Griffin-Lim requires considerable computational effort
+
+p. 8 you can be more specific:
+this thesis uses sum of partials with piecewise parabolic phase signal model, classified with common AM and FM
+
+sec. 3.1 cite acoustics text 
+
+p. 9 discrete times n
+
+p. 9 casually joke as footnote
+
+p. 9 imaginary number def elsewhere
+
+p. 10 spectrogram should be bold X?
+
+p. 11 bold X?
+
+sec. 3.2.1 need to cite acoustics text
+
+sec 3.2 need \onepage
+
+sec 3.2.1 sigma quantifies power of noisey part
+
+p. 11 remove space between equation and paragraph
+
+p. 12 need lower case c in amplitude estimation equation
+
+p. 12 bad indent after equation
+
+p. 15 figure not found
+
+(blackman harris figures far from description but maybe this is fine after splitting chapters)
+
+p 16 partial tracking its own chapter?
+maybe state: "We choose the parital model, now we need to track its partials."
+
+p. 17 cost matrix C should be capital C
+p. 18 too in algorithm 1
+
+sec 3.3.2 use inner product notation instead of transpose
+
+p. 20 em dash looks funny
+
+s,p,b,c superscripts on a should be \text{}
+
+p. 21 the result should always be 0 for equal number of entering and exiting nodes
+
+p. 22 a^c inner product should sum to L, no?
+
+p. 23 "in this paper" -> "in that paper"
+
+p. 24 whose hth frame has ... connections?
+
+p. 24 need em dash instead of en dash
+
+p. 24 "space 75 Hz apart"
+
+p. 25 distance metric needs explanation
+
+p. 25 footnote needs period
+
+p. 25 indicate DDM of 2 signals added together
+
+p. 26 "that wasn't existent" -> "didn't exist", "not present"
+
+p. 28 for linear classifier, should use inequality. In this case, it gives what you want. We use the GMM because we have no training examples.
+
+p. 29, don't use definition symbol as you otherwise don't use it
+
+p. 29 should be "i.e., the parameters change little..."
+
+p. 30 overlap-add citation page 258 in Moore book
+
+p. 31 fix en-dash in McAulay...
+
+p. 32 "we* take the two adjacent bins..."
+
+p. 32 fix em-dash "this is true"...
+
+p. 32 "adequately separated in frequency..." and does not require sophisticated tracking procedure
+
+p. 33 "section 6"?
+
+p. 34 put H before imaginary part number in equation for consistency
+
+p. 35 reference to previous quintic paper should go in previous section
+
+p. 35 note figures where results are presented
+
+p. 45 funny em dash again
+
+p. 45 "after computing the remainder*"
+
+p. 45 do this plot with modulo error?
+
+p. 47 remind reader that this is using modified Horner's method.
+
+p. 48 chapter 5 is not experiment "2"
+
+p. 48 1st -> first
+
+p. 49 parameter definitions should be in table.
+
+p. 49 Hz should be regular text
+
+p. 50 "The DDM seeks signals..." it's really more we choose to find signals of this form, as it can seek arbitrary signals
+
+p. 51 bad indent after eq
+
+p. 51 why capital greek letters?
+
+p. 51 "most-likely" correct?
+
+p. 51 table 5.1 not comparison of total costs
+
+p. 52 last sentence missing period
+
+p. 53 The trade-off though is if one parameter is noisy and the other isn't the noisy parameter will dominate as it has more variance. so the technique is good to more sufficiently separate close values that have little noise, if one parameter is noisy, 2 PCs should be used  
+
+p. 54 Expectation Maximization can be EM
+
+p. 54 Dempster citation needs to be in good format
+
+

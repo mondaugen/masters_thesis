@@ -1,0 +1,2 @@
+random variable: continuous p(x), discrete p(Z=k)
+
