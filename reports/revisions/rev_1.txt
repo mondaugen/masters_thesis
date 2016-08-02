@@ -14,6 +14,10 @@ be cosisent abount hyphenating frequency-modulation
 
 check ordering of terms and abbreviations
 
+don't put small s after acronyms
+
+how to colour text with hyperref?
+
 Introduction:
 
 Give specific descriptions of techniques, for example when you speak of vehicles, you mean the example of using Kalman filtering to track a vehicle. This is maybe the removal of wide-sense-stationary noise from a deterministic signal.
@@ -160,5 +164,37 @@ p. 53 The trade-off though is if one parameter is noisy and the other isn't the 
 p. 54 Expectation Maximization can be EM
 
 p. 54 Dempster citation needs to be in good format
+
+p. 54 indeed not needed
+
+p. 55 where are footnotes 3 and 4?
+
+p. 55 "between frame h and h+1*"
+
+p. 56 prefers->measures
+
+p. 57 need period after "figure 5.8"
+
+p. 57 need period after "figure 5.10"
+
+p. 57 avoid refering to specific part of graph that might change
+
+p. 58 avoid refering to specific part of graph that might change
+
+p. 59 FM needs hyphenation
+
+p. 59 missing citation after "subspace methods"
+
+p. 59 maybe a more efficient technique exists, either give an outline of the idea or instead state: well, we need to use the EM algorithm, but at least we get the phase information
+
+p. 70 use bigger equation spacing
+
+p. 72 "synthesis, we use the technique..." missing reference
+
+p. 73 fix em dash
+
+p. 73-74 remove part about harmonicity assumptions
+
+p. 74 figure needs caption stating it is the PCs of the two signals overlayed
 
 
