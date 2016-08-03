@@ -441,7 +441,7 @@ threshold $\Delta$. This is summarized in Algorithm~\ref{alg:mq_peak_match}
     $\Gamma_{i} \leftarrow \varnothing$\;
     $\Gamma_{j} \leftarrow \varnothing$\;
     \For{$l \leftarrow 0$ to $L-1$}{
-        $i_{l},j_{l}=\argmin_{i \in \left[ 0,\dotsc,M-1 \right] \setminus
+        $\D i_{l},j_{l}=\argmin_{i \in \left[ 0,\dotsc,M-1 \right] \setminus
         \Gamma_{i}, j \in \left[ 0,\dotsc,M-1 \right] \setminus \Gamma_{j}}
         C_{i,j}$\;
         \If{$ C_{i_{l},j_{l}} > \Delta$}{
@@ -590,7 +590,7 @@ stored.
 The complete \textit{linear program (LP)} solving the $L$ shortest paths problem is then
 \begin{samepage}
 \[
-        \min \left\langle \boldsymbol{c}, \boldsymbol{x} \right\rangle
+    \min_{\boldsymbol{x}} \left\langle \boldsymbol{c}, \boldsymbol{x} \right\rangle
 \]
 subject to
 \[
