@@ -191,16 +191,16 @@ p. 50 explain why you use FOF
 
 #p. 59 missing citation after "subspace methods"
 
-p. 59 maybe a more efficient technique exists, either give an outline of the idea or instead state: well, we need to use the EM algorithm, but at least we get the phase information (plot needs improvement)
+#p. 59 maybe a more efficient technique exists, either give an outline of the idea or instead state: well, we need to use the EM algorithm, but at least we get the phase information (plot needs improvement)
 
-p. 70 use bigger equation spacing
+#p. 70 use bigger equation spacing
 
 p. 72 "synthesis, we use the technique..." missing reference
 
-p. 73 fix em dash
+#p. 73 fix em dash
 
-p. 73-74 remove part about harmonicity assumptions
+#p. 73-74 remove part about harmonicity assumptions
 
-p. 74 figure needs caption stating it is the PCs of the two signals overlayed
+#p. 74 figure needs caption stating it is the PCs of the two signals overlayed
 
 

@@ -343,8 +343,8 @@ samples. The figures in \ref{sec:amfmsepresults} summarize the results of the
 source separation experiment.
 
 %\begin{figure}[!t]
-%    %\centering
-%\includegraphics[width=\textwidth]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
+%    \centering
+%\includegraphics[width=\figwidthscale\textwidth]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
 %\end{figure}
 \section{Results \label{sec:amfmsepresults}}
 
@@ -375,23 +375,23 @@ summarized in Table~\ref{tab:amfmexpplotkey}.
 \end{table}
 
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_orig_data}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_data}.eps}
     \caption{Line-segments describing the frequency and frequency modulation
     of both sources.\label{plot:hsrp_test_7_multi_orig_data}}
 \end{figure}
 
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_orig_spur_data}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_spur_data}.eps}
     \caption{Line-segments describing the frequency and frequency modulation
         of the original data and the spurious data.
     \label{plot:hsrp_test_7_multi_orig_spur_data}}
 \end{figure}
 
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_class_pcs}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_class_pcs}.eps}
     \caption{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
         $\sigma_{i}^{0}$ are respectively
     the initial mean and standard deviation guesses for the EM algorithm fitting
@@ -403,8 +403,8 @@ summarized in Table~\ref{tab:amfmexpplotkey}.
 \end{figure}
 
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_est}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_est}.eps}
     \caption{Line-segments classified as belonging to Source 1. The
         classification is done on each frame so classifications in consecutive
         frames may not belong to the same true source. This is because the
@@ -414,8 +414,8 @@ summarized in Table~\ref{tab:amfmexpplotkey}.
 \end{figure}
 
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_2_est}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_est}.eps}
     \caption{Line-segments classified as belonging to Source 2. See
         Figure~\ref{plot:hsrp_test_7_multi_source_2_est} for more
         information.
@@ -480,26 +480,28 @@ of the lattice and the requirement that we find 2 non-overlapping paths (see
 Section~\ref{sec:lppathsearch}). An example of discovered paths is given in
 Figure~\ref{plot:hsrp_test_7_multi_smooth_freq_amp_sol}.
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_smooth_freq_amp_sol}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_smooth_freq_amp_sol}.eps}
     \caption{The points originally classified as source 1 are marked with
         circles and those originally classified as source 2 squares. The paths
         in black or grey connect the points for source 1 or source 2
-        respectively with optimal smoothness.
+        respectively with optimal smoothness. Plots indicated with an \textit{a}
+        are the paths with frequency smoothness as the criterion and those
+        indicated with \textit{b} are with amplitude smoothness as the citerion.
     \label{plot:hsrp_test_7_multi_smooth_freq_amp_sol}}
 \end{figure}
 The estimated sources after smoothing in frequency are shown in
 Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_freq}.
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_freq}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_freq}.eps}
     \caption{Line-segments classified as belonging to source 1 after smoothing
         in frequency.
     \label{plot:hsrp_test_7_multi_source_1_smooth_freq}}
 \end{figure}
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_freq}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_freq}.eps}
     \caption{Line-segments classified as belonging to source 2 after smoothing
         in frequency.
     \label{plot:hsrp_test_7_multi_source_2_smooth_freq}}
@@ -507,15 +509,15 @@ Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_tes
 The estimated sources after smoothing in amplitude are shown in
 Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_amp}.
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_amp}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_amp}.eps}
     \caption{Line-segments classified as belonging to source 1 after smoothing
         in amplitude.
     \label{plot:hsrp_test_7_multi_source_1_smooth_amp}}
 \end{figure}
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_amp}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_amp}.eps}
     \caption{Line-segments classified as belonging to source 2 after smoothing
         in amplitude.
     \label{plot:hsrp_test_7_multi_source_2_smooth_amp}}
@@ -531,8 +533,8 @@ When smoothed in amplitude, the results are less convincing. This is not
 surprsing as smoothness in amplitude is not the best criterion at all time
 points.
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_af}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_af}.eps}
     \caption{ Line-segments representing the instantaneous amplitude and amplitude slope at
         analysis time points. 
     \label{plot:hsrp_test_7_multi_af}}
@@ -559,23 +561,19 @@ uncorrupted measurements of one source and extrapolate the parameters of the
 signal in the part corrupted by the other.  Another shortcoming of the technique
 presented here is the use of the costly EM algorithm to classify data points
 using GMM. A more ad hoc approach could be taken to save on these computations,
-perhaps partitioning the data sets using local maxima and minima as illustrated
+perhaps partitioning the data sets using local minima as illustrated
 in Figure~\ref{plot:adhocclusterpartex}.  In any case, the source separation
 technique presented here, being interative, is of a complexity similar to NMF or
 PLCA but can also resolve the phases of the sinusoids which are discarded in
 most NMF or PLCA implementations\footnote{See \cite{bronson2014exploration} for
 an approach that does take into consideration the phase information in the
-spectrogram}.
+spectrogram.}.
 \begin{figure}[!t]
-    %\centering
-    \includegraphics[width=\textwidth]{plots/{ad_hoc_cluster_part_ex}.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/{ad_hoc_cluster_part_ex}.eps}
     \caption{The data points are convolved with some smoothing kernels giving a
-        function with a small number of extrema. The maxima are indicated by
-        circles and the minimum by a square. Two normal distributions are fit
-        using the maxima as means and the minimum as a point some number of
-        standard deviations away from that mean. This number of standard
-        deviations is computed using the difference in height between the
-        probability at the mean and that at the minimum.
-        % NEED TO DO PLOT RIGHT
+        function with a small number of extrema. The minima, indicated by
+        circles, are used as boundaries between the partitions which are
+        illustrated with different shades of grey.
     \label{plot:adhocclusterpartex}}
 \end{figure}

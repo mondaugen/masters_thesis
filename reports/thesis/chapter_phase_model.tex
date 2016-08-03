@@ -15,7 +15,7 @@ local estimations of the coefficients of a quadratic phase polynomial.
 
 A complex sinusoid with cubic phase has the following form:
 \begin{equation}
-    \caption{\label{eq:cubicphasepoly}}
+    \label{eq:cubicphasepoly}
     \phi(n) = \exp \left(c_3 n^{3} + c_2 n^{2} + c_1 n + c_0 \right)
 \end{equation}
 One with quadratic phase has this form:
@@ -400,14 +400,16 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 % compare_mq_interp_funcs_1.py
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_cubic_original_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_cubic_original_spec.eps}
     \caption{This depicts the log spectrum. Darker regions represent greater
         values whereas lighter are smaller values.
     \label{plot:mqcubicoriginalspec}}
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_cubic_estimated_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_cubic_estimated_spec.eps}
     \caption{This depicts the log spectrum. Darker regions represent greater
         values whereas lighter are smaller values. The estimated signal is
         computed using the original method proposed by McAulay and Quatieri.
@@ -415,7 +417,8 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_cubic_error.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_cubic_error.eps}
     \caption{
         The error when subtracting the original signal from the estimated
         signal. The estimated signal is computed using the original method
@@ -424,14 +427,16 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 %\begin{figure}[!t]
-%    \includegraphics[width=\textwidth]{plots/mq_mod_cubic_original_spec.eps}
+%    \centering
+%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_cubic_original_spec.eps}
 %    \caption{This depicts the dB spectrum. Darker regions represent greater
 %        values whereas lighter are smaller values.
 %    \label{plot:mqmodcubicoriginalspec}}
 %\end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_cubic_estimated_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_cubic_estimated_spec.eps}
     \caption{This depicts the dB spectrum. Darker regions represent greater
         values whereas lighter are smaller values. The estimated signal is
         computed using the cubic interpolation method proposed here.
@@ -439,7 +444,8 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_cubic_error.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_cubic_error.eps}
     \caption{The error when subtracting the original signal from the estimated
         signal. The estimated signal is computed using the cubic interpolation
         method proposed here.
@@ -447,14 +453,16 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 %\begin{figure}[!t]
-%    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_original_spec.eps}
+%    \centering
+%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_original_spec.eps}
 %    \caption{This depicts the dB spectrum. Darker regions represent greater
 %        values whereas lighter are smaller values.
 %    \label{plot:mqmodcubicoriginalspec}}
 %\end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_estimated_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_estimated_spec.eps}
     \caption{This depicts the dB spectrum. Darker regions represent greater
         values whereas lighter are smaller values. The estimated signal is
         computed using the quintic interpolation method proposed here.
@@ -462,7 +470,8 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_error.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_error.eps}
     \caption{The error when subtracting the original signal from the estimated
         signal. The estimated signal is computed using the quintic interpolation
         method proposed here.
@@ -470,14 +479,16 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
     \caption{This shows the error of the interpolated signals when compared
     with the original signal for the three proposed methods.
     \label{plot:mqmoderrcomplogamperr}}
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_logamp_func.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_func.eps}
     \caption{This compares the original log-amplitude function with the
     interpolated log-amplitude functions. The log-amplitude functions are
     considered because these are the real part of the polynomial exponents in
@@ -486,7 +497,8 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
     \caption{This compares the theoretical phase function with the interpolated
         phase functions. The phase functions are considered because these are
         the imaginary part of the polynomial exponents in the complex sinusoidal
@@ -499,7 +511,8 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_func.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_phase_func.eps}
     \caption{Error bound of polynomial evaluation using Horner's method. The
     error bound is shown for the quintic phase and amplitude polynomials.
     \label{plot:mqmoderrcompphasefunc}}
@@ -525,6 +538,7 @@ errors are negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the
 results.
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
     \caption{\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}

@@ -1,4 +1,5 @@
-\documentclass[letterpaper,12pt]{report}
+\documentclass[openright,twoside,letterpaper,12pt]{report}
+\usepackage{McGillLogo}
 \usepackage[fancyhdr]{McECEThesis}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -13,14 +14,38 @@
 %    linkcolor=blue,
 %    citecolor=gray
 }
+\usepackage{setspace}
+\onehalfspacing
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
-\DeclareMathOperator{\argmin}{argmin}
-\DeclareMathOperator{\argmax}{argmax}
+%\DeclareMathOperator{\argmin}{argmin}
+%\DeclareMathOperator{\argmax}{argmax}
+\def\argmin{\mathop{\rm arg\,min}}
+\def\argmax{\mathop{\rm arg\,min}}
 \newcommand\ImNe[1]{\Im \left\{ #1 \right\}}
 \newcommand\ReNe[1]{\Re \left\{ #1 \right\}}
+\newcommand{\D}{\displaystyle}
+\newcommand{\T}{\textstyle}
+% Scale figures
+\def\figwidthscale{0.8}
 \begin{document}
+\title{Audio Source Separation via the Grouping of Partials in the
+Sum-of-Sinusoids Model}
 \author{Nicholas Esterer}
-\title{Elements of Source Separation}
+\organization{%
+    Department of Music Research \\
+    Schulich School of Music \\
+    McGill University \\
+    Montreal, Canada}
+\note{%
+    {\hrule height 0.4ex}
+    \vskip 3ex
+    A thesis submitted to McGill University
+    in partial fulfilment of the requirements of the degree of
+    Master of Arts.
+    \vskip 3ex
+    \copyright\ \the\year\ Nicholas Alois Esterer
+}
+
 \maketitle
 \tableofcontents
 

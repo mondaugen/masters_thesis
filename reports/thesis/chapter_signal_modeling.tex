@@ -372,22 +372,26 @@ to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
 % Plots made with continuous_blackman_1.py
 \begin{figure}[!t]
     \caption{\label{plot:opt_blackman}}
-    \includegraphics[width=\textwidth]{plots/min4_blackman_td.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_td.eps}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{}
-    \includegraphics[width=\textwidth]{plots/min4_blackman_fd.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_fd.eps}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{}
-    \includegraphics[width=\textwidth]{plots/c1_blackman_td.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_td.eps}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{}
-    \includegraphics[width=\textwidth]{plots/c1_blackman_fd.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_fd.eps}
 \end{figure}
 
 \section{\label{sec:partialtracking}Partial Tracking}
@@ -507,12 +511,14 @@ path not using the nodes of the first path.
 
 \begin{figure}[!t]
     \caption{\label{plot:simple_graph}}
-    \includegraphics[width=\textwidth]{plots/small_graph_ex.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex.eps}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{\label{plot:simple_graph_greedy_paths}}
-    \includegraphics[width=\textwidth]{plots/small_graph_ex_greedy_paths.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex_greedy_paths.eps}
 \end{figure}
 
 To find a set of paths minimizing the total cost, we instead search for total
@@ -618,7 +624,8 @@ its rows, etc.
 
 \begin{figure}[!t]
     \caption{\label{plot:simple_graph_lp_paths}}
-    \includegraphics[width=\textwidth]{plots/small_graph_ex_lp_paths.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex_lp_paths.eps}
 \end{figure}
 
 The solution of the two best paths using the LP formulation
@@ -734,31 +741,36 @@ to nodes between frequencies 250 to 2250 Hz.
 
 \begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_20.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
     \caption{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_20}}
 \end{figure}
 \begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_15.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
     \caption{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_15}}
 \end{figure}
 \begin{figure}[!t]
     %\centering
-    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_10.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_10.eps}
     \caption{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_10}}
 \end{figure}
 %\begin{figure}[!t]
 %    %\centering
-%    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_20.eps}
+%    \centering
+%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
 %    \caption{ Line-segments representing the discovered partial paths.
 %    \label{plot:mq_lp_compare_chirp_hint20}}
 %\end{figure}
 %\begin{figure}[!t]
 %    %\centering
-%    \includegraphics[width=\textwidth]{plots/mq_lp_compare_chirp_15.eps}
+%    \centering
+%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
 %    \caption{ Line-segments representing the discovered partial paths.
 %    \label{plot:mq_lp_compare_chirp_hint15}}
 %\end{figure}
@@ -845,8 +857,8 @@ there are only two classes, we might postulate a linear
 classifier
 \[
     \hat{h}(\boldsymbol{x}) = \begin{cases}
-        0 \text{ if } \boldsymbol{\Beta}^{T}\boldsymbol{x} > c \\
-        1 \text{ if } \boldsymbol{\Beta}^{T}\boldsymbol{x} < c
+        0 \text{ if } \boldsymbol{\beta}^{T}\boldsymbol{x} > c \\
+        1 \text{ if } \boldsymbol{\beta}^{T}\boldsymbol{x} < c
     \end{cases}
 \]
 where 0 and 1 indicate membership in class 0 or 1. Techniques for choosing

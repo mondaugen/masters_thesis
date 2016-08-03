@@ -2,10 +2,10 @@
 %   - for use with documentclass report
 %     \usepackage [fancyhdr]{McECEThesis}
 
-% $Id: McECEThesis.sty,v 1.1 2005/06/09 12:48:17 kabal Exp $
+% $Id: McECEThesis.sty,v 1.9 2000/03/26 12:46:34 pkabal Exp $
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{McECEThesis}[2005/02/15]
+\ProvidesPackage{McECEThesis}[2000/03/15]
 
 \newif\if@fancyhdr
 \DeclareOption{fancyhdr}{\@fancyhdrtrue}
@@ -96,9 +96,8 @@
 
 %========= Dummy definitions if datestamp package is not loaded
 \ifx\datestampbox\@undefined
-  \def\datestampbox{}
+  \let\datestampbox=\relax
   \def\rcs #1{}
-  \def\resetdatestamp{}
 \fi
 
 %========= Fancy headings setup
@@ -195,6 +194,10 @@
     \vskip 3ex%
     {\large
      \lineskip 0.5em%
+     \begin{center}
+      \definecolor{DarkRed}{rgb}{.9,0,0}
+      \McGillCrest[DarkRed]{!}{1in}            % 1 inch high McGill crest
+     \end{center}
      \begin{tabular}[t]{c}%
        \@organization
      \end{tabular}\par}%

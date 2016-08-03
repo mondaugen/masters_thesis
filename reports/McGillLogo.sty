@@ -2,26 +2,46 @@
 %   \usepackage{McGillLogo}
 %
 % This package provides a McGill University crest.  It uses the Encapsulated
-% PostScript file McGillcrest.eps or the PDF file McGillcrest.pdf.
+% PostScript file McGillcrest.epsf.
 %
 % macros:
-%    \McGillCrest{h-length}{v-length}
+%    \McGillCrest[colour-name]{h-length}{v-length}
 %      Scale the crest so that the width is the given h-length value and the
 %      height is the given v-length value.  If either dimension is given as !,
 %      the other argument is used to determine the scaling.  This macro calls
-%      \resizebox passing the arguments directly to that macro.
+%      \resizebox passing the arguments directly to that macro.  The colour is
+%      determined by the named colour used in the optional argument.  The
+%      default colour is red.  Named colours can be defined using \definecolor.
 %
 % Example:
 %   \usepackage{McGillLogo}
-%   \McGillCrest{!}{1in}            % 1 inch high McGill crest
+%   \definecolor{DarkRed}{rgb}{.9,0,0}
+%   \McGillCrest[DarkRed]{!}{1in}            % 1 inch high McGill crest
 
-% $Id: McGillLogo.sty,v 1.4 2004/08/31 19:59:14 kabal_res Exp $
+% $Id: McGillLogo.sty,v 1.3 1998/10/28 14:58:32 kabal Exp $
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{McGillLogo}[2004/08/31]
+\ProvidesPackage{McGillLogo}[1995/01/23]
 
 \RequirePackage{graphics}
+\RequirePackage{color}
 
-% McGill crest
-\newcommand\McGillCrest[2]{\resizebox{#1}{#2}{%
-        \includegraphics{McGillcrest}}}
+% Supported color models (cmyk is only in PostScript Level 2)
+\def\Mset@rgb{setrgbcolor}
+\def\Mset@hsb{sethsbcolor}
+\def\Mset@cmyk{setcmykcolor}
+\def\Mset@gray{setgray}
+
+% Define the PS macro McGillCrestFg to set the colour to the current TeX colour
+\def\Msetcolor{\expandafter\M@mc\current@color/}
+\def\M@mc #1 #2/{\@ifundefined{Mset@#1}%
+                 {\PackageWarning{McGillLogo}{Unsupported color model `#1'}}%
+                 {\special{ps: /McGillCrestFg
+                           {#2 \csname Mset@#1\endcsname}def}}}
+
+% McGill crest: set the TeX colour and then pick up the colour coordinates
+% to pass to the McGillcrest.epsf procedure (as McGillCrestFg)
+\newcommand\McGillCrest[3][red]{\resizebox{#2}{#3}{%
+        \color{#1}
+	\Msetcolor
+        \includegraphics{McGillcrest.eps}}}

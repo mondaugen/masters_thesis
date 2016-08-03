@@ -2,14 +2,15 @@
 \label{chap:decaysep}}
 
 In this section we demonstrate how the techniques described above can be used to
-perform audio source separation. We start with a recording of an acoustic guitar
-playing $a_{3}$ and a xylophone playing $f_{4}^{\sharp}$. The recordings are
-from \cite{opolko1987mcgill} and have been mixed down to one channel (by simply
+perform audio source separation on signals obtained from recordings of acoustic
+instruments. We start with a recording of an acoustic guitar playing $a_{3}$ and
+a xylophone playing $f_{4}^{\sharp}$.  The recordings are from
+\cite{opolko1987mcgill} and have been mixed down to one channel (by simply
 adding the two signals together) and resampled at 16 KHz, coded simply as a
-stream of 64-bit floating-point numbers. Spectrograms of the original signals are
-shown in Figure~\ref{plot:acgtra3specgram} and
-Figure~\ref{plot:xylofs4specgram}. The spectrograms were produced with a
-Hann window, DFT size of 4096 samples and a hop size of 512 samples.
+stream of 64-bit floating-point numbers. Spectrograms of the original signals
+are shown in Figure~\ref{plot:acgtra3specgram} and
+Figure~\ref{plot:xylofs4specgram}. The spectrograms were produced with a Hann
+window, DFT size of 4096 samples and a hop size of 512 samples.
 
 The mixture of the two signals was analysed using the DDM for finding the
 coefficients of a cubic complex phase polynomial. Local maxima in each frame
@@ -30,7 +31,8 @@ These are filtered out by discarding paths whose cost-length ratio is excessive.
 See Figure~\ref{plot:acgtra3xylofs4costlengththresh} to see a plot of these
 values and the thresholding function. 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.eps}
     \caption{Paths (represented as circles) are considered only if their
     path cost is smaller than the threshold function (represented in black).\label{plot:acgtra3xylofs4costlengththresh}}
 \end{figure}
@@ -38,26 +40,31 @@ The spectrogram of
 the mixture can be seen in Figure~\ref{plot:acgtra3xylofs4specgram} and the
 partial paths in Figure~\ref{plot:acgtra3xylofs4partials}.
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_specgram.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram.eps}
     \caption{\label{plot:acgtra3xylofs4specgram}}
 \end{figure}
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/partial_estimation_acgtr_xylo_specgram_partials.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram_partials.eps}
     \caption{\label{plot:acgtra3xylofs4partials}}
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/ac_gtr_orig_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_orig_spec.eps}
     \caption{\label{plot:acgtra3specgram}}
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/xylo_orig_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_orig_spec.eps}
     \caption{\label{plot:xylofs4specgram}}
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_partial_trajectories.pdf}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_partial_trajectories.pdf}
     \caption{\label{plot:parclassaxpartialtrajectories}}
 \end{figure}
 
@@ -81,8 +88,14 @@ The data-points have the form
 where $a_{i,0}$ is the first PC and $a_{i,1}$ the second. The set of PC data
 points will be denoted $\{\boldsymbol{a}\}$.
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_sep_true_memberships.eps}
-    \caption{\label{plot:partialclassificationacgtrxyloseptruememberships}}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_sep_true_memberships.eps}
+    \caption{This shows the distribution of partials when plotting their two PCs
+        derived from their mean frequency and log-length. In this case, the
+        source memberships of the partials are known. We see that there is
+        generally a separation of the partials into two clusters corresponding
+        to the two sources.
+        \label{plot:partialclassificationacgtrxyloseptruememberships}}
 \end{figure}
 We see that, for the most part, the partials belonging to the two sources are
 separated appropriately into two clusters. The partials from the xylophone
@@ -117,11 +130,11 @@ $\boldsymbol{\Sigma}_{\boldsymbol{a}}$ is defined as
     \boldsymbol{\Sigma}_{\boldsymbol{a}}
     =
     \begin{pmatrix}
-        \frac{\Delta_{\boldsymbol{a}_1}}{\Delta_{\boldsymbol{a}_0
+        \frac{\D\Delta_{\boldsymbol{a}_1}}{\D\Delta_{\boldsymbol{a}_0
         +\Delta_{\boldsymbol{a}_1}}}
             \theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}}
         & 0 \\
-        0 & \frac{\Delta_{\boldsymbol{a}_0}}{\Delta_{\boldsymbol{a}_0
+        0 & \frac{\D\Delta_{\boldsymbol{a}_0}}{\D\Delta_{\boldsymbol{a}_0
     +\Delta_{\boldsymbol{a}_1}}}
             \theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}}
     \end{pmatrix}
@@ -175,7 +188,8 @@ classification task can be seen in
 Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}.
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/partial_classification_acgtr_xylo_estimated_memberships.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_estimated_memberships.eps}
     \caption{\label{plot:partialclassificationacgtrxylosepestimatedmemberships}}
 \end{figure}
 
@@ -187,32 +201,33 @@ are shown in Figure~\ref{plot:acgtra3specgramss} and
 Figure~\ref{plot:xylofs4specgramss}. 
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/ac_gtr_ss_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_ss_spec.eps}
     \caption{\label{plot:acgtra3specgramss}}
 \end{figure}
 
 \begin{figure}[!t]
-    \includegraphics[width=\textwidth]{plots/xylo_ss_spec.eps}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_ss_spec.eps}
     \caption{\label{plot:xylofs4specgramss}}
 \end{figure}
 
 \subsection{Conclusion}
 
-After an informal listening, the
-source separation is perceptually convincing.\footnote{Soundfiles can be
-downloaded from \par
+After an informal listening, the source separation is perceptually
+convincing.\footnote{Soundfiles can be downloaded from \par
 \url{https://drive.google.com/file/d/0B8B4c04j8tBwZDFraEZ1dFZHRFU/view?usp=sharing}}
 At least one partial from the guitar can be heard in the xylophone recording,
-however --
-it is difficult to separate partials that do not have sufficient spacial separation in
-Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}. Another drawback of the current technique is that it requires some
-tuning of the parameters $\theta_{w}$ and
-$\theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}}$. Furthermore, some of the
-partials from both sounds were lost in the analysis. Although a shortcoming of
+however --- it is difficult to separate partials that do not have sufficient
+spacial separation in
+Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}. Another
+drawback of the current technique is that it requires some tuning of the
+parameters $\theta_{w}$ and $\theta_{\boldsymbol{\Sigma_{\boldsymbol{a}}}}$.
+From the spectrograms of the resynthesized sources, we see that some of the
+partials from both sounds were lost in the analysis.  Although a shortcoming of
 the analysis rather than the classification, if partials are not sufficiently
 separated in time or frequency, they cannot be separated as their analysis will
 yield simply one partial when there in fact many. In any case, it is important
 to see that source separation can be carried out by only considering the
 amplitude modulation (in this case, the decay rate) in relation to the partial
-frequency---the techniques discussed in Section~\ref{sec:previoussstechniques}
-use fundamental frequency estimation or harmonicity assumptions in their models.
+frequency.
