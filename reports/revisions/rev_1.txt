@@ -18,6 +18,10 @@ don't put small s after acronyms
 
 how to colour text with hyperref?
 
+change title
+
+explain better the choice of parameter values in experiment 2
+
 Introduction:
 
 Give specific descriptions of techniques, for example when you speak of vehicles, you mean the example of using Kalman filtering to track a vehicle. This is maybe the removal of wide-sense-stationary noise from a deterministic signal.
@@ -107,85 +111,87 @@ maybe state: "We choose the parital model, now we need to track its partials."
 
 #p. 26 "that wasn't existent" -> "didn't exist", "not present"
 
-p. 28 for linear classifier, should use inequality. In this case, it gives what you want. We use the GMM because we have no training examples.
+#p. 28 for linear classifier, should use inequality. In this case, it gives what you want. We use the GMM because we have no training examples.
 
-p. 29, don't use definition symbol as you otherwise don't use it
+#p. 29, don't use definition symbol as you otherwise don't use it
 
-p. 29 should be "i.e., the parameters change little..."
+#p. 29 should be "i.e., the parameters change little..."
 
 p. 30 overlap-add citation page 258 in Moore book
 
-p. 31 fix en-dash in McAulay...
+#p. 31 fix en-dash in McAulay...
 
-p. 32 "we* take the two adjacent bins..."
+#p. 32 "we* take the two adjacent bins..."
 
-p. 32 fix em-dash "this is true"...
+#p. 32 fix em-dash "this is true"...
 
-p. 32 "adequately separated in frequency..." and does not require sophisticated tracking procedure
+#p. 32 "adequately separated in frequency..." and does not require sophisticated tracking procedure
 
-p. 33 "section 6"?
+#p. 33 "section 6"?
 
-p. 34 put H before imaginary part number in equation for consistency
+#p. 34 put H before imaginary part number in equation for consistency
 
-p. 35 reference to previous quintic paper should go in previous section
+#p. 35 reference to previous quintic paper should go in previous section
 
-p. 35 note figures where results are presented
+#p. 35 note figures where results are presented
 
-p. 45 funny em dash again
+$p. 45 funny em dash again
 
-p. 45 "after computing the remainder*"
+#p. 45 "after computing the remainder*"
 
-p. 45 do this plot with modulo error?
+#p. 45 do this plot with modulo error (do it)
 
-p. 47 remind reader that this is using modified Horner's method.
+#p. 47 remind reader that this is using modified Horner's method.
 
-p. 48 chapter 5 is not experiment "2"
+#p. 48 chapter 5 is not experiment "2"
 
-p. 48 1st -> first
+#p. 48 1st -> first
 
-p. 49 parameter definitions should be in table.
+#p. 49 parameter definitions should be in table.
 
-p. 49 Hz should be regular text
+#p. 49 Hz should be regular text
 
-p. 50 "The DDM seeks signals..." it's really more we choose to find signals of this form, as it can seek arbitrary signals
+p. 50 explain why you use FOF
 
-p. 51 bad indent after eq
+#p. 50 "The DDM seeks signals..." it's really more we choose to find signals of this form, as it can seek arbitrary signals
 
-p. 51 why capital greek letters?
+#p. 51 bad indent after eq
 
-p. 51 "most-likely" correct?
+#p. 51 why capital greek letters? (because captial letters often indicare random variables, but there are numerous contradictions to this in this thesis)
 
-p. 51 table 5.1 not comparison of total costs
+#p. 51 "most-likely" correct?
 
-p. 52 last sentence missing period
+#p. 51 table 5.1 not comparison of total costs
 
-p. 53 The trade-off though is if one parameter is noisy and the other isn't the noisy parameter will dominate as it has more variance. so the technique is good to more sufficiently separate close values that have little noise, if one parameter is noisy, 2 PCs should be used  
+#p. 52 last sentence missing period
 
-p. 54 Expectation Maximization can be EM
+#p. 53 The trade-off though is if one parameter is noisy and the other isn't the noisy parameter will dominate as it has more variance. so the technique is good to more sufficiently separate close values that have little noise, if one parameter is noisy, 2 PCs should be used  
 
-p. 54 Dempster citation needs to be in good format
+#p. 54 Expectation Maximization can be EM
 
-p. 54 indeed not needed
+#p. 54 Dempster citation needs to be in good format
 
-p. 55 where are footnotes 3 and 4?
+#p. 54 indeed not needed
 
-p. 55 "between frame h and h+1*"
+#p. 55 where are footnotes 3 and 4? (see if tablefootnote helps)
 
-p. 56 prefers->measures
+#p. 55 "between frame h and h+1*"
 
-p. 57 need period after "figure 5.8"
+#p. 56 prefers->measures
 
-p. 57 need period after "figure 5.10"
+#p. 57 need period after "figure 5.8"
 
-p. 57 avoid refering to specific part of graph that might change
+#p. 57 need period after "figure 5.10"
 
-p. 58 avoid refering to specific part of graph that might change
+#p. 57 avoid refering to specific part of graph that might change
 
-p. 59 FM needs hyphenation
+#p. 58 avoid refering to specific part of graph that might change
 
-p. 59 missing citation after "subspace methods"
+#p. 59 FM needs hyphenation
 
-p. 59 maybe a more efficient technique exists, either give an outline of the idea or instead state: well, we need to use the EM algorithm, but at least we get the phase information
+#p. 59 missing citation after "subspace methods"
+
+p. 59 maybe a more efficient technique exists, either give an outline of the idea or instead state: well, we need to use the EM algorithm, but at least we get the phase information (plot needs improvement)
 
 p. 70 use bigger equation spacing
 

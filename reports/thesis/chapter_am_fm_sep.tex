@@ -1,4 +1,4 @@
-\chapter{Experiment 2: Partial grouping in one frame}
+\chapter{Experiment: Partial grouping by amplitude- and frequency-modulation}
 
 \section{Introduction}
 To evaluate whether the grouping of partials with common AM and FM parameters is
@@ -22,7 +22,7 @@ clustering algorithm and we evalutate the results. A summary follows:
         Principal components analysis is carried out on the parameters happening
         at one time instance.
     \item
-        A histogram is made of the 1st principal components. Values sharing a
+        A histogram is made of the first principal components. Values sharing a
         bin with too few other values are discarded to remove spurious data
         points.
     \item
@@ -37,56 +37,38 @@ clustering algorithm and we evalutate the results. A summary follows:
 The algorithm is run on a typical source separation problem to evaluate its
 plausibility.
 \section{Synthesis}
-Our model makes available the following parameters. Time values are in seconds,
-frequency values are in $Hz$ and phase values are in radians.
-\begin{itemize}
-    \item
-        $t$ time.
-    \item
-        $f_{s}$ sampling frequency.
-    \item
-        $N$ length of signal in samples.
-    \item
-        $H$ duration between data-point calculations in samples (i.e., the hop
-        size).
-    \item
-        $N_{p}$ number of sources.
-    \item
-        $p$ which source.
-    \item
-        $f_{0,p}$ fundamental frequency.
-    \item
-        $K_{p}$ number of harmonics.
-    \item
-        $k_{60,p}$ harmonic number 60 dB lower than the first.
-    \item 
-        $B_{p}$ the inharmonicity coefficient.
-    \item
-        $\phi_{0,p}$ initial phase.
-    \item
-        $\phi_{0,f,p}$ initial FM phase.
-    \item
-        $t_{60,p}$ time until amplitude of partial has dropped 60 dB.
-    \item
-        $t_{\text{attack},p}$ time duration of attack portion.
-    \item
-        $A_{f,p}$ amplitude of FM.
-    \item
-        $f_{f,p}$ frequency of FM.
-    \item
-        $s_{p}$ the signal representing the $p$th source.
-\end{itemize}
+Our model makes available the parameters summarized in
+Table~\ref{tab:ex2synthparams}. Time values are in seconds,
+frequency values are in Hz and phase values are in radians.
+\begin{table}
+    \begin{tabular}{l r}
+        $H$ & duration between data-point calculations in samples (i.e., the hop
+        size). \\
+        $N_{p}$ & number of sources. \\
+        $p$ & which source. \\
+        $f_{0,p}$ & fundamental frequency. \\
+        $K_{p}$ & number of harmonics. \\
+        $k_{60,p}$ & harmonic number 60 dB lower than the first. \\
+        $B_{p}$ & the inharmonicity coefficient. \\
+        $\phi_{0,p}$ & initial phase. \\
+        $\phi_{0,f,p}$ & initial FM phase. \\
+        $t_{60,p}$ & time until amplitude of partial has dropped 60 dB. \\
+        $t_{\text{attack},p}$ & time duration of attack portion. \\
+        $A_{f,p}$ & amplitude of FM. \\
+        $f_{f,p}$ & frequency of FM. \\
+        $s_{p}$ & the signal representing the $p$th source.
+    \end{tabular}
+    \caption{Synthesis parameters \label{tab:ex2synthparams}}
+\end{table}
 
 To incorporate inharmonicity often observed in real string instruments where the
 strings exhibit some stiffness, we define the \textit{stretched} harmonic numbers
 as follows
 \cite{paspweb2010}\footnote{
 \texttt{http://ccrma.stanford.edu/\~{}jos/pasp/Dispersion\_Filter\_Design\_I.html}}
-
 \begin{equation}
     K_{B}(k) = k (1+Bk^{2})^{\frac{1}{2}}
 \end{equation}
-
 Each source is synthesized using the following equation:
 \begin{equation}
     s_{p}(t) = \sum_{k=1}^{K_{p}} A_{p}(k,t) \exp(j(2\pi
@@ -118,9 +100,10 @@ The estimation of these parameters is a separate problem addressed by the
 DDM (see Section~\ref{sec:ddm_description}). We use theoretical values calculated
 directly from the model signals. For interpretation, and to make it possible to
 simply replace the theoretical values with those obtained from an analysis, we
-compute parameters that correspond to the model of these methods.
+compute parameters that correspond to a model whose parameters could be
+estimated through a technique such as the DDM.
 
-The DDM seeks signals $s_k \in \mathbb{C}$ of the following form:
+For this experiment we seek signals $s_k \in \mathbb{C}$ of the following form:
 \begin{equation}
     s_{k}(n) = \exp(\log(A_{k}) + \alpha_{k}n + j(\phi_{k} + \omega_{k}n +
     \frac{1}{2} \psi_{k} n^{2})) \label{eq:rm_model}
@@ -168,9 +151,7 @@ then $\log(A_{k,p})$ and $\alpha_{k,p}$ are found as the least-squares solution 
     \end{pmatrix}
     = \log{\hat{\mathbf{s}}_{k,p}(t)}
 \end{equation}
-
 for the argument parameters (those multiplied by $j$ in Equation~\eqref{eq:rm_model})
-
 \begin{equation}
     \omega_{k,p} \left( t \right)  = \frac{2 \pi}{f_{s}}  \left(  f_{0,p} +
     A_{f,p} \sin \left( 2 \pi f_{f,p} t + \phi_{0,f,p} \right)  \right)
@@ -192,10 +173,10 @@ parameters from an arbitrary signal, we create noise corrupted values by
 substituting the random variables:
 \begin{itemize}
     \item
-        $\tilde{\Psi}_{k,p}(t) \sim
+        $\tilde{\psi}_{k,p}(t) \sim
         \mathcal{N}(\psi_{k,p}(t),\psi_{no})$
     \item
-        $\tilde{\Omega}_{k,p}(t) \sim
+        $\tilde{\omega}_{k,p}(t) \sim
         \mathcal{N}(\omega_{k,p}(t),\omega_{no})$
     \item
         $\tilde{\alpha}_{k,p}(t) \sim
@@ -224,7 +205,7 @@ substituting the random variables:
 %        \mathcal{N}(A_{k,p}(t),A_{no})$
 %\end{itemize}
 The $\theta_{no}$ (where $\theta$ is replaced by $\omega$ etc.) specifies the
-variance of the particular parameter. Most-likely in practice these random
+variance of the particular parameter. Most likely in practice these random
 variables would be correlated but not knowing the estimation method, we cannot
 at this point say anything about this correlation. Therefore the noisy
 parameters are uncorrelated random variables for this experiment.
@@ -237,14 +218,15 @@ $\omega$ parameter. For this experiment $r = 0.25$. The parameters of the
 uniformly distributed random variables are given in
 Table~\ref{tab:amfmspuriousuniformparams}.
 \begin{table}
-    \caption{Comparison of total costs\label{tab:amfmspuriousuniformparams}}
+    \caption{Distribution parameters of uniformly distributed random
+    variables\label{tab:amfmspuriousuniformparams}}
     \begin{center}
         \begin{tabular}{l r r}
             Parameter & $\theta_{\text{min}}$ & $\theta_{\text{max}}$ \\
             \hline
             $\omega$  & $0$ & $\pi$ \\
             $\psi$    & $-1 \times 10^{-4}$ & $1 \times 10^{-4}$ \\
-            $\alpha$    & $-1 \times 10^{-3}$ & $1 \times 10^{-3}$ \\
+            $\alpha$  & $-1 \times 10^{-3}$ & $1 \times 10^{-3}$ \\
         \end{tabular}
     \end{center}
 \end{table}
@@ -288,7 +270,7 @@ $\mathbf{A}(t)$ are then computed as
     \mathbf{A}(t) = \mathbf{V}^{T}(t)\mathbf{X}(t)
 \end{equation}
 We have found it sufficient to use only the first principal component and
-therefore only use the values in the first row of $\mathbf{A}(t)$
+therefore only use the values in the first row of $\mathbf{A}(t)$.
 
 If we see the $\mathbf{x}_{l}(t)$ as realizations of a random variable, the
 above computation of principal components has the effect of projecting
@@ -296,15 +278,19 @@ realizations of $\mathbf{x}_{l}(t)$ to points $a_{1,l}(t)$ on a 1-dimensional
 subspace. It is a fundamental theory of principal components that the
 transformation above maximizes the expected euclidean distance between the
 points $a_{1,l}(t)$. This is desirable for the current problem because it will
-always produce a variable emphasizing the parameter with the most variance,
-hence if we are observing a random variable drawn from multiple distributions
-with sufficiently separated means and small enough variances, this separation
-will be most observable in the principal components corresponding to the
-greatest eigenvalues.
+always produce a variable emphasizing the parameter with the most variance. More
+specifically, if a scatter plot of the frequency-modulation measurements shows
+multiple distinct clusters whereas the amplitude-modulation measurements are all
+close and show only one cluster in a scatter plot, the first PC will emphasize
+the frequency-modulation measurements, which we desire for ease of clustering.
+The drawback of this approach is that if one parameter is very noisy and the
+other is not, the noisy parameter will be emphasized but forming informative
+clusters will be difficult. In that case it would be better to reject this
+parameter or use more PCs on which to perform clustering.
 
 \section{Preparing data for clustering \label{sec:amfmseppreparecluster}}
-The Expectation Maximization underlying the Gaussian mixture model parameter
-estimation will only converge to a local maximum (see Dempster et al),
+The EM underlying the Gaussian mixture model parameter
+estimation will only converge to a local maximum \cite{dempster1977maximum},
 therefore, for the best results, we compute a good initial guess and remove
 obvious outliers before carrying out the clustering algorithm.
 
@@ -315,7 +301,7 @@ values are discarded. We find $N_{p}$ contiguous sections of equal area in the
 new histogram omitting the discarded values.  We use the centres of these
 sections as the initial mean guesses and half their width as the distance 3
 standard deviations from the mean (roughly 99.7 percent of values drawn from one
-distribution will lie within this interval if they indeed follow a normal
+distribution will lie within this interval if they follow a normal
 distribution). The initial guesses for the weights are simply $\frac{1}{N_{p}}$.
 
 \section{Clustering}
@@ -333,7 +319,7 @@ parameters summarized in Table~\ref{tab:synthparamamfmsep}.
         \begin{tabular}{c c c }
             Parameter & Source 1 value & Source 2 value \\
             \hline
-            $f_{0,p}$ & 261.63 & 277.18 \footnote{These are the fundamental
+            $f_{0,p}$ & 261.63 & 277.18 \tablefootnote{These are the fundamental
             frequencies of a $c_{4}$
             and $c_{4}^{\sharp}$ respectively.} \\
             $K_{p}$ & 20 & 20 \\
@@ -343,7 +329,7 @@ parameters summarized in Table~\ref{tab:synthparamamfmsep}.
             $\phi_{0,f,p}$ & 0 & 0.8 \\
             $t_{60,p}$ & 0.5 & 0.75 \\
             $t_{\text{attack},p}$ & 0.1 & 0.1 \\
-            $A_{f,p}$ & 7.666 & 8.1220 \footnote{These values are found by
+            $A_{f,p}$ & 7.666 & 8.1220 \tablefootnote{These values are found by
             computing $f_{0,p}2^{1/24}-f_{0,p}$ giving a quarter-tone of
             frequency modulation centred around the fundamental frequency.} \\
             $f_{f,p}$ & 3 & 2
@@ -454,7 +440,7 @@ classification $\tilde{p}$ we have frequency measurements
 $\omega_{k,\tilde{p}}^{h}$
 and frequency slope measurements $\psi_{k,\tilde{p}}^{h}$. The set of parameters
 at time $h$ from initially classified source $\tilde{p}$ we will denote
-$\boldsymbol{\theta}_{\tilde{p}}^{h}$. Between frame $h$ and frame $h-1$ we use
+$\boldsymbol{\theta}_{\tilde{p}}^{h}$. Between frame $h$ and frame $h+1$ we use
 Algorithm~\ref{alg:mq_peak_match} on the pairs $\left\{ \boldsymbol{\theta}_{\tilde{m}}^{h},
 \boldsymbol{\theta}_{\tilde{n}}^{h+1} \right\}$ with $(m,n) \in \{0,1\} \times
 \{0,1\}$. For
@@ -468,10 +454,10 @@ frame, i.e.,
     \theta_{j,\tilde{n}}^{h+1} \right) = | \omega_{i,\tilde{m}}^{h} +
     \psi_{i,\tilde{m}}^{h} H - \omega_{j,\tilde{n}}^{h+1} |
 \]
-where $H$ is the
-hop-size in samples between the two frames.
-The second distance metric prefers smoothness in amplitude between two frames.
-It is given as
+where $H$ is the hop-size in samples between the two frames.  The second
+distance metric measures the smoothness in amplitude between two frames by
+predicting the next frame's amplitude parameters using the amplitude and
+amplitude-modulation parameters of the current frame.  It is given as
 \[
     \mathcal{D}_{a} \left( \theta_{i,\tilde{m}}^{h},
     \theta_{j,\tilde{n}}^{h+1} \right) = | \log(A_{i,\tilde{m}}^{h}) +
@@ -503,7 +489,7 @@ Figure~\ref{plot:hsrp_test_7_multi_smooth_freq_amp_sol}.
     \label{plot:hsrp_test_7_multi_smooth_freq_amp_sol}}
 \end{figure}
 The estimated sources after smoothing in frequency are shown in
-Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_freq}
+Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_freq}.
 \begin{figure}[!t]
     %\centering
     \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_freq}.eps}
@@ -519,7 +505,7 @@ Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_tes
     \label{plot:hsrp_test_7_multi_source_2_smooth_freq}}
 \end{figure}
 The estimated sources after smoothing in amplitude are shown in
-Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_amp}
+Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_amp}.
 \begin{figure}[!t]
     %\centering
     \includegraphics[width=\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_amp}.eps}
@@ -537,12 +523,9 @@ Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test
 We see that when smoothed in frequency, the results are acceptable. However,
 when both sets of parameters are close and give close costs, the spurious
 data-points can influence the cost function causing a false classification. This
-can be seen at around 0.35 seconds in
-Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_freq}
-where it seems perhaps 3 frames should be classified as the other source. That
-these are difficult to classify is not surprising, comparing with
-Figures~\ref{plot:hsrp_test_7_multi_orig_data} we see that at around
-0.38 seconds the frequency slopes are close.
+difficulty is not surprising, looking at
+Figure~\ref{plot:hsrp_test_7_multi_orig_data} we see that there are some
+segments where the frequency slopes are close.
 
 When smoothed in amplitude, the results are less convincing. This is not
 surprsing as smoothness in amplitude is not the best criterion at all time
@@ -556,32 +539,43 @@ points.
 \end{figure}
 In Figure~\ref{plot:hsrp_test_7_multi_af} we see that the amplitudes of
 both sources are similar at many points, e.g., at around 0.05 and 0.15 seconds.
-Indeed it is here that the amplitude smoothness criterion fails, as we see in
-Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test_7_multi_source_2_smooth_amp}.
 
 \section{Conclusion}
 
-In this chapter we evaluated the plausibility of separating two mixed sources
-by classifying based on their theoretical frequency and amplitude modulation. We
+In this chapter we evaluated the plausibility of separating two mixed sources by
+classifying based on their theoretical frequency- and amplitude-modulation. We
 obtained acceptable results for signals with small measurement errors. The
 method is also robust in the presence of spurious data points. A shortcoming of
-the method is the requirement that the frequency and frequency modulation of the
+the method is the requirement that the frequency and frequency-modulation of the
 signals be known. If the signals are sufficiently separated in frequency and
 have small bandwidth, as shown in Section~\ref{sec:ddm_description} the DDM can
 be used to estimate these parameters. If signals are close in frequency, the
-number of sinusoids is known, and these
-exhibit slow modulations, signal subspace methods could be used \cite{} where
-the estimations at different time points are connected as in
-Section~\ref{sec:partialtracking} and the modulation parameters postulated via
-interpolation similarly to Section~\ref{sec:mqfmfromphase}.
-% What about initial phase of sinusoids???
-Another strategy might be to use two uncorrupted measurements of one source and
-extrapolate the parameters of the signal in the part corrupted by the other.
-Another shortcoming of the technique presented here is the use of the costly EM
-algorithm to classify data points using GMM. A more ad hoc approach could be
-taken to save on these computations, perhaps partitioning the data sets using
-local maxima as the means and local minima as points some number of standard
-deviations away from these means. Were these two drawbacks overcome, the source
-separation technique presented here is inexpensive computationally and can even
-resolve the phases of the sinusoids, which are discarded in techniques using the
-power spectrum such as NMF and PLCA.
+number of sinusoids is known, and these exhibit slow modulations, signal
+subspace methods could be used \cite{roy1986esprit} where the estimations at
+different time points are connected as in Section~\ref{sec:partialtracking} and
+the modulation parameters postulated via interpolation similarly to
+Section~\ref{sec:mqfmfromphase}.  Another strategy might be to use two
+uncorrupted measurements of one source and extrapolate the parameters of the
+signal in the part corrupted by the other.  Another shortcoming of the technique
+presented here is the use of the costly EM algorithm to classify data points
+using GMM. A more ad hoc approach could be taken to save on these computations,
+perhaps partitioning the data sets using local maxima and minima as illustrated
+in Figure~\ref{plot:adhocclusterpartex}.  In any case, the source separation
+technique presented here, being interative, is of a complexity similar to NMF or
+PLCA but can also resolve the phases of the sinusoids which are discarded in
+most NMF or PLCA implementations\footnote{See \cite{bronson2014exploration} for
+an approach that does take into consideration the phase information in the
+spectrogram}.
+\begin{figure}[!t]
+    %\centering
+    \includegraphics[width=\textwidth]{plots/{ad_hoc_cluster_part_ex}.eps}
+    \caption{The data points are convolved with some smoothing kernels giving a
+        function with a small number of extrema. The maxima are indicated by
+        circles and the minimum by a square. Two normal distributions are fit
+        using the maxima as means and the minimum as a point some number of
+        standard deviations away from that mean. This number of standard
+        deviations is computed using the difference in height between the
+        probability at the mean and that at the minimum.
+        % NEED TO DO PLOT RIGHT
+    \label{plot:adhocclusterpartex}}
+\end{figure}

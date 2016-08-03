@@ -849,48 +849,40 @@ classifier
         1 \text{ if } \boldsymbol{\Beta}^{T}\boldsymbol{x} < c
     \end{cases}
 \]
-Techniques for choosing $\hat{h}$ are discussed in \ref{friedman2001elements}
-and often require data on which to "train" a classifier, i.e., determine a
-function $\hat{h}$ that classifies well a dataset with known classifications.
-Here we do not have a sample dataset because of the large number of possible
-situations and the difficulty of consistently estimating underlying model
-parameters (see, for example, Section~\ref{sec:mq_lp_compare_chirp}).
-
-%%% FIX THIS SECTION
-%The
-%classification algorithm will give some estimated $\hat{h}$ as above, but it is
-%doubtful that we would find a situation to use it to classify new data-points.
-%In the case that the classification gives a continuous variable as in
-%Equation~\ref{eq:least_squares}, thresholding values are required to convert
-%$\hat{h} \left( \boldsymbol{x} \right)$ to discrete values.  Because we would
-%have to choose these values beforehand, this sort of classification algorithm is
-%probably not very useful in practice. For this reason we opt for classification
-%algorithms that give discrete indicators as output, purely as a function of the
-%input dataset. The algorithm we consider is the \textit{Gaussian mixture model
-%(GMM)}.
-
-%To automate
-%classification we treat the dataset beforehand to increase the robustness of the
-%classification algorithm, and allow the algorithm to estimate some
-%class memberships. 
+where 0 and 1 indicate membership in class 0 or 1. Techniques for choosing
+$\hat{h}$ are discussed in \ref{friedman2001elements} and often require data on
+which to ``train'' a classifier, i.e., determine a function $\hat{h}$ that
+classifies well a dataset with known classifications.  Here we do not have a
+sample dataset because of the large number of possible situations and the
+difficulty of consistently estimating underlying model parameters (see, for
+example, Section~\ref{sec:mq_lp_compare_chirp}). As training to find a suitable
+$\hat{h}$ is not possible, we propose \textit{kernels} that reflect the
+hypothesized underlying structure of the distribution of $\boldsymbol{x}$. To
+elaborate, we may observe that the classification of a
+point is indicated by its nearness to other points in the same class, i.e., its
+membership to a cluster. The proposed kernel is a parameterized model of a
+cluster, whose parameters we can adjust until they fit the observed data well.
+We then choose the kernel that best explains the data to indicate what class
+these data are in. The following section describes a technique using normal
+distributions as kernels, which is the technique used in later experiments.
 
 \subsection{Gaussian Mixture Models (GMM) \label{sec:gmm}}
 
 Consider the data-points $\boldsymbol{X}$ as realizations of the vector Gaussian
-distributed random variable
-$X$. With a large enough sample and a small enough covariance, we will observe
-realizations of $X$ as a cluster with some mean (centre point) $\boldsymbol{\mu}$ and a shape
-described by the covariance matrix $\boldsymbol{\Sigma}$. If we observe multiple
-clusters this might imply that there are $P$ different distributions each with
-mean $\boldsymbol{\mu}_p$ and covariance matrix $\boldsymbol{\Sigma}_p$ and on each
-iteration one is chosen with probability $w_p$. With $N$ observations
-$\boldsymbol{x}_{n}$ we can estimate, via maximum likelihood, the $P$ sets of
-parameters using a form of the \textit{expectation maximization (EM)} algorithm
-\cite{moon1996expectation}, \cite{dempster1977maximum}, which is an algorithm
-suitable for estimating missing data from known ones. First, define
+distributed random variable $X$. With a large enough sample and a small enough
+covariance, we will observe realizations of $X$ as a cluster with some mean
+(centre point) $\boldsymbol{\mu}$ and a shape described by the covariance matrix
+$\boldsymbol{\Sigma}$. If we observe multiple clusters this might imply that
+there are $P$ different distributions each with mean $\boldsymbol{\mu}_p$ and
+covariance matrix $\boldsymbol{\Sigma}_p$ and on each iteration one is chosen
+with probability $w_p$. With $N$ observations $\boldsymbol{x}_{n}$ we can
+estimate, via maximum likelihood, the $P$ sets of parameters using a form of the
+\textit{expectation maximization (EM)} algorithm \cite{moon1996expectation},
+\cite{dempster1977maximum}, which is an algorithm suitable for estimating
+missing data from known ones. First, define
 \[
     \mathrm{p} \left( \boldsymbol{x}_{n} | p \right)
-    \doteq
+    =
     \ddfrac{
         \mathcal{N} \left( \boldsymbol{x}_{n}; \boldsymbol{\mu}^{k}_{p} ,
         \boldsymbol{\Sigma}^{k}_{p} \right) w^{k}_{p}
@@ -932,7 +924,7 @@ made for $\boldsymbol{\Sigma}^{k+1}_p$:
     }
 \]
 The algorithm is halted after some number of iterations or when convergence is
-reached (the parameters change little each iteration). After convergence, the
+reached, i.e., the parameters change little each iteration. After convergence, the
 classification $p^{\ast}$ of the data-point $\boldsymbol{x}$ is simply
 \[
     p^{\ast} = \argmax_{p} \mathrm{p} \left( \boldsymbol{x}_n | p \right)

@@ -5,7 +5,7 @@ be postulated from two connected measurements (see
 Section~\ref{sec:partialtracking}) giving a cubic phase polynomial. Here we will
 demonstrate how to include the additional phase polynomial coefficients
 estimated using DDM in calculating a phase function. In a later section we will
-compare the synthesis quality of the classical McAulay \textendash Quatieri
+compare the synthesis quality of the classical McAulay-Quatieri
 approach with our new method.
 
 \section{Cubic phase polynomial\label{sec:cubicphasepoly} }
@@ -15,7 +15,7 @@ local estimations of the coefficients of a quadratic phase polynomial.
 
 A complex sinusoid with cubic phase has the following form:
 \begin{equation}
-    \label{eq:cubicphasepoly}
+    \caption{\label{eq:cubicphasepoly}}
     \phi(n) = \exp \left(c_3 n^{3} + c_2 n^{2} + c_1 n + c_0 \right)
 \end{equation}
 One with quadratic phase has this form:
@@ -51,16 +51,17 @@ these indices.
 We then find $k^{\ast}$ such that $X_{p_{1}}$ is maximum. If multiple components
 are present in the signal and are sufficiently separated in frequency, we can
 split the signal up into frequency bands and find local maxima. A technique for
-doing so is described in \cite[p.~42]{serra1989system}. To have a system of equations
-with a unique solution, take the two adjacent bins $k-1$ and $k+1$ to have
-enough unique atoms for Equation~\ref{eq:ddmsyseq}. These bins
-should only contain energy from the component whose parameters we are interested
-in measuring \textemdash this is true if the components are adequately separated
-in time and frequency. We could choose only two bins to have a non-singular
-system, and there are many possibilities for choosing different atoms
-\cite[p.~4639]{betser2009sinusoidal}. We choose three to have improved
-estimation accuracy in situations where components are adaquately separated in
-frequency. Then $a_2$ and $a_1$ can be determined by solving the linear system
+doing so is described in \cite[p.~42]{serra1989system}. To have a system of
+equations with a unique solution, we take the two adjacent bins $k-1$ and $k+1$
+to have enough unique atoms for Equation~\ref{eq:ddmsyseq}. These bins should
+only contain energy from the component whose parameters we are interested in
+measuring --- this is true if the components are adequately separated in time
+and frequency. We could choose only two bins to have a non-singular system, and
+there are many possibilities for choosing different atoms
+\cite[p.~4639]{betser2009sinusoidal}. We choose three from the same frame to
+have improved estimation accuracy in situations where components are adaquately
+separated in frequency, while avoid a more sophisticated local peak selection
+procedure. Then $a_2$ and $a_1$ can be determined by solving the linear system
 \[
     \begin{pmatrix}
         X_{p_{1}} \left( \tau, k^{\ast} - 1 \right) & X_{p_{2}} \left( \tau, k^{\ast} - 1 \right) \\
@@ -282,9 +283,9 @@ equations:
     \end{pmatrix}
     =
     \begin{pmatrix}
-        -\ImNe{ a^{\tau_0}_2 } \frac{ H^{2} }{2} - \ImNe{ a^{\tau_0}_1 } H +
+        -\frac{ H^{2} }{2} \ImNe{ a^{\tau_0}_2 } - H \ImNe{ a^{\tau_0}_1 } +
             \ImNe{ a^{\tau_1}_0 } - \ImNe{ a^{\tau_1}_1 } + 2 \pi U^{\ast}\\
-        -\ImNe{ a^{\tau_0}_2 } H + \ImNe{ a^{\tau_1}_1 } - \ImNe{ a^{\tau_0}_1 } \\
+        -H \ImNe{ a^{\tau_0}_2 } + \ImNe{ a^{\tau_1}_1 } - \ImNe{ a^{\tau_0}_1 } \\
         \ImNe{ a^{\tau_1}_2 } - \ImNe{ a^{\tau_0}_2 }
     \end{pmatrix}
 \end{equation}
@@ -296,6 +297,11 @@ The smoothness maximizing $\tilde{U}$ is found as
         + 40 ( \ImNe{ a^{\tau_0}_0 } - \ImNe{ a^{\tau_1}_0 } ) \right]
 \]
 and then rounded to produce $U^{\ast}$ as above.
+
+The quintic interpolating phase polynomial has been proposed in a previous paper
+\cite{girin2003comparing} although they do not directly estimate the frequency
+slope, choosing instead to derive it using the difference in frequency between
+two analysis frames.
 
 \section{Quintic amplitude polynomial}
 
@@ -329,17 +335,12 @@ equations:
     \end{pmatrix}
     =
     \begin{pmatrix}
-        -\ReNe{ a^{\tau_0}_2 } \frac{ H^{2} }{2} - \ReNe{ a^{\tau_0}_1 } H +
+        -\frac{ H^{2} }{2} \ReNe{ a^{\tau_0}_2 } - H \ReNe{ a^{\tau_0}_1 } +
             \ReNe{ a^{\tau_1}_0 } - \ReNe{ a^{\tau_1}_1 } \\
-        -\ReNe{ a^{\tau_0}_2 } H + \ReNe{ a^{\tau_1}_1 } - \ReNe{ a^{\tau_0}_1 } \\
+        -H \ReNe{ a^{\tau_0}_2 } + \ReNe{ a^{\tau_1}_1 } - \ReNe{ a^{\tau_0}_1 } \\
         \ReNe{ a^{\tau_1}_2 } - \ReNe{ a^{\tau_0}_2 }
     \end{pmatrix}
 \end{equation}
-
-The quintic interpolating phase polynomial has been proposed in a previous paper
-\cite{girin2003comparing} although they do not directly estimate the frequency
-slope, choosing instead to derive it using the difference in frequency between
-two analysis frames.
 
 \section{Evaluation}
 
@@ -390,6 +391,13 @@ The signal was sampled with a sampling rate of 16000 Hz and was analysed every
 256 samples with an analysis window of length 1024 samples. For the DDM method, the
 $\mathcal{C}^{1}$ 4-Term Blackman-Harris was used (see
 Section~\ref{sec:optblackman}).
+
+The results of the evalution are presented in
+Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
+
+% Plots of this section produced with
+% mq_cubic_test_less_fm_{1..3}.py
+% compare_mq_interp_funcs_1.py
 
 \begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_cubic_original_spec.eps}
@@ -479,28 +487,28 @@ Section~\ref{sec:optblackman}).
 
 \begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
-    \caption{This compares the phase functions with the interpolated phase
-    functions. The phase functions are considered because these are the
-    imaginary part of the polynomial exponents in the complex sinusoidal model.
-    The error exhibited by the McAulay \textendash Quatieri interpolation is
-    misleading because phase values should be compared after computing the
-    remaineder when dividing by $2\pi$. This means there are only brief segments
-    where the phase error is significant (compare with
-    Figure~\ref{plot:mqcubicerror}). The plot is shown without adjusting the
-    values to show the accuracy of the proposed methods in the interpolated
-    regions.
+    \caption{This compares the theoretical phase function with the interpolated
+        phase functions. The phase functions are considered because these are
+        the imaginary part of the polynomial exponents in the complex sinusoidal
+        model.  The errors are ``wrapped'' to lie between $-\pi$ and $\pi$. The
+        errors stem from both the estimation of the phase and the interpolation
+        of phase between analysis points. As a frequency modulated sinusoid is
+        considered, it is not surprising that the stationary frequency
+        assumption of the McAulay-Quatieri model exhibits the most errors.
     \label{plot:mqmoderrcompphaseerr}}
 \end{figure}
 
 \begin{figure}[!t]
     \includegraphics[width=\textwidth]{plots/mq_mod_err_comp_phase_func.eps}
-    \caption{\label{plot:mqmoderrcompphasefunc}}
+    \caption{Error bound of polynomial evaluation using Horner's method. The
+    error bound is shown for the quintic phase and amplitude polynomials.
+    \label{plot:mqmoderrcompphasefunc}}
 \end{figure}
 
 \section{Conclusion}
 
 Out of the three proposed methods it appears that the modified cubic
-interpolation method works superiorily for the signal model considered. The
+interpolation method works superiorly for the signal model considered. The
 reduced accuracy of the higher-order quintic model can perhaps be explained by
 the ``overfitting'' of the log-amplitude function (see
 Figure~\ref{plot:mqmoderrcomplogampfunc}). Indeed, even the proposed cubic model
@@ -508,7 +516,7 @@ shows some overfitting in this case. From Figure~\ref{plot:mqmoderrcompphaseerr}
 it is clear that the DDM based methods provide superior estimation of the phase
 function---this is not the case for the log-amplitude function. Depending on
 the underlying signal, perhaps better results can be obtained by postulating a
-lower-order amplitude function and higher-order phase function. The possiblity
+lower-order amplitude function and higher-order phase function. The possibility
 of errors arising from numerical accuracy when evaluating the quintic
 polynomials has been ruled out. We evalutated these polynomials using an
 implementation of Horner's method that keeps track of the error bound
