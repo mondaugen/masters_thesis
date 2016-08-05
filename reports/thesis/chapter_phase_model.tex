@@ -8,7 +8,8 @@ estimated using DDM in calculating a phase function. In a later section we will
 compare the synthesis quality of the classical McAulay-Quatieri
 approach with our new method.
 
-\section{Cubic phase polynomial\label{sec:cubicphasepoly} }
+\section{Estimating parameters of a sinusoid with cubic
+phase\label{sec:cubicphasepolyest} }
 
 In this section we describe how to obtain a cubic phase polynomial from
 local estimations of the coefficients of a quadratic phase polynomial.
@@ -43,7 +44,10 @@ Equation~\ref{eq:ddmsyseq}, we define the three functions
     -j 2 \pi \frac{k}{M} X_{p_{1}} \left( \tau , k \right) + 
     \sum_{m=0}^{M-1} \frac{dw}{dn}(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
 \end{equation}
-Where $M$ is the length of the window and $k$ is the frequency ``bin". We also
+Where $M$ is the length of the window and $k$ is the frequency
+``bin''\footnote{For tractability, the functions $X(\tau,k)$ are only evaluated at
+    a finite number of frequencies, which are often called ``bins'' in the
+signal processing literature.}. We also
 only consider $x$ at the samples $m = [0, \dotsc, M-1]$ because we can always
 shift the time reference to view an arbitrary contiguous segment of signal with
 these indices.
@@ -81,7 +85,11 @@ procedure. Then $a_2$ and $a_1$ can be determined by solving the linear system
 \]
 With $a_{1}$ and $a_{2}$ determined, we can use Equation~\ref{eq:ddmestc0} to
 estimate $a_0$. We will write $a^{\tau}_{i}$ to refer to coefficient $i$
-determined at time $\tau$. Once the $\boldsymbol{a}^{\tau}$ have been determined
+determined at time $\tau$.
+
+\section{A cubic interpolating phase polynomial from DDM-estimated coefficients}
+
+Once the $\boldsymbol{a}^{\tau}$ have been determined
 at two times $\tau_{0}$ and $\tau_{1}$, with $H = \tau_{1} - \tau_{0}$ and these
 times have between determined as connected (see
 Section~\ref{sec:partialtracking}), we can write a system of equations
@@ -179,7 +187,7 @@ and then $\tilde{U}$ is determined using Equation~\ref{eq:minfmcubic} to be
 \]
 and then rounded to obtain $U^{\ast}$.
 
-\section{Cubic amplitude polynomial \label{sec:cubicamppoly}}
+\section{A cubic amplitude polynomial from DDM-estimated coefficients \label{sec:cubicamppoly}}
 
 Solving for the cubic polynomial describing the local amplitude function
 \begin{equation}
@@ -250,7 +258,7 @@ subject to
 This can be solved using numerical methods, in particular, using a specific
 interpretation of weighted least-squares \cite[p.~266]{golub1996matrix}.
 
-\section{Quintic phase polynomial\label{sec:quinticphasepoly}}
+\section{A quintic phase polynomial from DDM-estimated coefficients\label{sec:quinticphasepoly}}
 
 Solving for the coefficients of a quintic phase polynomial is done very
 similarly to Section~\ref{sec:cubicphasepoly}. The quintic phase polynomial is
@@ -303,7 +311,8 @@ The quintic interpolating phase polynomial has been proposed in a previous paper
 slope, choosing instead to derive it using the difference in frequency between
 two analysis frames.
 
-\section{Quintic amplitude polynomial}
+\section{A quintic amplitude polynomial from DDM-estimated
+coefficients\label{sec:quinticamppoly}}
 
 Solving for the quintic amplitude polynomial
 \begin{equation}
@@ -345,12 +354,67 @@ equations:
 \section{Evaluation}
 
 We compared the quality of an analysis-synthesis system using the
-original method proposed by McAulay and Quatieri, the cubic interpolation
-method, and the quartic interpolation method. A frequency- and
-amplitude-modulated sinusoid was synthesized and then analysed frame-by-frame
-using the DDM to estimate its initial phase (amplitude), frequency (amplitude
-slope), and frequency-modulation (amplitude-modulation). Afterwards, the signal
-was resynthesized using the estimated parameters and compared with the original.
+original method proposed by McAulay and Quatieri (MQ), the cubic interpolation
+method, and the quartic interpolation method. Frequency- and
+amplitude-modulated sinusoids were synthesized and then analysed frame-by-frame
+using the DDM to estimate their initial phase (amplitude), frequency (amplitude
+slope), and frequency-modulation (amplitude-modulation). Afterwards, the signals
+were resynthesized using the estimated parameters and compared to the original.
+We are interested in seeing in what cases higher order phase polynomials will
+improve the accuracy of synthesis.
+
+\subsection{The analysis-synthesis system}
+
+\subsubsection{The McAulay-Quatieri method}
+
+For the MQ method, the model is a sinusoid of constant frequency (linear phase)
+in each analysis frame. To estimate the frequency of this sinusoid we find the
+bin with the most energy and find a refined estimate of the frequency as the
+maximum of a quadratic interpolating polynomial fit to this bin and its two
+neighbouring bins. This is a procedure documented in
+\cite[p.~45]{serra1989system}. The interpolation is best performed in the
+log-spectrum and on a spectrum produced using a window, such as a zero-padded
+Hann window, giving a wide enough main-lobe so that the three points lie on this
+lobe and not on side-lobes. A refined estimate of the amplitude of the sinusoid
+is obtained with this procedure as well.
+
+In the original paper by McAulay and Quatieri, they do not use this technique
+but, as they show an example analysis of a speech signal, instead adjust the
+analysis window to be a multiple of the period of the glottal pulse. The bins of
+the DTFT used in the analysis will be integer multiples of the frequency given
+as the reciprocal of this period. Under the model of the speech signal as
+harmonically related sinusoids, the best estimate for the frequency is the bin
+of a local maximum, its amplitude the modulus of the spectrum at this maximum, and
+the phase the argument.
+
+In our system, we use a fixed window size. To estimate the phase then we use
+Equation~\ref{eq:ddmestc0} with
+\[
+    \gamma_{\text{MQ}}(n)=\exp(2\pi\frac{k^{\ast}}{M}n)
+\]
+where $k^{\ast}$ is the bin we have determined to correspond to the frequency of
+the sinusoid. The inital phase is then $\Im \left\{ c_{0} \right\}$.
+
+\subsubsection{The extended methods}
+
+Two extended methods are evaluated: the cubic and quartic phase and amplitude polynomials
+derived from DDM-estimated coefficients. For the polynomials of both orders, the
+DDM is used exactly as described in Section~\ref{sec:cubicphasepolyest} to estimate
+the parameters. The difference is in how the interpolating polynomials are
+formed between parameters estimated at two time points. For the cubic
+polynomials, the interpolation method described in
+Section~\ref{sec:cubicphasepoly} is used for phase, while that in
+Section~\ref{sec:cubicamppoly} is used for amplitude. For the quintic
+polynomials the interpolation methods described in
+Sections~\ref{sec:quinticphasepoly}~and~\ref{sec:quinticamppoly} are used for
+phase and amplitude, respectively.
+
+\subsection{Evaluation on sinusoid of cubic phase \label{sec:evalcubicphase}}
+
+The initial evalutation illustrates how higher order phase polynomials will not
+necessarily improve the quality of synthesis if the underlying phase function is
+a polynomial of lower order than the polynomials used for synthesis. As we will
+see, the estimated phase functions suffer from ``overfitting''.
 
 The synthesized signal has 3 frequency break-points and an initial phase,
 therefore its phase function can be interpolated by a cubic polynomial
@@ -418,12 +482,12 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_cubic_error.eps}
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_true_vs_est_err.eps}
     \caption{
-        The error when subtracting the original signal from the estimated
-        signal. The estimated signal is computed using the original method
-        proposed by McAulay and Quatieri.
-    \label{plot:mqcubicerror}}
+        The power of the error when subtracting the original signal from the estimated
+        signal. The local upper bound on the error was produced by connecting
+        the local maxima in the error data.
+    \label{plot:mqerrortruevsesterr}}
 \end{figure}
 
 %\begin{figure}[!t]
@@ -443,15 +507,6 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
     \label{plot:mqmodcubicestimatedspec}}
 \end{figure}
 
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_cubic_error.eps}
-    \caption{The error when subtracting the original signal from the estimated
-        signal. The estimated signal is computed using the cubic interpolation
-        method proposed here.
-    \label{plot:mqmodcubicerror}}
-\end{figure}
-
 %\begin{figure}[!t]
 %    \centering
 %    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_original_spec.eps}
@@ -467,15 +522,6 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
         values whereas lighter are smaller values. The estimated signal is
         computed using the quintic interpolation method proposed here.
     \label{plot:mqmodcubicestimatedspec}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_error.eps}
-    \caption{The error when subtracting the original signal from the estimated
-        signal. The estimated signal is computed using the quintic interpolation
-        method proposed here.
-    \label{plot:mqmodcubicerror}}
 \end{figure}
 
 \begin{figure}[!t]
@@ -518,27 +564,70 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
     \label{plot:mqmoderrcompphasefunc}}
 \end{figure}
 
+\subsection{Evaluation on sinusoid of exponential phase \label{sec:evalexpphase}}
+
+The previous evaluation of this analysis-synthesis system was on a sinusoid with
+small order polynomial phase. In the cases where we observed overfitting, the
+polynomial used for synthesis was of higher order than the true underlying one
+--- the interpolating polynomials were more times differentiable than the true
+polynomial. We propose evaluating the system on an infinitely differentiable and
+analytic phase function. The rationale behind this stems from the definition of
+an analytic function: one whose power series representation (a polynomial)
+converges to the function as the number of terms approches infinity. What this
+means is, in the region of convergence, the larger the number of terms in the
+approximating polynomial, the better the approximation to the true underlying
+function. The exponential function
+\[
+    y=\exp(x), x,y \in \mathbb{R}
+\]
+is one such function whose power series is
+\[
+    \exp(x)=\sum_{n=0}^{\infty} \frac{x^{n}}{n!}
+\]
+To find the radius of convergence, we use the ratio test
+\[
+    \lim_{n \rightarrow \infty} \frac{|1/n!|}{|1/(n+1)!|} = \lim_{n \rightarrow \infty} n = \infty
+\]
+i.e., the power series of the exponential function converges everywhere and so
+using more terms of its power series will improve its approximation for
+any $x \in \mathbb{R}$.
+
+The exponential function arises in music. In 12-tone equal temperament tuning,
+to find the frequency $f_{1}$ of a pitch $b$-semitones away from the frequency
+$f_{0}$ we compute
+\[
+    f_{1}=f_{0}2^{\frac{b}{12}}=f_{0}\exp(\log(2)\frac{b}{12})
+\]
+So a linear transition from pitch $b_{0}$ to $b_{1}$ is an exponential change in
+frequency. This could be observed in recordings of performances of the
+\textit{portamento} gesture.
+
+We synthesize a sinusoid with exponential phase and use the same analysis system
+as in Section~\ref{sec:evalcubicphase} to evaluate the synthesis accuracy for
+piece-wise interpolating polynomials of cubic and quartic order for phase.
+
 \section{Conclusion}
 
 Out of the three proposed methods it appears that the modified cubic
-interpolation method works superiorly for the signal model considered. The
-reduced accuracy of the higher-order quintic model can perhaps be explained by
-the ``overfitting'' of the log-amplitude function (see
-Figure~\ref{plot:mqmoderrcomplogampfunc}). Indeed, even the proposed cubic model
-shows some overfitting in this case. From Figure~\ref{plot:mqmoderrcompphaseerr}
-it is clear that the DDM based methods provide superior estimation of the phase
-function---this is not the case for the log-amplitude function. Depending on
-the underlying signal, perhaps better results can be obtained by postulating a
-lower-order amplitude function and higher-order phase function. The possibility
-of errors arising from numerical accuracy when evaluating the quintic
-polynomials has been ruled out. We evalutated these polynomials using an
-implementation of Horner's method that keeps track of the error bound
-\cite[p.~95]{higham2002accuracy}: the
-errors are negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the
-results.
+interpolation method works superiorly for the signal model considered. We obseve
+overfitting by the higher-order quintic model in
+Figure~\ref{plot:mqmoderrcomplogampfunc}, compromising the accuracy of
+resynthesis.  Even the proposed cubic model shows some overfitting in
+this case. From Figure~\ref{plot:mqmoderrcompphaseerr} it is clear that the DDM
+based methods provide superior estimation of the phase function --- this is not
+the case for the log-amplitude function. Depending on the underlying signal,
+perhaps better results can be obtained by postulating a lower-order amplitude
+function and higher-order phase function. The possibility of errors arising from
+numerical accuracy when evaluating the quintic polynomials has been ruled out.
+We evalutated these polynomials using an implementation of Horner's method that
+keeps track of the error bound \cite[p.~95]{higham2002accuracy}: the errors are
+negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
-    \caption{\label{plot:mqmodquinticpolyevalerr}}
+    \caption{The error bound in evaluating the quintic amplitude and phase
+    polynomials using Horner's method. This plot was produced by plotting only
+    the local maxima of the error bound data in order to reduce the plot's
+    range.\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}

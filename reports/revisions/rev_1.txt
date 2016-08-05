@@ -1,24 +1,26 @@
+need to finish section on sinusoid with exponential phase
+
 Need section on notation
 
 remove all equation numbers unless needed
 
 need to add appendix describing normal distribution
 
-need to fix argmax so argument is directly beneath
+#need to fix argmax so argument is directly beneath
 
 add NMF problem example
 
 check big equations against code
 
-be cosisent abount hyphenating frequency-modulation
+be consisent abount hyphenating frequency-modulation
 
 check ordering of terms and abbreviations
 
-don't put small s after acronyms
+# don't put small s after acronyms (yes do it)
 
-how to colour text with hyperref?
+# how to colour text with hyperref?
 
-change title
+# change title
 
 explain better the choice of parameter values in experiment 2
 
