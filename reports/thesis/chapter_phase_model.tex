@@ -606,6 +606,17 @@ We synthesize a sinusoid with exponential phase and use the same analysis system
 as in Section~\ref{sec:evalcubicphase} to evaluate the synthesis accuracy for
 piece-wise interpolating polynomials of cubic and quartic order for phase.
 
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_true_vs_est_err.eps}
+    \caption{
+        The power of the error when subtracting the original signal from the
+        estimated signal for the signals of exponential phase. The local upper
+        bound on the error was produced by connecting the local maxima in the
+        error data.
+    \label{plot:mqexperrortruevsesterr}}
+\end{figure}
+
 \section{Conclusion}
 
 Out of the three proposed methods it appears that the modified cubic
