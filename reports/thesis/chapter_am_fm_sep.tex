@@ -378,14 +378,15 @@ summarized in Table~\ref{tab:amfmexpplotkey}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_orig_data_plot_title}.txt}
+    }{Line-segments describing the frequency and frequency modulation
     of both sources.\label{plot:hsrp_test_7_multi_orig_data}}
 \end{figure}
 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_spur_data}.eps}
-    \caption{Line-segments describing the frequency and frequency modulation
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_orig_spur_data_plot_title}.txt}}{Line-segments describing the frequency and frequency modulation
         of the original data and the spurious data.
     \label{plot:hsrp_test_7_multi_orig_spur_data}}
 \end{figure}
@@ -393,7 +394,7 @@ summarized in Table~\ref{tab:amfmexpplotkey}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_class_pcs}.eps}
-    \caption{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_class_pcs_plot_title}.txt}}{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
         $\sigma_{i}^{0}$ are respectively
     the initial mean and standard deviation guesses for the EM algorithm fitting
     the GMM parameters to the $i$th source. These values are also visible on the
@@ -406,7 +407,7 @@ summarized in Table~\ref{tab:amfmexpplotkey}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_est}.eps}
-    \caption{Line-segments classified as belonging to Source 1. The
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_source_1_est_plot_title}.txt}}{Line-segments classified as belonging to Source 1. The
         classification is done on each frame so classifications in consecutive
         frames may not belong to the same true source. This is because the
         ordering of the clusters in each frame in
@@ -417,7 +418,7 @@ summarized in Table~\ref{tab:amfmexpplotkey}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_est}.eps}
-    \caption{Line-segments classified as belonging to Source 2. See
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_source_2_est_plot_title}.txt}}{Line-segments classified as belonging to Source 2. See
         Figure~\ref{plot:hsrp_test_7_multi_source_2_est} for more
         information.
     \label{plot:hsrp_test_7_multi_source_2_est}}
@@ -483,7 +484,7 @@ Figure~\ref{plot:hsrp_test_7_multi_smooth_freq_amp_sol}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_smooth_freq_amp_sol}.eps}
-    \caption{The points originally classified as source 1 are marked with
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_smooth_freq_amp_sol_plot_title}.txt}}{The points originally classified as source 1 are marked with
         circles and those originally classified as source 2 squares. The paths
         in black or grey connect the points for source 1 or source 2
         respectively with optimal smoothness. Plots indicated with an \textit{a}
@@ -496,14 +497,14 @@ Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_freq}~and~\ref{plot:hsrp_tes
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_source_1_smooth_freq_plot_title}.txt}}{Line-segments classified as belonging to source 1 after smoothing
         in frequency.
     \label{plot:hsrp_test_7_multi_source_1_smooth_freq}}
 \end{figure}
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_freq}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_source_2_smooth_freq_plot_title}.txt}}{Line-segments classified as belonging to source 2 after smoothing
         in frequency.
     \label{plot:hsrp_test_7_multi_source_2_smooth_freq}}
 \end{figure}
@@ -512,14 +513,14 @@ Figures~\ref{plot:hsrp_test_7_multi_source_1_smooth_amp}~and~\ref{plot:hsrp_test
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 1 after smoothing
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_source_1_smooth_amp_plot_title}.txt}}{Line-segments classified as belonging to source 1 after smoothing
         in amplitude.
     \label{plot:hsrp_test_7_multi_source_1_smooth_amp}}
 \end{figure}
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_amp}.eps}
-    \caption{Line-segments classified as belonging to source 2 after smoothing
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_source_2_smooth_amp_plot_title}.txt}}{Line-segments classified as belonging to source 2 after smoothing
         in amplitude.
     \label{plot:hsrp_test_7_multi_source_2_smooth_amp}}
 \end{figure}
@@ -536,7 +537,7 @@ points.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_af}.eps}
-    \caption{ Line-segments representing the instantaneous amplitude and amplitude slope at
+    \CaptionWithTitle{\input{plots/{hsrp_test_7_multi_af_plot_title}.txt}}{ Line-segments representing the instantaneous amplitude and amplitude slope at
         analysis time points. 
     \label{plot:hsrp_test_7_multi_af}}
 \end{figure}
@@ -572,7 +573,7 @@ spectrogram.}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/{ad_hoc_cluster_part_ex}.eps}
-    \caption{The data points are convolved with some smoothing kernels giving a
+    \CaptionWithTitle{\input{plots/{ad_hoc_cluster_part_ex_plot_title}.txt}}{The data points are convolved with some smoothing kernels giving a
         function with a small number of extrema. The minima, indicated by
         circles, are used as boundaries between the partitions which are
         illustrated with different shades of grey.

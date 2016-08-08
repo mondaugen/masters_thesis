@@ -9,6 +9,7 @@
 \usepackage{algorithm2e}
 \usepackage{hyperref}
 \usepackage{tablefootnote}
+\usepackage[labelsep=period]{caption}
 \hypersetup{
     colorlinks=true,
 %    linkcolor=blue,
@@ -25,6 +26,18 @@
 \newcommand\ReNe[1]{\Re \left\{ #1 \right\}}
 \newcommand{\D}{\displaystyle}
 \newcommand{\T}{\textstyle}
+\newcommand{\TmpCapTitle}[0]{default}
+\DeclareCaptionFormat{inc-cap-title}{#1: \textbf{\TmpCapTitle#2}#3\par}
+\DeclareCaptionFormat{no-cap-title}{#1\textbf{#2}#3\par}
+\newcommand{\CaptionWithTitle}[2]{
+    \renewcommand{\TmpCapTitle}[0]{\protect#1}
+    \captionsetup{format=inc-cap-title}
+    \caption[\protect#1.]{#2}
+%    \caption{#2}
+}
+\captionsetup{format=no-cap-title}
+\newcommand{\MyInput}[1]{\immediate\write18{cat #1}}
+
 % Scale figures
 \def\figwidthscale{0.8}
 \begin{document}
@@ -48,6 +61,7 @@ Sum-of-Sinusoids Model}
 
 \maketitle
 \tableofcontents
+\listoffigures
 
 \input{thesis/chapter_intro.tex}
 
