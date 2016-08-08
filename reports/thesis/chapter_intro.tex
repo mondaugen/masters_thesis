@@ -17,3 +17,119 @@ of instruments actually designed to blend well; to sound as one instrument.
 Ironically, it is this criterion that we use to guide the source separation
 techniques described in the following.
 
+\section{Notation}
+
+\subsection{Vectors and matricies}
+
+While scalars are typeset normally --- $x$ is an example of a scalar --- vectors
+and matrices are typeset in a boldface font, with matrices written with a
+capital letter, e.g., $\boldsymbol{x}$ is a vector and $\boldsymbol{X}$ a
+matrix. If a number is written instead of a symbol, we mean a vector all of that
+number, e.g., $\boldsymbol{1}$ is the vector of all $1$s, $\boldsymbol{0}$ the
+vector of all $0$s. The $i$th entry of a vector $\boldsymbol{x}$ is written
+$x_{i}$ and the entry in the $i$th row and $j$th column of a matrix $X$ is
+written $X_{i,j}$.  Both are scalars and therefore typeset normally. Sometimes
+we might find it convenient to extract a column vector or row vector from the
+matrix $\boldsymbol{X}$. We write $\boldsymbol{x}_{i,:}$ to extract all columns
+from the $i$th row and and $\boldsymbol{x}_{:,j}$ to extract all rows from the
+$j$th column. These are the $i$th row vector and $j$th column vector
+respectively. The orientation of a vector will be clear from the context, but in
+general $\boldsymbol{x}$ is a column vector while $\boldsymbol{y}_{i,:}$ and
+$\boldsymbol{x}^{T}$ are row vectors.
+
+\subsection{Operators}
+
+\subsubsection{Inner product}
+
+We will be dealing with objects in vector spaces. The operator $\left\langle
+x, y \right\rangle$ takes two objects in a vector space $V$, $x,y \in V$ and maps
+them to an element $k \in \mathbb{K}$ of a field $\mathbb{K}$.
+For this thesis, the field will always be the field of real numbers
+$\mathbb{R}$ or complex numbers $\mathbb{C}$. The vector space can be the set of
+vectors of $N$ elements in $\mathbb{R}^{N}$ or $\mathbb{C}^{N}$, in which case
+the inner product is defined, for $\boldsymbol{x},\boldsymbol{y} \in
+\mathbb{K}^{N}$, $k \in \mathbb{K}$
+\[
+    \left\langle  \boldsymbol{x}, \boldsymbol{y} \right\rangle =
+\boldsymbol{x}^{T} \boldsymbol{y} = k
+\]
+The inner product is also defined on
+the vector space of functions $\Phi$
+mapping from a set $S$ to a field $\mathbb{K}$, $\Phi : \forall f \text{ s.t. } f(s) = k, s \in S,k \in
+\mathbb{K} $ in which case the inner product on $g,f \in \Phi$ is
+defined as
+\[
+    \left\langle  g, f \right\rangle =
+\int_{-\infty}^{\infty} g(x) \overline{f(x)} dx
+\]
+and $\overline{a}$ gives the complex conjugate of $a$.
+
+\subsubsection{General outer operators}
+
+The outer operator $\cdotp \otimes_{\mathcal{O}} \cdotp$ will only be defined for
+vectors in this thesis. It operates on the two vectors $\boldsymbol{x},\boldsymbol{y} \in
+\mathbb{K}^{N}$ and is defined as
+\[
+    \boldsymbol{x} \otimes_{\mathcal{O}} \boldsymbol{y} = \boldsymbol{W}
+\] where the $i$th row and $j$th column of $\boldsymbol{W}$ are
+\[
+    w_{i,j} = \mathcal{O} (x_{i},y_{j})
+\]
+Canonically, the operator $\mathcal{O}$ is multiplication in which case
+\[
+    \boldsymbol{x} \otimes_{\times} \boldsymbol{y} = \boldsymbol{W}
+\] where the $i$th row and $j$th column of $W$ are
+\[
+    W_{i,j} = x_{i} y_{j}
+\]
+but $\mathcal{O}$ can be defined arbitrarily as any function taking two inputs a
+returning a single output. The general outer product is also known as the
+\textit{Kronecker product}.
+
+\subsubsection{Point-wise operators}
+
+If an operator on matrices $\circ$ is written with a period preceding it, i.e.,
+$.\circ$ it
+means perform that operation on each element individually. Some examples follow.
+
+For matrix $\boldsymbol{X} \in \mathbb{K}^{M,N}$ and $p \in \mathbb{K}$
+\[
+    \boldsymbol{X}^{.p} = \boldsymbol{W}
+\] where
+\[
+    W_{i,j}=X_{i,j}^{p}
+\]
+For matricies $\boldsymbol{X},\boldsymbol{Y} \in \mathbb{K}^{M,N}$
+\[
+    \boldsymbol{X}.\boldsymbol{Y} = \boldsymbol{W}
+\] where
+\[
+    W_{i,j}=X_{i,j}Y_{i,j}
+\]
+(constrast these with canonical matrix multiplication).
+
+\subsection{Random variables}
+
+Many authors denote random variables with a normally typeset uppercase letter.
+We will use this convention only when convenient, but will always state
+explicitly that a certain variable is random.
+
+\subsection{Complex numbers}
+
+A complex number $z \in \mathbb{C}$ can be described in cartesian notation as
+\[
+    z = a + jb, a,b \in \mathbb{R}
+\]
+or in polar notation as
+\[
+    z = \alpha \exp(j\omega), \alpha,\omega \in \mathbb{R}
+\]
+where $j = \sqrt{-1}$. $j$ is also often used to denote an index variable. It
+will be clear from the context when the imaginary number is meant and when the
+index.
+
+\subsection{Logarithms}
+
+The logarithm base-$e$\footnote{$e$ is Euler's constant.} of $x$ is written
+$\log(x)$. The logarithm of any other base $b$ will be denoted as such:
+$\log_{b}(x)$.

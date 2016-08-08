@@ -1,6 +1,8 @@
-need to finish section on sinusoid with exponential phase
+# need to finish section on sinusoid with exponential phase
 
-Need section on notation
+remove plot titles and put in caption
+
+# Need section on notation
 
 remove all equation numbers unless needed
 
@@ -12,7 +14,7 @@ add NMF problem example
 
 check big equations against code
 
-be consisent abount hyphenating frequency-modulation
+be consisent about hyphenating frequency-modulation
 
 check ordering of terms and abbreviations
 

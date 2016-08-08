@@ -5,7 +5,10 @@
 As most musical instruments are resonating media and excited resonating media
 are well described as linear time-invariant (LTI) auto-regressive (AR)
 structures, popular models of musical audio are some variation of this
-description \cite{fletcher2012physics}.
+description \cite{fletcher2012physics}. Strictly speaking, incorporating
+moving-average structures (MA) into a model of musical signals can be benficial,
+but is more difficultly cast in the sum-of-sinusoids model adopted later in this
+thesis.
 
 An LTI auto-regressive structure is a signal that can be desribed using the
 following \textit{difference equation}:
@@ -56,12 +59,12 @@ exponential $r^n$. In other words, the output is a damped exponential. From this
 it is not hard to see that if we can estimate the coefficients $a_k$, we can
 then know the frequencies, amplitudes and damping factors of the sinusoids that
 are output when this structure is excited by an impulse (the Kronecker delta).
-This technique is presented as a motivation for the following techniques and is
+This principle is presented as a motivation for the following techniques and is
 not pursued here. The interested reader is referred to \cite{makhoul1975linear}
 for more information.
 
 An alternative method for determining the frequencies and amplitudes of
-sinusoids in mixture is to take the inner-product of the signal with a complex
+sinusoids in mixture is to take the inner product of the signal with a complex
 exponential of known frequency and see what you get
 
 \begin{equation}
@@ -86,14 +89,32 @@ frequencies $\omega$ are present at different times $\tau$, giving a function of
 two variables
 
 \begin{equation}
+    \label{eq:dtstftdef}
     X(\tau,\omega) = \sum_{n=-\infty}^{\infty} x(n) w(n - \tau) \exp(-j \omega n)
 \end{equation}
-
-This transformation of a signal of time $n$ in to one of time $\tau$ and
+This transformation of a signal of time $n$ into one of time $\tau$ and
 frequency $\omega$ is known as the \textit{Discrete-time Short-time Fourier
 Transform} (DTSTFT).
 
-\begin{samepage}
+One further point about the window should be discussed. The Fourier transform of
+the product of two functions, like we have in Equation~\ref{eq:dtstftdef}, is
+equal to the convolution of the Fourier transform of each function separately.
+If we denote the Fourier transform operator as $\mathcal{F}$, for functions $g$
+and $f$ we have
+\[
+    \mathcal{F}(gf) = \mathcal{F}(g)\ast\mathcal{F}(f)
+\]
+where $\ast$ is the convolution operator. The value $X(\tau,\omega)$, which will
+be a complex number, can be see
+as describing the amplitude and phase of a sinusoid at that frequency and time.
+If the Fourier transform of the window function is not purely real its imaginary
+part will ofset the phase of this sinusoid. It's usually simpler to avoid this
+complication. The Fourier transform of a real even function
+\[
+    f(n) = f(-n), f(n) \in \mathbb{R} \Rightarrow f\text{ is real and even.}
+\]
+is real, so we choose windows with this property. See
+\cite[p.~52]{harris1978use} for a concrete illustration of this.
 
 \section{Polynomial Phase Models\label{sec:polynomphasemodel}}
 
@@ -113,8 +134,6 @@ musical signals, however, we have some prior information about the mechanics of
 the their production and can make certain assumptions about the underlying
 functions.
 
-\end{samepage}
-
 \subsection{Sinusoidal Representations\label{sec:mqfmfromphase}} Many musical
 acoustic signals are quasi-harmonic \cite{fletcher2012physics}, meaning that
 they consist of a sum of sinusoids whose frequencies are roughly integer
@@ -124,13 +143,14 @@ the signal, the signal can be described by a small number of sinusoids with
 slowly varying amplitude and phase, plus some noise. The model is
 
 \begin{equation}
+    \label{eq:sumofsinesampphasesep}
     x(n)=\sum_{p=1}^{P} A_p(n) \exp(j \phi_p(n)) + \varepsilon
 \end{equation}
 
 where $\varepsilon \sim \mathcal{N}(0,\sigma)$, $\sigma$ quantifies the power of
-the noise, and $A_p \in \mathbb{R}$ and $\phi_p \in \mathbb{R}$ are functions of
-amplitude and phase respectively. In the following, we consider equivalent
-sinusoidal mixtures of complex-valued polynomial phase exponentials
+the noise, and $A_{p}(n),\phi_{p}(n) \in \mathbb{R}$ are functions of amplitude and
+phase respectively. In the following, we consider equivalent sinusoidal mixtures
+of complex-valued polynomial phase exponentials
 \begin{equation}
     x(n)=\sum_{p=1}^{P} \exp(\mathcal{P}_p(n)) + \varepsilon
 \end{equation}
@@ -138,8 +158,12 @@ where
 \begin{equation}
     \mathcal{P}_p(n) = \sum_{q=0}^{Q} c_q n^{q}
 \end{equation}
-and $c_q \in \mathbb{C}$.
-
+and $c_q \in \mathbb{C}$. Note the form in
+Equation~\ref{eq:sumofsinesampphasesep} can be retrieved as
+\[
+    \mathcal{P}_p(n) = \log(A_p(n)) +  j \phi_p(n) = \Re{\mathcal{P}_p(n)} +
+    j\Im{\mathcal{P}_p(n)}
+\]
 The sum-of-sinusoids model of McAulay and Quatieri estimates these coefficients
 in an indirect way \cite{mcaulay1986speech}. Given two local maxima of the
 DTSTFT $X(\tau_0,\omega_0)$ and $X(\tau_1,\omega_1)$, where $H = \tau_1 -
@@ -147,13 +171,14 @@ DTSTFT $X(\tau_0,\omega_0)$ and $X(\tau_1,\omega_1)$, where $H = \tau_1 -
 polynomial phase function for the imaginary part of the phase argument
 
 \begin{equation}
-    \tilde{\phi}(n) = c_3 (n-\tau_0)^3 + c_2 (n-\tau_0)^2 + c_1 (n-\tau_0) + c_0
+    \tilde{\phi}(n) = \Im{c_3} (n-\tau_0)^3 + \Im{c_2} (n-\tau_0)^2 + \Im{c_1} (n-\tau_0) + \Im{c_0}
 \end{equation}
 
 By noting that we have 2 measurements of the phase and frequency,
 $\angle\{X(\tau_0,\omega_0)\}$ and $\angle\{X(\tau_1,\omega_1)\}$, and the frequency
 is the derivative of the phase, we can solve for the coefficients of the
-polynomial phase function using the following linear system of equations
+polynomial phase function using the following linear system of equations,
+assuming the DTSTFT was computed using an even window
 \begin{equation}
     \begin{pmatrix}
         0   & 0     & 0 & 1 \\
@@ -175,12 +200,20 @@ polynomial phase function using the following linear system of equations
         \omega_1        
     \end{pmatrix}
 \end{equation}
-and choosing $M$ so that
+We $M$ so that
 \begin{equation}
     \label{eq:minfmmq}
-    \int_{0}^{H}(\tilde{\phi}^{\prime\prime}(t))^{2}dt
+    \int_{0}^{H}(\frac{d^{2}\tilde{\phi}}{dt^2}(t))^{2}dt
 \end{equation}
-is minimized.
+is minimized in order to have a smooth evolution of phase in the interpolated
+region. $M$ is necessary because some integer number of periods of a sinusoid
+will have passed from times $\tau_{0}$ to $\tau_{1}$. Informally we choose $M$
+so that a polynomial describing the phase evolution between these two times
+takes a direct route, which is a plausible criterion because a signal with more
+radical phase variation would unlikely exhibit a spectrum that could be well
+described by two points in the time-frequency plane, i.e., the signal
+would exhibit a large bandwidth. See \cite[p.~751]{mcaulay1986speech} for
+further clarification.
 
 As only two measurements of the amplitude of the sinusoid are available,
 $|X(\tau_0,\omega_0)|$ and $|X(\tau_1,\omega_1)|$, the coefficients
@@ -227,14 +260,16 @@ Differentiating with respect to $n$, we obtain by the product rule
 \]
 If $\psi(t)$ is 0 outside of some interval $n \in [-T,T]$ then
 \[
-    \int_{-T}^{T} \frac{dx}{dn}(n)\overline{\psi}(n) dn
-    = \sum_{q=1}^{Q} q c_q \int_{-T}^{T} n^{q-1} x(n) \overline{\psi}(n) dn
+%    \int_{-T}^{T} \frac{dx}{dn}(n)\overline{\psi}(n) dn
+%    = 
+    \sum_{q=1}^{Q} q c_q \int_{-T}^{T} n^{q-1} x(n) \overline{\psi}(n) dn
     + \left\langle x, \frac{d\overline{\psi}}{dn} \right\rangle = 0
 \]
-which after rearranging is
+If we define the operator $\mathcal{T}^{\alpha} : (\mathcal{T}^{\alpha}x)(n) =
+n^{\alpha}x(n)$ we can write
 \[ 
     \sum_{q=1}^{Q} q c_q 
-    \left\langle n^{q-1} x(n) , \overline{\psi}(n) dn \right\rangle
+    \left\langle \mathcal{T}^{q-1} x , \overline{\psi} \right\rangle
     = -\left\langle x, \frac{d\overline{\psi}}{dn} \right\rangle
 \]
 From this we can see that to estimate the coefficients $c_q$, $ 1 \leq q \leq Q
@@ -243,20 +278,20 @@ equations
 \begin{equation}
     \label{eq:ddmsyseq}
     \sum_{q=1}^{Q} q c_q 
-    \left\langle n^{q-1} x(n) , \overline{\psi_{r}}(n) dn \right\rangle
-    = -\left\langle x, \frac{d\overline{\psi_{r}}}{dn} \right\rangle
+    \left\langle \mathcal{T}^{q-1} x , \overline{\psi}_{r} \right\rangle
+    = -\left\langle x, \frac{d\overline{\psi}_{r}}{dn} \right\rangle
 \end{equation}
 for $1 \leq r \leq R$. To estimate $c_0$ we write the signal we are analysing as
 \[
     s(n) = \exp(c_0) \exp \left( \sum_{q=1}^{Q} c_q n^{q} \right) + \eta (n)
 \]
 $\eta (n)$ is the error signal, or the part of the signal that is not explained
-by our model. We also define the function $\gamma (n)$, the part of the signal
+by our model. We also define a function $\gamma (n)$, the part of the signal
 whose coefficients have already been estimated
 \[
     \gamma(n) = \exp \left( \sum_{q=1}^{Q} c_q n^{q} \right)
 \]
-Computing the inner-product $\left\langle s , \gamma \right\rangle$, we have
+Computing the inner product $\left\langle s , \gamma \right\rangle$, we have
 \[
     \left\langle s , \gamma \right\rangle
     =
@@ -281,6 +316,63 @@ The estimation of the coefficients of a phase polynomial
 using this method is known as the \textit{Distribution Derivative Method (DDM)}.
 
 \subsection{The choice of atom $\psi$ \label{sec:optblackman}}
+
+% Plots made with continuous_blackman_1.py
+\begin{figure}[!t]
+    \caption{\label{plot:opt_blackman}}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_td.eps}
+\end{figure}
+
+\begin{figure}[!t]
+    \caption{}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_fd.eps}
+\end{figure}
+
+\begin{figure}[!t]
+    \caption{}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_td.eps}
+\end{figure}
+
+\begin{figure}[!t]
+    \caption{}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_fd.eps}
+\end{figure}
+
+\begin{figure}[!t]
+    \caption{\label{plot:c1vsminblackmancloseup}}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/c1_vs_min_blackman_closeup.eps}
+\end{figure}
+
+\begin{table}
+    \caption{\label{tab:optblackman}}
+    \begin{center}
+        \begin{tabular}{l c c c c }
+            Window & $a_0$ & $a_1$ & $a_2$ & $a_3$ \\
+            \hline
+            Minimum & 0.35857 & 0.48829 & 0.14128 &
+            0.01168 \\
+            $\mathcal{C}^{1}$ & 0.35874 & 0.48831 &
+            0.14127 & 0.01170
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}
+    \caption{\label{tab:optvs4termblackman}}
+    \begin{center}
+        \begin{tabular}{l c c}
+            Window & Highest side-lobe level (dB) & 6-dB bandwidth in bins \\
+            \hline
+            Minimum & -92 & 2.72 \\
+            $\mathcal{C}^{1}$ & -90 & 2.66 \\
+        \end{tabular}
+    \end{center}
+\end{table}
 
 As we are dealing with mixtures of sinusoids of small bandwidth, in addition to
 the finite time support constraint, we desire atoms whose inner-product is only
@@ -353,48 +445,16 @@ where
 \]
 The solution $\tilde{a}^{\ast}$ is given in Table~\ref{tab:optblackman} and
 plots are given in Figure~\ref{plot:opt_blackman}. This window will be referred
-to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window.
+to as the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window. Some figures of merit
+for the two windows are compared in Table~\ref{tab:optvs4termblackman} in a similar
+fashion to \cite{harris1978use}. We see
+that the $\mathcal{C}^{1}$ 4-Term Blackman-Harris window is not too different
+from the Minimum 4-term Blackman-Harris window, but has the additional
+desirable property of differentiability everywhere in its domain. A comparison
+of the windows's endpoints is presented in
+Figure~\ref{plot:c1vsminblackmancloseup}.
 
-\begin{table}
-    \caption{\label{tab:optblackman}}
-    \begin{center}
-        \begin{tabular}{l c c c c }
-            Window & $a_0$ & $a_1$ & $a_2$ & $a_3$ \\
-            \hline
-            Minimum 4-term Blackman-Harris & 0.35857 & 0.48829 & 0.14128 &
-            0.01168 \\
-            $\mathcal{C}^{1}$ 4-Term Blackman-Harris & 0.35874 & 0.48831 &
-            0.14127 & 0.01170
-        \end{tabular}
-    \end{center}
-\end{table}
-
-% Plots made with continuous_blackman_1.py
-\begin{figure}[!t]
-    \caption{\label{plot:opt_blackman}}
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_td.eps}
-\end{figure}
-
-\begin{figure}[!t]
-    \caption{}
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_fd.eps}
-\end{figure}
-
-\begin{figure}[!t]
-    \caption{}
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_td.eps}
-\end{figure}
-
-\begin{figure}[!t]
-    \caption{}
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_fd.eps}
-\end{figure}
-
-\section{\label{sec:partialtracking}Partial Tracking}
+\section{Partial Tracking\label{sec:partialtracking}}
 
 In Section~\ref{sec:mqfmfromphase} we discussed how to determine reasonable
 values for the coefficients of a cubic phase polynomial by using the frequency,

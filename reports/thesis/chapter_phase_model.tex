@@ -465,19 +465,11 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_cubic_original_spec.eps}
-    \caption{This depicts the log spectrum. Darker regions represent greater
-        values whereas lighter are smaller values.
-    \label{plot:mqcubicoriginalspec}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_cubic_estimated_spec.eps}
-    \caption{This depicts the log spectrum. Darker regions represent greater
-        values whereas lighter are smaller values. The estimated signal is
-        computed using the original method proposed by McAulay and Quatieri.
-    \label{plot:mqcubicestimatedspec}}
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_all_spect.eps}
+    \caption{
+        Spectrograms of the true signal and estimated signals for the polynomial
+        phase signal.
+    \label{plot:mqmoderrorallspect}}
 \end{figure}
 
 \begin{figure}[!t]
@@ -488,40 +480,6 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
         signal. The local upper bound on the error was produced by connecting
         the local maxima in the error data.
     \label{plot:mqerrortruevsesterr}}
-\end{figure}
-
-%\begin{figure}[!t]
-%    \centering
-%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_cubic_original_spec.eps}
-%    \caption{This depicts the dB spectrum. Darker regions represent greater
-%        values whereas lighter are smaller values.
-%    \label{plot:mqmodcubicoriginalspec}}
-%\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_cubic_estimated_spec.eps}
-    \caption{This depicts the dB spectrum. Darker regions represent greater
-        values whereas lighter are smaller values. The estimated signal is
-        computed using the cubic interpolation method proposed here.
-    \label{plot:mqmodcubicestimatedspec}}
-\end{figure}
-
-%\begin{figure}[!t]
-%    \centering
-%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_original_spec.eps}
-%    \caption{This depicts the dB spectrum. Darker regions represent greater
-%        values whereas lighter are smaller values.
-%    \label{plot:mqmodcubicoriginalspec}}
-%\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_estimated_spec.eps}
-    \caption{This depicts the dB spectrum. Darker regions represent greater
-        values whereas lighter are smaller values. The estimated signal is
-        computed using the quintic interpolation method proposed here.
-    \label{plot:mqmodcubicestimatedspec}}
 \end{figure}
 
 \begin{figure}[!t]
@@ -556,13 +514,13 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
     \label{plot:mqmoderrcompphaseerr}}
 \end{figure}
 
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_phase_func.eps}
-    \caption{Error bound of polynomial evaluation using Horner's method. The
-    error bound is shown for the quintic phase and amplitude polynomials.
-    \label{plot:mqmoderrcompphasefunc}}
-\end{figure}
+%\begin{figure}[!t]
+%    \centering
+%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_phase_func.eps}
+%    \caption{Error bound of polynomial evaluation using Horner's method. The
+%    error bound is shown for the quintic phase and amplitude polynomials.
+%    \label{plot:mqmoderrcompphasefunc}}
+%\end{figure}
 
 \subsection{Evaluation on sinusoid of exponential phase \label{sec:evalexpphase}}
 
@@ -602,9 +560,31 @@ So a linear transition from pitch $b_{0}$ to $b_{1}$ is an exponential change in
 frequency. This could be observed in recordings of performances of the
 \textit{portamento} gesture.
 
-We synthesize a sinusoid with exponential phase and use the same analysis system
-as in Section~\ref{sec:evalcubicphase} to evaluate the synthesis accuracy for
-piece-wise interpolating polynomials of cubic and quartic order for phase.
+We synthesize a sinusoid  of length $N$ samples with exponential phase and use
+the same analysis system as in Section~\ref{sec:evalcubicphase} to evaluate the
+synthesis accuracy for piece-wise interpolating polynomials of cubic and quartic
+order for phase. The signal $x$ is defined
+\[
+    x(n) = \exp(\frac{2\pi f_{0}}{\log(2)c_{1}}\exp(j(c_{1}n + c_{0})))
+\]
+with
+\[
+    c_{0} = \log(2)\frac{b_{0}}{12}
+\]
+and
+\[
+    c_{1}= \log(2)\frac{b_{1}}{12N}
+\]
+i.e., a signal starting at pitch $b_{0}$ with frequency $f_{0}$ and arriving at
+pitch $b_{1}$ in $N$ samples. We keep the amplitude of the signal constant in
+this evalutation as we are interested in the accuracy of the phase
+reconstruction. The same proceduare as in
+Section~\ref{sec:evalcubicphase} is used to estimate the parameters of
+piece-wise interpolating phase polynomials. We can see in
+Figure~\ref{plot:mqexperrortruevsesterr} that the resynthesis accuracy is
+greater for higher order polynomials. Spectrograms of the original and estimated
+signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
+
 
 \begin{figure}[!t]
     \centering
@@ -617,20 +597,32 @@ piece-wise interpolating polynomials of cubic and quartic order for phase.
     \label{plot:mqexperrortruevsesterr}}
 \end{figure}
 
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_all_spect.eps}
+    \caption{
+        Spectrograms of the true signal and estimated signals for the
+        exponential phase signal.
+    \label{plot:mqexperrorallspect}}
+\end{figure}
+
 \section{Conclusion}
+
+\subsection{Polynomial phase function}
 
 Out of the three proposed methods it appears that the modified cubic
 interpolation method works superiorly for the signal model considered. We obseve
 overfitting by the higher-order quintic model in
 Figure~\ref{plot:mqmoderrcomplogampfunc}, compromising the accuracy of
-resynthesis.  Even the proposed cubic model shows some overfitting in
-this case. From Figure~\ref{plot:mqmoderrcompphaseerr} it is clear that the DDM
-based methods provide superior estimation of the phase function --- this is not
-the case for the log-amplitude function. Depending on the underlying signal,
-perhaps better results can be obtained by postulating a lower-order amplitude
-function and higher-order phase function. The possibility of errors arising from
-numerical accuracy when evaluating the quintic polynomials has been ruled out.
-We evalutated these polynomials using an implementation of Horner's method that
+resynthesis.  Even the proposed cubic model shows some overfitting in this case.
+This is consistent with the results of \cite{girin2003comparing}. From
+Figure~\ref{plot:mqmoderrcompphaseerr} it is clear that the DDM based methods
+provide superior estimation of the phase function --- this is not the case for
+the log-amplitude function. Depending on the underlying signal, perhaps better
+results can be obtained by postulating a lower-order amplitude function and
+higher-order phase function. The possibility of errors arising from numerical
+accuracy when evaluating the quintic polynomials has been ruled out.  We
+evalutated these polynomials using an implementation of Horner's method that
 keeps track of the error bound \cite[p.~95]{higham2002accuracy}: the errors are
 negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
 
@@ -642,3 +634,16 @@ negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
     the local maxima of the error bound data in order to reduce the plot's
     range.\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}
+
+\subsection{Exponential phase function}
+
+The quintic interpolation, the polynomial of highest order, performs the most
+accurate resynthesis. This is consistent with the analytic property of the
+exponential function and an encouraging result as it suggests arbitrary analytic
+phase functions can be approximated with arbitrary accuracy simply by increasing
+the order of the interpolating polynomials. Many models of musical gestures
+involve such functions, apart from the portamento gesture modeled by an
+exponential phase function, vibrato can be modeled as a sinusoid with sinusoidal
+phase \cite{maher1990investigation}. The DDM-based analysis system combined with
+the higher order polynomial phase synthesis system presented here allow for
+accurate modeling of these gestures.
