@@ -1,5 +1,50 @@
 \chapter{Extended phase model \label{chap:exphsmodel}}
 
+\section{Partial synthesis \label{sec:partialsynthesis}}
+
+Once the parameters have been estimated, the partials have been determined, and
+the partials have been grouped into sources, we can now synthesize a single
+source by choosing only those partials belonging to a single source and
+resynthesizing from the parameters in some fashion. A popular technique that is
+straightforward to implement is the \textit{overlap-and-add} procedure
+\cite{portnoff1976implementation}, \cite{moore1990elements}. We assume that in
+the neighbourhood of $\tau_{r}$ the signal is approximately described by the
+function $x(n) \approx f_{\tau_{r}}(n-\tau_{r})$. To synthesize an approximation of $x$
+we sum windowed $f_{\tau_{r}}$ at multiple locations, windowed by a function $w$
+with finite support so
+the resulting signal has finite energy and the piecewise assumption is
+maintained. For simplicity we assume the $\tau_{r}$ are equally spaced by $H$
+samples, and $\tau_{0}=0$, so we have $\tau_{r} = rH$. The length of the window
+function $w$ is $M$ samples. The approximate signal at sample $n$ is then
+\[
+    \tilde{x}(n) = \sum_{l=L_{-}}^{L^{+}} w(n-lH) f_{\tau_l}(n-\tau_l)
+\]
+where
+\[
+    L_{-} = \left\lfloor \frac{n-M}{H} + 1 \right\rfloor
+\]
+and
+\[
+    L_{+} = \left\lfloor \frac{n}{H} \right\rfloor
+\]
+This method has some drawbacks. Usually the function $f$ is an approximation
+$\tilde{f}$ of the true underlying function. In the case of partial tracking,
+often partials that are too short are discarded or missed. At amplitude
+transients, these short partials are important for reproducing sharp attacks
+that are shorter than the window length. If these partials are missing, the
+resulting signal takes on a transient similar to the window shape. This could be
+overcome by choosing a window with a shape similar to the overall amplitude
+envelope in the attack region when resynthesizing an attack transient.
+
+Another drawback is that no attempt is made to interpolate between the functions
+estimated at $\tau_{r}$ and $\tau_{r+1}$. This is what is carried out in
+Section~\ref{sec:mqfmfromphase} and results in a cubic interpolating polynomial
+for phase. From Equation~\ref{eq:ddmsyseq} we know we can estimate a polynomial
+of arbitrary order for phase. We will see that using this additional information
+can give us an interpolating function closer to the underlying model.
+
+\section{DDM based analysis-synthesis system}
+
 In Section~\ref{sec:mqfmfromphase} it was shown how a cubic phase function could
 be postulated from two connected measurements (see
 Section~\ref{sec:partialtracking}) giving a cubic phase polynomial. Here we will

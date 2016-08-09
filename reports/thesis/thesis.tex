@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{tablefootnote}
 \usepackage[labelsep=period]{caption}
+\usepackage[toc,page]{appendix}
 %\usepackage{gobble}
 \hypersetup{
     colorlinks=true,
@@ -70,11 +71,21 @@ Sum-of-Sinusoids Model}
 
 \input{thesis/chapter_signal_modeling.tex}
 
+\input{thesis/chapter_partial_tracking.tex}
+
 \input{thesis/chapter_phase_model.tex}
 
 \input{thesis/chapter_am_fm_sep.tex}
 
 \input{thesis/chapter_decay_sep.tex}
+
+\begin{appendices}
+
+    \input{thesis/appendix_pca.tex}
+
+    \input{thesis/appendix_gmm.tex}
+
+\end{appendices}
 
 \bibliographystyle{plain}
 \bibliography{thesis}
