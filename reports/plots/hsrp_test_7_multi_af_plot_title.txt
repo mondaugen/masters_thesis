@@ -1,1 +1,1 @@
-Amplitude function for each source (true)
+Amplitude function for each source (true)%

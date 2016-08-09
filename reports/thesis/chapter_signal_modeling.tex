@@ -1,5 +1,26 @@
 \chapter{Signal Modeling}
 
+\section{Introduction}
+
+To build tools to analyse and synthesize signals some structure must be imposed
+on the signals. The structures chosen can reflect something about the behaviour
+of these signals as observed in the field, as we will see with sinusoidal
+models. Other structures are chosen phenomenalogically --- we do not really know
+the underlying mechanism behind the production of these signals, but a
+particular structure is chosen for its mathematical or conceptual convenience,
+such as is the case when we consider higher order models for sinusoidal phase
+and amplitude.
+
+We begin the chapter with what could be seen as a mathematical analog of the
+musical score: time-frequency representations. Through this we will justify the
+adoption of a sinusoidal model for musical signals. Finding this inadequate to
+describe the signals of interest with sufficient quality, the sinusoidal model
+is generalized to incorporate modulations in frequency and amplitude. A
+technique is described to estimate the parameters of these more complex models
+which requires windows that are everywhere differentiable --- we design a new
+window having desirable properties close to those of well-known optimal windows,
+but that is everywhere differentiable.
+
 \section{Time-Frequency Representations \label{sec:timefreqrep}}
 
 As most musical instruments are resonating media and excited resonating media
@@ -161,79 +182,10 @@ where
 and $c_q \in \mathbb{C}$. Note the form in
 Equation~\ref{eq:sumofsinesampphasesep} can be retrieved as
 \[
-    \mathcal{P}_p(n) = \log(A_p(n)) +  j \phi_p(n) = \Re{\mathcal{P}_p(n)} +
-    j\Im{\mathcal{P}_p(n)}
+    \mathcal{P}_p(n) = \log(A_p(n)) +  j \phi_p(n) =
+    \Re\left\{\mathcal{P}_p(n)\right\} +
+    j\Im\left\{\mathcal{P}_p(n)\right\}
 \]
-The sum-of-sinusoids model of McAulay and Quatieri estimates these coefficients
-in an indirect way \cite{mcaulay1986speech}. Given two local maxima of the
-DTSTFT $X(\tau_0,\omega_0)$ and $X(\tau_1,\omega_1)$, where $H = \tau_1 -
-\tau_0$ we can conjecture a cubic
-polynomial phase function for the imaginary part of the phase argument
-
-\begin{equation}
-    \tilde{\phi}(n) = \Im{c_3} (n-\tau_0)^3 + \Im{c_2} (n-\tau_0)^2 + \Im{c_1} (n-\tau_0) + \Im{c_0}
-\end{equation}
-
-By noting that we have 2 measurements of the phase and frequency,
-$\angle\{X(\tau_0,\omega_0)\}$ and $\angle\{X(\tau_1,\omega_1)\}$, and the frequency
-is the derivative of the phase, we can solve for the coefficients of the
-polynomial phase function using the following linear system of equations,
-assuming the DTSTFT was computed using an even window
-\begin{equation}
-    \begin{pmatrix}
-        0   & 0     & 0 & 1 \\
-        H^3 & H^2   & H & 1 \\
-        0   & 0     & 1 & 0 \\
-        3 H^2 & 2 H & 1 & 0
-    \end{pmatrix}
-    \begin{pmatrix}
-        \Im\{c_3\} \\
-        \Im\{c_2\} \\
-        \Im\{c_1\} \\
-        \Im\{c_0\}
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-        \angle\{X(\tau_0,\omega_0)\} \\
-        \angle\{X(\tau_1,\omega_1)\} + 2 \pi M \\
-        \omega_0 \\
-        \omega_1        
-    \end{pmatrix}
-\end{equation}
-We $M$ so that
-\begin{equation}
-    \label{eq:minfmmq}
-    \int_{0}^{H}(\frac{d^{2}\tilde{\phi}}{dt^2}(t))^{2}dt
-\end{equation}
-is minimized in order to have a smooth evolution of phase in the interpolated
-region. $M$ is necessary because some integer number of periods of a sinusoid
-will have passed from times $\tau_{0}$ to $\tau_{1}$. Informally we choose $M$
-so that a polynomial describing the phase evolution between these two times
-takes a direct route, which is a plausible criterion because a signal with more
-radical phase variation would unlikely exhibit a spectrum that could be well
-described by two points in the time-frequency plane, i.e., the signal
-would exhibit a large bandwidth. See \cite[p.~751]{mcaulay1986speech} for
-further clarification.
-
-As only two measurements of the amplitude of the sinusoid are available,
-$|X(\tau_0,\omega_0)|$ and $|X(\tau_1,\omega_1)|$, the coefficients
-$c_3$ and $c_2$ are purely imaginary and the real parts of $c_1$ and $c_0$ are
-determined as
-\begin{equation}
-    \begin{pmatrix}
-        0 & 1 \\
-        H & 1
-    \end{pmatrix}
-    \begin{pmatrix}
-        \Re\{c_1\} \\
-        \Re\{c_0\}
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-        \log(|X(\tau_0,\omega_0)|) \\
-        \log(|X(\tau_1,\omega_1)|)
-    \end{pmatrix}
-\end{equation}
 
 \subsection{Polynomial phase parameter estimation}
 \label{sec:ddm_description}
@@ -322,30 +274,45 @@ using this method is known as the \textit{Distribution Derivative Method (DDM)}.
     \caption{\label{plot:opt_blackman}}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_td.eps}
+    \CaptionWithTitle{%
+        \input{plots/min4_blackman_td.txt}%
+    }{}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/min4_blackman_fd.eps}
+    \CaptionWithTitle{%
+        \input{plots/min4_blackman_fd.txt}%
+    }{}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_td.eps}
+    \CaptionWithTitle{%
+        \input{plots/c1_blackman_td.txt}%
+    }{}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/c1_blackman_fd.eps}
+    \CaptionWithTitle{%
+        \input{plots/c1_blackman_fd.txt}%
+    }{}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{\label{plot:c1vsminblackmancloseup}}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/c1_vs_min_blackman_closeup.eps}
+    \CaptionWithTitle{%
+        \input{plots/c1_vs_min_blackman_closeup.txt}%
+    }{}
 \end{figure}
 
 \begin{table}
@@ -573,12 +540,18 @@ path not using the nodes of the first path.
     \caption{\label{plot:simple_graph}}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex.eps}
+    \CaptionWithTitle{%
+        \input{plots/small_graph_ex.txt}%
+    }{}
 \end{figure}
 
 \begin{figure}[!t]
     \caption{\label{plot:simple_graph_greedy_paths}}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex_greedy_paths.eps}
+    \CaptionWithTitle{%
+        \input{plots/small_graph_ex_greedy_paths.txt}%
+    }{}
 \end{figure}
 
 To find a set of paths minimizing the total cost, we instead search for total
@@ -686,6 +659,9 @@ its rows, etc.
     \caption{\label{plot:simple_graph_lp_paths}}
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex_lp_paths.eps}
+    \CaptionWithTitle{%
+        \input{plots/small_graph_ex_lp_paths.txt}%
+    }{}
 \end{figure}
 
 The solution of the two best paths using the LP formulation
@@ -803,21 +779,27 @@ to nodes between frequencies 250 to 2250 Hz.
     %\centering
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
-    \caption{ Line-segments representing the discovered partial paths.
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_20.txt}%
+    }{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_20}}
 \end{figure}
 \begin{figure}[!t]
     %\centering
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
-    \caption{ Line-segments representing the discovered partial paths.
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_15.txt}%
+    }{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_15}}
 \end{figure}
 \begin{figure}[!t]
     %\centering
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_10.eps}
-    \caption{ Line-segments representing the discovered partial paths.
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_10.txt}%
+    }{ Line-segments representing the discovered partial paths.
     \label{plot:mq_lp_compare_chirp_10}}
 \end{figure}
 %\begin{figure}[!t]

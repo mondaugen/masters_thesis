@@ -30,10 +30,13 @@ sometimes unrealistic paths are discovered that jump between spurious maxima.
 These are filtered out by discarding paths whose cost-length ratio is excessive.
 See Figure~\ref{plot:acgtra3xylofs4costlengththresh} to see a plot of these
 values and the thresholding function. 
+% plots produced with ../../signal_modeling/test/partial_estimation_plot_3_3c.py
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.eps}
-    \caption{Paths (represented as circles) are considered only if their
+    \CaptionWithTitle{%
+        \input{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.txt}%
+    }{Paths (represented as circles) are considered only if their
     path cost is smaller than the threshold function (represented in black).\label{plot:acgtra3xylofs4costlengththresh}}
 \end{figure}
 The spectrogram of
@@ -42,24 +45,32 @@ partial paths in Figure~\ref{plot:acgtra3xylofs4partials}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram.eps}
-    \caption{\label{plot:acgtra3xylofs4specgram}}
+    \CaptionWithTitle{%
+        \input{plots/partial_estimation_acgtr_xylo_specgram.txt}%
+    }{\label{plot:acgtra3xylofs4specgram}}
 \end{figure}
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram_partials.eps}
-    \caption{\label{plot:acgtra3xylofs4partials}}
+    \CaptionWithTitle{%
+        \input{plots/partial_estimation_acgtr_xylo_specgram_partials.txt}%
+    }{\label{plot:acgtra3xylofs4partials}}
 \end{figure}
 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_orig_spec.eps}
-    \caption{\label{plot:acgtra3specgram}}
+    \CaptionWithTitle{%
+        \input{plots/ac_gtr_orig_spec.txt}%
+    }{\label{plot:acgtra3specgram}}
 \end{figure}
 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_orig_spec.eps}
-    \caption{\label{plot:xylofs4specgram}}
+    \CaptionWithTitle{%
+        \input{plots/xylo_orig_spec.txt}%
+    }{\label{plot:xylofs4specgram}}
 \end{figure}
 
 \begin{figure}[!t]
@@ -87,10 +98,14 @@ The data-points have the form
 \]
 where $a_{i,0}$ is the first PC and $a_{i,1}$ the second. The set of PC data
 points will be denoted $\{\boldsymbol{a}\}$.
+% plot produced with
+% plot_pep_3_3d.py
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_sep_true_memberships.eps}
-    \caption{This shows the distribution of partials when plotting their two PCs
+    \CaptionWithTitle{%
+        \input{plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}%
+    }{This shows the distribution of partials when plotting their two PCs
         derived from their mean frequency and log-length. In this case, the
         source memberships of the partials are known. We see that there is
         generally a separation of the partials into two clusters corresponding
@@ -109,7 +124,6 @@ partials to yield a plausible source separation.
 GMM fitting is sensitive to its initial guess of the parameters as the algorithm
 only finds a local maximum of the likelihood function
 \cite[p.~187]{kay1993fundamentals}.
-% Need to add page to citation
 To find an initial guess we convolve the scatter plot with Gaussian kernels,
 giving a continuous function. We use the two local maxima of this function as
 the initial means for the two sought classifying Gaussian distributions. The
@@ -190,7 +204,9 @@ Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_estimated_memberships.eps}
-    \caption{\label{plot:partialclassificationacgtrxylosepestimatedmemberships}}
+    \CaptionWithTitle{%
+        \input{plots/partial_classification_acgtr_xylo_estimated_memberships.txt}%
+    }{\label{plot:partialclassificationacgtrxylosepestimatedmemberships}}
 \end{figure}
 
 After the classifications have been made, synthesizing the separated sources
@@ -203,13 +219,17 @@ Figure~\ref{plot:xylofs4specgramss}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_ss_spec.eps}
-    \caption{\label{plot:acgtra3specgramss}}
+    \CaptionWithTitle{%
+        \input{plots/ac_gtr_ss_spec.txt}%
+    }{\label{plot:acgtra3specgramss}}
 \end{figure}
 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_ss_spec.eps}
-    \caption{\label{plot:xylofs4specgramss}}
+    \CaptionWithTitle{%
+        \input{plots/xylo_ss_spec.txt}%
+    }{\label{plot:xylofs4specgramss}}
 \end{figure}
 
 \subsection{Conclusion}

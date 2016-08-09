@@ -8,6 +8,79 @@ estimated using DDM in calculating a phase function. In a later section we will
 compare the synthesis quality of the classical McAulay-Quatieri
 approach with our new method.
 
+\section{Estimating sinusoid of cubic phase: McAulay-Quatieri method}
+
+The sum-of-sinusoids model of McAulay and Quatieri estimates these coefficients
+in an indirect way \cite{mcaulay1986speech}. Given two local maxima of the
+DTSTFT $X(\tau_0,\omega_0)$ and $X(\tau_1,\omega_1)$, where $H = \tau_1 -
+\tau_0$ we can conjecture a cubic
+polynomial phase function for the imaginary part of the phase argument
+
+\begin{equation}
+    \tilde{\phi}(n) = \Im\left\{c_3\right\} (n-\tau_0)^3 + \Im\left\{c_2\right\} (n-\tau_0)^2 + \Im\left\{c_1\right\} (n-\tau_0) + \Im\left\{c_0\right\}
+\end{equation}
+
+By noting that we have 2 measurements of the phase and frequency,
+$\angle\{X(\tau_0,\omega_0)\}$ and $\angle\{X(\tau_1,\omega_1)\}$, and the frequency
+is the derivative of the phase, we can solve for the coefficients of the
+polynomial phase function using the following linear system of equations,
+assuming the DTSTFT was computed using an even window
+\begin{equation}
+    \begin{pmatrix}
+        0   & 0     & 0 & 1 \\
+        H^3 & H^2   & H & 1 \\
+        0   & 0     & 1 & 0 \\
+        3 H^2 & 2 H & 1 & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Im\{c_3\} \\
+        \Im\{c_2\} \\
+        \Im\{c_1\} \\
+        \Im\{c_0\}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \angle\{X(\tau_0,\omega_0)\} \\
+        \angle\{X(\tau_1,\omega_1)\} + 2 \pi M \\
+        \omega_0 \\
+        \omega_1        
+    \end{pmatrix}
+\end{equation}
+We choose $M$ so that
+\begin{equation}
+    \label{eq:minfmmq}
+    \int_{0}^{H}(\frac{d^{2}\tilde{\phi}}{dt^2}(t))^{2}dt
+\end{equation}
+is minimized in order to have a smooth evolution of phase in the interpolated
+region. $M$ is necessary because some integer number of periods of a sinusoid
+will have passed from times $\tau_{0}$ to $\tau_{1}$. Informally we choose $M$
+so that a polynomial describing the phase evolution between these two times
+takes a direct route, which is a plausible criterion because a signal with more
+radical phase variation would unlikely exhibit a spectrum that could be well
+described by two points in the time-frequency plane, i.e., the signal
+would exhibit a large bandwidth. See \cite[p.~751]{mcaulay1986speech} for
+further clarification.
+
+As only two measurements of the amplitude of the sinusoid are available,
+$|X(\tau_0,\omega_0)|$ and $|X(\tau_1,\omega_1)|$, the coefficients
+$c_3$ and $c_2$ are purely imaginary and the real parts of $c_1$ and $c_0$ are
+determined as
+\begin{equation}
+    \begin{pmatrix}
+        0 & 1 \\
+        H & 1
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Re\{c_1\} \\
+        \Re\{c_0\}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \log(|X(\tau_0,\omega_0)|) \\
+        \log(|X(\tau_1,\omega_1)|)
+    \end{pmatrix}
+\end{equation}
+
 \section{Estimating parameters of a sinusoid with cubic
 phase\label{sec:cubicphasepolyest} }
 
@@ -466,7 +539,9 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_all_spect.eps}
-    \caption{
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_all_spect.txt}%
+    }{
         Spectrograms of the true signal and estimated signals for the polynomial
         phase signal.
     \label{plot:mqmoderrorallspect}}
@@ -475,7 +550,9 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_true_vs_est_err.eps}
-    \caption{
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_true_vs_est_err.txt}%
+    }{
         The power of the error when subtracting the original signal from the estimated
         signal. The local upper bound on the error was produced by connecting
         the local maxima in the error data.
@@ -485,7 +562,9 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
-    \caption{This shows the error of the interpolated signals when compared
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_logamp_err.txt}%
+    }{This shows the error of the interpolated signals when compared
     with the original signal for the three proposed methods.
     \label{plot:mqmoderrcomplogamperr}}
 \end{figure}
@@ -493,7 +572,9 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_func.eps}
-    \caption{This compares the original log-amplitude function with the
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_logamp_func.txt}%
+    }{This compares the original log-amplitude function with the
     interpolated log-amplitude functions. The log-amplitude functions are
     considered because these are the real part of the polynomial exponents in
     the complex sinusoid model.
@@ -503,7 +584,9 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
-    \caption{This compares the theoretical phase function with the interpolated
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_phase_err.txt}%
+    }{This compares the theoretical phase function with the interpolated
         phase functions. The phase functions are considered because these are
         the imaginary part of the polynomial exponents in the complex sinusoidal
         model.  The errors are ``wrapped'' to lie between $-\pi$ and $\pi$. The
@@ -589,7 +672,9 @@ signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_true_vs_est_err.eps}
-    \caption{
+    \CaptionWithTitle{%
+        \input{plots/mq_exp_err_comp_true_vs_est_err.txt}%
+    }{
         The power of the error when subtracting the original signal from the
         estimated signal for the signals of exponential phase. The local upper
         bound on the error was produced by connecting the local maxima in the
@@ -600,7 +685,9 @@ signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_all_spect.eps}
-    \caption{
+    \CaptionWithTitle{%
+        \input{plots/mq_exp_err_comp_all_spect.txt}%
+    }{
         Spectrograms of the true signal and estimated signals for the
         exponential phase signal.
     \label{plot:mqexperrorallspect}}
@@ -629,7 +716,9 @@ negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
-    \caption{The error bound in evaluating the quintic amplitude and phase
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_quintic_poly_eval_err.txt}%
+    }{The error bound in evaluating the quintic amplitude and phase
     polynomials using Horner's method. This plot was produced by plotting only
     the local maxima of the error bound data in order to reduce the plot's
     range.\label{plot:mqmodquinticpolyevalerr}}
