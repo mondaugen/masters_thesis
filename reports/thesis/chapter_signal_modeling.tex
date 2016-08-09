@@ -186,8 +186,11 @@ Equation~\ref{eq:sumofsinesampphasesep} can be retrieved as
     \Re\left\{\mathcal{P}_p(n)\right\} +
     j\Im\left\{\mathcal{P}_p(n)\right\}
 \]
+In Chapter~\ref{chap:exphsmodel} we will see how estimations of these parameters
+at different times can be interpolated to create higher order phase functions
+with improved synthesis quality.
 
-\subsection{Polynomial phase parameter estimation}
+\section{Polynomial phase parameter estimation}
 \label{sec:ddm_description}
 More recently a set of techniques have been developed that use some combination
 of derivatives of the analysis window $w$ or the signal $x$ to estimate the
@@ -267,7 +270,7 @@ so we can estimate $c_0$ as
 The estimation of the coefficients of a phase polynomial
 using this method is known as the \textit{Distribution Derivative Method (DDM)}.
 
-\subsection{The choice of atom $\psi$ \label{sec:optblackman}}
+\section{Choosing atom $\psi$ \label{sec:optblackman}}
 
 % Plots made with continuous_blackman_1.py
 \begin{figure}[!t]
@@ -356,6 +359,9 @@ informally, we require
 \[
     \lim_{n \rightarrow T} \psi(n) = \psi(T) = 0
 \]
+
+\subsection{The Hann window}
+
 The \textit{Hann} window possesses this property
 \[
     w_{h}(n) = \begin{cases}
@@ -375,22 +381,47 @@ Letting $T=N/2$, where $N$ is the length of the window
         0 & \text{otherwise}
     \end{cases}
 \]
-With $M=2$ and $a_0 = a_1 = 0.5$, we have the Hann window. The
-\textit{Blackman-Harris} family of windows are also sum-of-cosine windows. For
-these windows, optimization techniques were used to search for coefficients
-giving optimum properties, such as minimum height of the highest side-lobe
-(maximum out-of-band rejection) \cite{rabiner1970approach}. The 4-term window
-whose coefficients $a$ are listed in Table~\ref{tab:optblackman} has a maximum
-side-lobe level of 92 dB, lower than the quantization noise of a 16-bit linear
-pulse code modulated signal. This window has a very large main-lobe which means
-two sinusoids of similar frequency will be difficult to resolve. Furthermore,
-the window has a discontinuity at its boundaries, e.g.,
-$w \left( \frac{N}{2} \right) \neq 0$ and is not once-differentiable. In any
-case the window is valuble in that it effectively nulls any influence of signals
-outside of a bandwidth of interest.
+With $M=2$ and $a_0 = a_1 = 0.5$, we have the Hann window.
 
-To find a window with properties similar to the 4-term Blackman-Harris window
-but without a discontinuity, we solve the optimization problem
+The simple expression for its calculation and good trade-off between main-lobe
+width and side-lobe height make the Hann window a popular choice in many signal
+processing applications. The expression for its Fourier transform is such that
+fast digital implementations of windowing a signal by a Hann window involve no
+multiplies \cite[p.~183]{harris1978use}. A recursive implementation of the
+DTSTFT is possible when windowing with the Hann window, which is important for
+applications where little storage is available \cite[p.~102]{stankovic2014time}.
+In spite of all its merits, other windows have been proposed that have superior
+qualities, such as lower side-lobes.
+
+\subsection{Blackman-Harris windows}
+
+A family of windows with certain properties superior to the Hann window is the
+\textit{Blackman-Harris} family of windows. These are also sum-of-cosine
+windows. For these windows, optimization techniques were used to search for
+coefficients giving minimum height of the highest side-lobe (maximum out-of-band
+rejection) \cite{rabiner1970approach}. The 4-term window whose coefficients $a$
+are listed in Table~\ref{tab:optblackman} has a maximum side-lobe level of 92
+dB, lower than the quantization noise of a 16-bit linear pulse code modulated
+signal. This window has a very large main-lobe which means two sinusoids of
+similar frequency will be difficult to resolve. Furthermore, the window has a
+discontinuity at its boundaries, e.g., $w \left( \frac{N}{2} \right) \neq 0$ and
+is not once-differentiable. In any case the window is valuble in that it
+effectively nulls any influence of signals outside of a bandwidth of interest.
+
+It should be clarified that when we compare the widths of the main-lobes of two
+windows, we compare two windows of the same length. Of course, the bandwidth of
+a window can also be decreased by increasing its length, at the expense of
+time-resolution. When searching for windows superior to the Hann window , we are
+motivated by our ability to describe the signal with more detail between two
+analysis frames than would be possible with a simple linear-phase sinusoid
+model. Using a longer window to decrease the main-lobe width is not problemati
+in this case, but we would still like a high level of signal rejection outside
+of the bandwidth of interest for improved estimation accuracy of the signal
+parameters, so we search for windows that have very low side-lobe height and are
+also once-differentiable, without caring so much about the width of the
+main-lobe. To find a window with properties similar to the 4-term
+Blackman-Harris window but without a discontinuity, we solve the optimization
+problem
 \[
         \min||a-\tilde{a}||_2 \\
 \]
