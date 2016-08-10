@@ -39,13 +39,15 @@ it can be sensitive to spurious peaks and is optimal only in the sense that
 the set of paths computed contains the best path possible --- the quality of the
 other paths may be comprimised under this criterion.
 
-In \cite{mcaulay1986speech} the parameters are the instantaneous amplitude,
-phase and frequency and are indexed by frequency as $\omega_0^{h}, \dotsc,
-\omega_{M-1}^{h}$ and $\omega_0^{h+1}, \dotsc, \omega_{N-1}^{h+1}$ but we will
-allow for arbitrary parameter sets. Define a distance function $\mathcal{D}
-\left( \theta_{i},\theta_{j} \right)$ that computes the similarity between $K=2$
-sets of parameters. We will now consider a method that finds $L$ pairs of
-parameters that are closest.
+In \cite[p.~748]{mcaulay1986speech} the peak matching algorithm is described in
+a number of steps; we summarize them here in a way comparable with the linear
+programming formulation to be presented in the sequel. In that paper, the
+parameters are the instantaneous amplitude, phase and frequency and are indexed
+by frequency as $\omega_0^{h}, \dotsc, \omega_{M-1}^{h}$ and $\omega_0^{h+1},
+\dotsc, \omega_{N-1}^{h+1}$ but we will allow for arbitrary parameter sets.
+Define a distance function $\mathcal{D} \left( \theta_{i},\theta_{j} \right)$
+that computes the similarity between $K=2$ sets of parameters. We will now
+consider a method that finds $L$ pairs of parameters that are closest.
 
 We compute the cost matrix $\boldsymbol{C}$
 \[
@@ -99,7 +101,8 @@ lowest total cost if
 we restrict the search to exactly $L$ paths. Instead of indexing parameters by
 their frame number $h$, we make $h$ part of the parameter set so that it can be
 used by the distance function $\mathcal{D}$. Assume that over $K$ frames there
-are $M$ total parameter sets. We define the vector $\boldsymbol{c} \in \mathbb{R}^{M^2}$
+are $M$ total parameter sets. In this context we will consider them as nodes in
+a graph. We define the vector $\boldsymbol{c} \in \mathbb{R}^{M^2}$
 where the entry $\boldsymbol{c}_{i + Mj} = \mathcal{D} \left( \theta_{i}, \theta_{j}
 \right)$. If we have a set of connections $\Gamma_{i,j}$ we can calculate the
 total cost of these connections by defining the vector
@@ -120,19 +123,26 @@ useful. How do we constrain $\boldsymbol{x}$ to give us a solution to the
 partial tracking problem? Let us consider an example.
 
 In Figure~\ref{plot:simple_graph} we have an example of a simple graph or
-lattice. The numbers are indices of nodes in the graph and the possible
-connections between them are indicated by lines, or \textit{edges}. We would
-like to find the two shortest paths based on different criteria. In
-Figure~\ref{plot:simple_graph_greedy_paths} we find the paths using an algorithm
-similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a tensor of
-distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry $C_{i,j,h}$
-represents the cost of travelling on the path connecting the $i$th node in layer
-0, the $j$th node in layer 1 and the $h$th node in layer 2. This is the greedy
-method of searching for the best paths whose optimality criterion is to find the
-set of best paths containing the absolute best path. We see in
-Figure~\ref{plot:simple_graph_greedy_paths} that the absolute shortest path, $1
-\rightarrow 4 \rightarrow 8$, is discovered, followed by the second shortest
-path not using the nodes of the first path.
+lattice. Such a graph represents a plausible partial tracking situation:
+vertically aligned nodes are parameter sets estimated from the same analysis
+frame and we would like to connect these parameter sets between frames. The
+numbers are indices of nodes in the graph and the possible connections between
+them are indicated by lines, or \textit{edges}. Imagine that we would like to
+find the two shortest paths. We will now examine the resulting paths from two
+algorithms using different criteria for shortness.
+
+In Figure~\ref{plot:simple_graph_greedy_paths} we find the paths using an
+algorithm similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a
+tensor of distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry
+$C_{i,j,h}$ represents the cost of travelling on the path connecting the $i$th
+node in layer 0, the $j$th node in layer 1 and the $h$th node in layer 2. This
+cost is the sum of the euclidean distances giving the lengths of the
+connections. This is the greedy method of searching for the best paths whose
+optimality criterion is to find the set of best paths containing the absolute
+best path. We see in Figure~\ref{plot:simple_graph_greedy_paths} that the
+absolute shortest path, $1 \rightarrow 4 \rightarrow 8$, is discovered, followed
+by the second shortest path not using the nodes of the first path, $2
+\rightarrow 5 \rightarrow 7$.
 
 \begin{figure}[!t]
     \caption{\label{plot:simple_graph}}
@@ -152,6 +162,8 @@ path not using the nodes of the first path.
     }{}
 \end{figure}
 
+\subsection{$L$ shortest paths via linear programming}
+
 To find a set of paths minimizing the total cost, we instead search for total
 solutions $\boldsymbol{x}$ that describe all paths in the graph. Assume for now
 that we can guarantee that the entries of $\boldsymbol{x}$ will be either 0 or
@@ -160,11 +172,12 @@ valid solution $\boldsymbol{x}^{\ast}$. To maintain that paths not overlap, a
 valid solution's nodes are only allowed to have one edge entering ---
 coming from a node in a previous frame --- and one edge leaving
 --- going to a node in a successive frame. To translate this into a
-constraint, consider the node $i$ and its possible $R$ successive connecting
-nodes $j_{0} \dotsc j_{R-1}$. Define the vector
+constraint, consider the node $i$ and its possible $R_{i}$ successive connecting
+nodes $j_{0} \dotsc j_{R_{i}-1}$. Define the vector\footnote{The superscript s
+stands for ``successive''.}
 \[
     a^{\text{s},i}_{i + Mj_{r}} = \begin{cases}
-        1 & \forall j_{r} \in \left[ j_{0} \dotsc j_{R-1} \right] \\
+        1 & \forall j_{r} \in \left[ j_{0} \dotsc j_{R_{i}-1} \right] \\
         0 & \text{otherwise}
     \end{cases}
 \]
@@ -173,11 +186,12 @@ As all the entries of $\boldsymbol{x}$ are either 0 or 1, we have
     0 \leq \left\langle \boldsymbol{a}^{\text{s},i}, \boldsymbol{x} \right\rangle \leq 1
 \]
 so we can make this a constraint to ensure that a node has at most one path
-leaving. Similarly, if we consider the node $j$ and its possible R previous connecting
-nodes $i_{0} \dotsc i_{R-1}$, the vector
+leaving. Similarly, if we consider the node $j$ and its possible $R_{j}$ previous connecting
+nodes $i_{0} \dotsc i_{R_{j}-1}$, the vector\footnote{The superscript p
+stands for ``previous''.}
 \[
     a^{\text{p},j}_{i_{r} + Mj} \begin{cases}
-        1 & \forall i_{r} \in \left[ i_{0} \dotsc i_{R-1} \right] \\
+        1 & \forall i_{r} \in \left[ i_{0} \dotsc i_{R_{j}-1} \right] \\
         0 & \text{otherwise}
     \end{cases}
 \]
@@ -190,6 +204,7 @@ translate this into a constraint, we define a vector that counts the number of
 edges entering a node and subtracts then the number of edges leaving a node. The
 result should always be 0 for an equal number of edges entering and exiting a
 node. If $r$ is the index of the node considered, the vector is simply
+\footnote{The superscript b stands for ``balanced''.}
 \[
     \boldsymbol{a}^{\text{b},r} = \boldsymbol{a}^{\text{p},r} -
     \boldsymbol{a}^{\text{s},r}
@@ -202,6 +217,7 @@ Finally we want to constrain that there be only $L$ paths. We do this by
 noticing that if this is true, there will be $L$ edges between frames $h$ and
 $h+1$. We constrain the number of paths going from edges
 $\Gamma_{h}$ in frame $h$ to $\Gamma_{h+1}$ by forming the vector
+\footnote{The superscript c stands for ``connections''.}
 \[
     \boldsymbol{a}^{\text{c},h} = \sum_{j \in \Gamma_{h}}
     \boldsymbol{a}^{\text{s},j}
@@ -278,7 +294,7 @@ total costs is shown in Table~\ref{tab:greedy_lp_cost_compare}
     \end{center}
 \end{table}
 
-The LP formulation is based on a multiple object tracking algorithm for video
+The LP formulation is inspired by a multiple object tracking algorithm for video
 \cite{jiang2007linear}. A proof that the solution $\boldsymbol{x}^{\ast}$ will
 have entries equal to either $0$ or $1$ can be found in
 \cite[p.~167]{parker1988discrete}. The theoretical computational complexity of
@@ -293,11 +309,7 @@ barrier-based algorithm would be required to solve the problem. More information
 on linear programming and optimization in general can be found in
 \cite{boyd2004convex}.
 
-It should be noted that in the special case that only 1 shortest path is
-searched an algorithm exists that requires on the order of $N^{2}T$ calculations
-\cite{rabiner1989tutorial} where $N$ is the number of nodes in each frame and
-$T$ is the number of frames (assuming the same number of nodes in each frame):
-this algorithm is known as the Viterbi algorithm \cite{forney1973viterbi}.
+\subsection{Complexity}
 
 The LP formulation of the $L$-best paths problem gives results equivalent to the
 solution to the $L$-best paths problem proposed in \cite{wolf1989finding}. The
@@ -320,7 +332,41 @@ figures in Section~\ref{sec:mq_lp_compare_chirp}.  Indeed the Viterbi
 formulation took prohibitvely long to compute when many paths were desired, as
 did the LP when many frames were considered.
 
-\section{Partial paths on example signal\label{sec:mq_lp_compare_chirp}}
+It should be noted that in the special case that only 1 shortest path is
+searched an algorithm exists that requires on the order of $N^{2}T$ calculations
+\cite{rabiner1989tutorial} where $N$ is the number of nodes in each frame and
+$T$ is the number of frames (assuming the same number of nodes in each frame):
+this algorithm is known as the Viterbi algorithm \cite{forney1973viterbi}.
+
+\section{Partial paths on an example signal\label{sec:mq_lp_compare_chirp}}
+
+\begin{figure}[!t]
+    %\centering
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_20.txt}%
+    }{ Line-segments representing the discovered partial paths.
+    \label{plot:mq_lp_compare_chirp_20}}
+\end{figure}
+\begin{figure}[!t]
+    %\centering
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_15.txt}%
+    }{ Line-segments representing the discovered partial paths.
+    \label{plot:mq_lp_compare_chirp_15}}
+\end{figure}
+\begin{figure}[!t]
+    %\centering
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_10.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_10.txt}%
+    }{ Line-segments representing the discovered partial paths.
+    \label{plot:mq_lp_compare_chirp_10}}
+\end{figure}
 
 We compare the greedy and LP based methods for peak matching on a synthetic
 signal. The signal is composed of $K=6$ chirps of constant amplitude, the $k$th
@@ -358,9 +404,9 @@ $\theta_{i}^{h} = \left\{ \phi_{i}^{h} , \omega_{i}^{h} , \psi_{i}^{h}
 it is on this lumped data that we perform partial tracking.
 
 We search for partial tracks using both the greedy and LP strategies. Both
-algorithms use the distance metric $\mathcal{D}$ between two parameters sets:
+algorithms use the distance metric $\mathcal{D}_{\text{pr.}}$ between two parameters sets:
 \[
-    \mathcal{D} \left( \theta_{i}^{h},
+    \mathcal{D}_{\text{pr.}} \left( \theta_{i}^{h},
     \theta_{j,}^{h+1} \right) = \left( \omega_{i}^{h} +
     \psi_{i}^{h} H - \omega_{j}^{h+1} \right)
 \]
@@ -373,33 +419,6 @@ To maintain connected paths, the search on the next frames uses the end nodes of
 the last search as starting points. For both methods, the search is restricted
 to nodes between frequencies 250 to 2250 Hz.
 
-\begin{figure}[!t]
-    %\centering
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_lp_compare_chirp_20.txt}%
-    }{ Line-segments representing the discovered partial paths.
-    \label{plot:mq_lp_compare_chirp_20}}
-\end{figure}
-\begin{figure}[!t]
-    %\centering
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_lp_compare_chirp_15.txt}%
-    }{ Line-segments representing the discovered partial paths.
-    \label{plot:mq_lp_compare_chirp_15}}
-\end{figure}
-\begin{figure}[!t]
-    %\centering
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_10.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_lp_compare_chirp_10.txt}%
-    }{ Line-segments representing the discovered partial paths.
-    \label{plot:mq_lp_compare_chirp_10}}
-\end{figure}
 %\begin{figure}[!t]
 %    %\centering
 %    \centering
@@ -437,6 +456,33 @@ estimate of the path's second derivative. More on regularization in optimization
 can be found in \cite[ch.~6.3]{boyd2004convex}.
 
 \section{Conclusion}
+
+In this chapter we reformulated the classical greedy algorithm of McAulay and
+Quatieri and showed that can be seen as a greedy algorithm for finding the $L$
+shortest paths in a lattice. An algorithm was then proposed minimizing the sum
+of the $L$ paths, using a linear programming approach. It was shown on synthetic
+signals that the new approach finds plausible paths in lattices with a
+large number of spurious nodes.
+
+There are problems with the proposed approach. As discussed in
+\ref{sec:lppathsearch}, ``jagged'' paths should be removed using regularization.
+There are also situations where it is undesireable to have paths extend
+throughout the entire lattice. Acoustic signals produced by striking media, such
+as strings or bars, exhibit a spectrum where the upper partials decay more
+quickly than the lower ones (e.g., see Figure~\ref{plot:acgtra3specgram}) --- it
+would be desirable in these situations to have shorter paths for the upper
+partials, those decaying more quickly. This could be addressed as in
+\cite{depalle1993tracking} where the signal is divided into overlapping sequences of
+frames and partial paths are connected between sequences.
+
+The proposed algorithm, while faster than algorithms based on the Viterbi
+algorithm, is still not fast. Assuming the same cost function
+$\mathcal{D}_{\text{pr.}}$ as in Section~\ref{sec:mq_lp_compare_chirp} it would
+be more efficient to consider narrow bands over which to search for paths when
+analysing signals with little frequency modulation. However, as we will see in
+Chapter~\ref{chap:amfmsep}, with different cost functions, the algorithm is
+useful for solving general $L$ shortest paths problems outside of partial
+tracking. 
 
 % Problems:
 % We assume paths spanning entire analysis are optimal
