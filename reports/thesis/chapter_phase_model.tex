@@ -1,31 +1,62 @@
 \chapter{Extended phase model \label{chap:exphsmodel}}
 
+In Chapter~\ref{sec:partialtracking} techniques were presented for discovering
+partials in a signal. Each partial is a set of analysis points indexed by time.
+The information at each analysis point can be used to synthesize a portion of
+the partial and these are combined to give a signal representing a partial.
+The various techniques to synthesize these pieces of the signal discussed here
+differ in the orders used for analysis and those for synthesis. The first
+technique presented simply synthesizes signals of short duration using the
+estimated parameters and blends these segments together. We recognize that
+having multiple estimations of parameters at discrete times within the partial
+duration allow us to postulate, via interpolation, functions describing the
+partial of higher order than those whose parameters were estimated during
+analysis. It is shown that this strategy is not always to our advantage ---
+interpolants of higher order than the underlying function can suffer from errors
+due to over-fitting. In the case of functions that are always better
+approximated by higher order polynomials, we will see that there is an advantage
+to using high order interpolation. These cases are illustrated through the
+analysis and synthesis of synthetic signals.
+
 \section{Partial synthesis \label{sec:partialsynthesis}}
 
-Once the parameters have been estimated, the partials have been determined, and
-the partials have been grouped into sources, we can now synthesize a single
-source by choosing only those partials belonging to a single source and
-resynthesizing from the parameters in some fashion. A popular technique that is
-straightforward to implement is the \textit{overlap-and-add} procedure
-\cite{portnoff1976implementation}, \cite{moore1990elements}. We assume that in
-the neighbourhood of $\tau_{r}$ the signal is approximately described by the
-function $x(n) \approx f_{\tau_{r}}(n-\tau_{r})$. To synthesize an approximation of $x$
-we sum windowed $f_{\tau_{r}}$ at multiple locations, windowed by a function $w$
-with finite support so
-the resulting signal has finite energy and the piecewise assumption is
-maintained. For simplicity we assume the $\tau_{r}$ are equally spaced by $H$
+A popular technique for synthesizing partials from a set of analysis points is
+the \textit{overlap-and-add} procedure \cite{portnoff1976implementation},
+\cite{moore1990elements}. We assume that in the neighbourhood of $\tau_{r}$ the
+partial's signal is approximately described by the function $x(n) \approx
+f_{\tau_{r}}(n-\tau_{r})$. To synthesize an approximation of $x$ we sum windowed
+$f_{\tau_{r}}$ at multiple locations, windowed by a function $w$ with finite
+support so the resulting signal has finite energy and the piecewise assumption
+is maintained. For simplicity we assume the $\tau_{r}$ are equally spaced by $H$
 samples, and $\tau_{0}=0$, so we have $\tau_{r} = rH$. The length of the window
-function $w$ is $M$ samples. The approximate signal at sample $n$ is then
+function $w$ is $M = VH + 1$ samples, with $V,H \in \mathbb{N}%
+$\footnote{%
+    $M$ is always odd so one may wonder how the Fast Fourier Transform can be
+    used to invert $F_{\tau_{r}}$, the frequency domain representaion of
+    $f_{\tau_{r}}$.  Recall that the DTFT can be interpreted as the coefficients
+    of a Fourier series that give the periodic version of the analysed signal.
+    Also recall that we use window functions that are real and even. In practice
+    the edges of the window are often equal to zero so that the length of the
+    non-zero part is equal to the length of the DTFT $N$. In the case they are
+    not, simply ensuring that values in the window indexed by integer multiples
+    of $N$ are 0, and that the value at the centre of the window is 1 will ensure proper
+    synthesis \cite[p.~244]{portnoff1976implementation}. In that case, the values
+    outside of the part of the window presented to the DTFT are folded into this
+    region using the window indices modulo-$N$. See
+    \cite{portnoff1976implementation} and \cite{moore1990elements} for more details on this
+    procedure.%
+}.
+The approximate signal at sample $n$ is then
 \[
     \tilde{x}(n) = \sum_{l=L_{-}}^{L^{+}} w(n-lH) f_{\tau_l}(n-\tau_l)
 \]
 where
 \[
-    L_{-} = \left\lfloor \frac{n-M}{H} + 1 \right\rfloor
+    L_{-} = \left\lceil \frac{n}{H} \right\rceil - V
 \]
 and
 \[
-    L_{+} = \left\lfloor \frac{n}{H} \right\rfloor
+    L_{+} = \left\lfloor \frac{n}{H} \right\rfloor + V
 \]
 This method has some drawbacks. Usually the function $f$ is an approximation
 $\tilde{f}$ of the true underlying function. In the case of partial tracking,
@@ -37,26 +68,60 @@ overcome by choosing a window with a shape similar to the overall amplitude
 envelope in the attack region when resynthesizing an attack transient.
 
 Another drawback is that no attempt is made to interpolate between the functions
-estimated at $\tau_{r}$ and $\tau_{r+1}$. This is what is carried out in
-Section~\ref{sec:mqfmfromphase} and results in a cubic interpolating polynomial
-for phase. From Equation~\ref{eq:ddmsyseq} we know we can estimate a polynomial
-of arbitrary order for phase. We will see that using this additional information
+estimated at $\tau_{r}$ and $\tau_{r+1}$ using the model that the underlying
+sinusoids are non-stationary\footnote{%
+    This is one of the causes of ``pre-echo'' when
+    time-stretching using the STFT \cite{roebel2003transient}.%
+}
+From Equation~\ref{eq:ddmsyseq} we know we can estimate a polynomial of
+arbitrary order for phase. We will see that using this additional information
 can give us an interpolating function closer to the underlying model.
 
-\section{DDM based analysis-synthesis system}
+\section{The interpolating analysis-synthesis system}
 
-In Section~\ref{sec:mqfmfromphase} it was shown how a cubic phase function could
-be postulated from two connected measurements (see
-Section~\ref{sec:partialtracking}) giving a cubic phase polynomial. Here we will
-demonstrate how to include the additional phase polynomial coefficients
-estimated using DDM in calculating a phase function. In a later section we will
-compare the synthesis quality of the classical McAulay-Quatieri
-approach with our new method.
+In the following, we investigate the synthesis quality of three interpolating
+analysis-synthesis systems. The qualifier ``interpolating'' is used because each
+system takes the multiple sets of estimated parameters of a smaller order model
+and interpolates them with a higher oder model, which is then used for
+synthesis. The systems will be denoted $\mathscr{S}_{p,q}$ where $p$ is the
+order of the analysis system and $q$ the order of the synthesis system, e.g., a
+linear analysis system has $p=1$, etc.
 
-\section{Estimating sinusoid of cubic phase: McAulay-Quatieri method}
+\section{$\mathscr{S}_{1,3}$: the McAulay-Quatieri method}
 
-The sum-of-sinusoids model of McAulay and Quatieri estimates these coefficients
-in an indirect way \cite{mcaulay1986speech}. Given two local maxima of the
+\subsection{Analysis: linear phase}
+
+For the McAulay-Quatieri method, the model is a sinusoid of constant frequency
+(linear phase) in each analysis frame. To estimate the frequency of this
+sinusoid we find the bin with the most energy and find a refined estimate of the
+frequency as the maximum of a quadratic interpolating polynomial fit to this bin
+and its two neighbouring bins. This is a procedure documented in
+\cite[p.~45]{serra1989system}. The interpolation is best performed in the
+log-spectrum and on a spectrum produced using a window, such as a zero-padded
+Hann window, giving a wide enough main-lobe so that the three points lie on this
+lobe and not on side-lobes. A refined estimate of the amplitude of the sinusoid
+is obtained with this procedure as well.
+
+In the original paper by McAulay and Quatieri, they do not use this technique
+but, as they show an example analysis of a speech signal, instead adjust the
+analysis window to be a multiple of the period of the glottal pulse. The bins of
+the DTFT used in the analysis will be integer multiples of the frequency given
+as the reciprocal of this period. Under the model of the speech signal as
+harmonically related sinusoids, the best estimate for the frequency is the bin
+of a local maximum, its amplitude the modulus of the spectrum at this maximum, and
+the phase the argument.
+
+In our system, we use a fixed window size. To estimate the phase then we use
+Equation~\ref{eq:ddmestc0} with
+\[
+    \gamma_{\text{MQ}}(n)=\exp(2\pi\frac{k^{\ast}}{M}n)
+\]
+where $k^{\ast}$ is the bin we have determined to correspond to the frequency of
+the sinusoid. The inital phase is then $\Im \left\{ c_{0} \right\}$.
+
+\subsection{Synthesis: cubic phase}
+
+Given two local maxima of the
 DTSTFT $X(\tau_0,\omega_0)$ and $X(\tau_1,\omega_1)$, where $H = \tau_1 -
 \tau_0$ we can conjecture a cubic
 polynomial phase function for the imaginary part of the phase argument
@@ -69,7 +134,7 @@ By noting that we have 2 measurements of the phase and frequency,
 $\angle\{X(\tau_0,\omega_0)\}$ and $\angle\{X(\tau_1,\omega_1)\}$, and the frequency
 is the derivative of the phase, we can solve for the coefficients of the
 polynomial phase function using the following linear system of equations,
-assuming the DTSTFT was computed using an even window
+assuming the DTSTFT was computed using a real and even window
 \begin{equation}
     \begin{pmatrix}
         0   & 0     & 0 & 1 \\
@@ -126,40 +191,53 @@ determined as
     \end{pmatrix}
 \end{equation}
 
-\section{Estimating parameters of a sinusoid with cubic
-phase\label{sec:cubicphasepolyest} }
+\section{$\mathscr{S}_{2,3}$ and $\mathscr{S}_{2,5}$: the DDM-based methods}
 
-In this section we describe how to obtain a cubic phase polynomial from
-local estimations of the coefficients of a quadratic phase polynomial.
+\subsection{Analysis: quadratic phase}
 
-A complex sinusoid with cubic phase has the following form:
-\begin{equation}
-    \label{eq:cubicphasepoly}
-    \phi(n) = \exp \left(c_3 n^{3} + c_2 n^{2} + c_1 n + c_0 \right)
-\end{equation}
-One with quadratic phase has this form:
+The DDM is used on segments of the signal to estimate the parameters of sinusoid
+with a complex quadratic phase polynomial. This sinusoid has the form
 \begin{equation}
     \label{eq:quadraticphasepoly}
-    x(n) = \exp \left(a_2 n^{2} + a_1 n + a_0 \right)
+    x_{a}(n) = \exp \left(a_2 n^{2} + a_1 n + a_0 \right)
 \end{equation}
-with $c_{i} \in \mathbb{C}$ and $a_{i} \in \mathbb{C}$.
+with $a_{i} \in \mathbb{C}$.
 
-% These equations are hard to understand
-% Write equation 3.10 as matrix so they make more sense
-We can estimate the coefficients of Equation~\ref{eq:quadraticphasepoly} using the DDM. From
-Equation~\ref{eq:ddmsyseq}, we define the three functions
+We can estimate the coefficients of Equation~\ref{eq:quadraticphasepoly} using
+the DDM. We write Equation~\ref{eq:ddmsyseq} in matrix form with $Q=2$
 \begin{equation}
-    X_{p_{1}} \left( \tau, k \right)
+    \begin{pmatrix}
+        \left\langle \mathcal{T}^{0} x , \overline{\psi}_{1} \right\rangle &
+        2\left\langle \mathcal{T}^{1} x , \overline{\psi}_{1} \right\rangle \\
+        \vdots & \vdots \\
+        \left\langle \mathcal{T}^{0} x , \overline{\psi}_{R} \right\rangle & 
+        2\left\langle \mathcal{T}^{1} x , \overline{\psi}_{R} \right\rangle
+    \end{pmatrix}
+    \begin{pmatrix}
+        a_{1} \\
+        a_{2}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        -\left\langle  x , \frac{d\overline{\psi}_{1}}{dn} \right\rangle \\
+        \vdots \\
+        -\left\langle  x , \frac{d\overline{\psi}_{R}}{dn} \right\rangle
+    \end{pmatrix}
+\end{equation}
+
+From this we recognize we need to define three functions
+\begin{equation}
+    \left\langle \mathcal{T}^{0} x , \overline{\psi}_{k} \right\rangle 
     =
     \sum_{m=0}^{M-1} w(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
 \end{equation}
 \begin{equation}
-    X_{p_{2}} \left( \tau, k \right)
+    \left\langle \mathcal{T}^{1} x , \overline{\psi}_{k} \right\rangle
     =
-    \sum_{m=0}^{M-1} 2 m w(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
+    \sum_{m=0}^{M-1} m w(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
 \end{equation}
 \begin{equation}
-    X_{w^{\prime}} \left( \tau, k \right)
+    \left\langle  x , \frac{d\overline{\psi}_{k}}{dn} \right\rangle
     =
     -j 2 \pi \frac{k}{M} X_{p_{1}} \left( \tau , k \right) + 
     \sum_{m=0}^{M-1} \frac{dw}{dn}(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
@@ -172,7 +250,7 @@ only consider $x$ at the samples $m = [0, \dotsc, M-1]$ because we can always
 shift the time reference to view an arbitrary contiguous segment of signal with
 these indices.
 
-We then find $k^{\ast}$ such that $X_{p_{1}}$ is maximum. If multiple components
+We then find $k^{\ast}$ such that $X$ is maximum. If multiple components
 are present in the signal and are sufficiently separated in frequency, we can
 split the signal up into frequency bands and find local maxima. A technique for
 doing so is described in \cite[p.~42]{serra1989system}. To have a system of
@@ -186,36 +264,53 @@ there are many possibilities for choosing different atoms
 have improved estimation accuracy in situations where components are adaquately
 separated in frequency, while avoid a more sophisticated local peak selection
 procedure. Then $a_2$ and $a_1$ can be determined by solving the linear system
-\[
+\begin{equation}
     \begin{pmatrix}
-        X_{p_{1}} \left( \tau, k^{\ast} - 1 \right) & X_{p_{2}} \left( \tau, k^{\ast} - 1 \right) \\
-        X_{p_{1}} \left( \tau, k^{\ast} \right) & X_{p_{2}} \left( \tau, k^{\ast} \right) \\
-        X_{p_{1}} \left( \tau, k^{\ast} + 1 \right) & X_{p_{2}} \left( \tau, k^{\ast} + 1 \right)
+        \left\langle \mathcal{T}^{0} x , \overline{\psi}_{k-1} \right\rangle &
+        \left\langle \mathcal{T}^{1} x , \overline{\psi}_{k-1} \right\rangle \\
+        \left\langle \mathcal{T}^{0} x , \overline{\psi}_{k} \right\rangle &
+        \left\langle \mathcal{T}^{1} x , \overline{\psi}_{k} \right\rangle \\
+        \left\langle \mathcal{T}^{0} x , \overline{\psi}_{k+1} \right\rangle & 
+        \left\langle \mathcal{T}^{1} x , \overline{\psi}_{k+1} \right\rangle
     \end{pmatrix}
     \begin{pmatrix}
-        a_1 \\
-        a_2
+        a_{1} \\
+        2a_{2}
     \end{pmatrix}
     =
     \begin{pmatrix}
-        X_{w^{\prime}} \left( \tau, k^{\ast} - 1 \right) \\
-        X_{w^{\prime}} \left( \tau, k^{\ast} \right) \\
-        X_{w^{\prime}} \left( \tau, k^{\ast} + 1 \right)
+        -\left\langle  x , \frac{d\overline{\psi}_{k-1}}{dn} \right\rangle \\
+        -\left\langle  x , \frac{d\overline{\psi}_{k}}{dn} \right\rangle \\
+        -\left\langle  x , \frac{d\overline{\psi}_{k+1}}{dn} \right\rangle
     \end{pmatrix}
-\]
+\end{equation}
 With $a_{1}$ and $a_{2}$ determined, we can use Equation~\ref{eq:ddmestc0} to
 estimate $a_0$. We will write $a^{\tau}_{i}$ to refer to coefficient $i$
 determined at time $\tau$.
 
-\section{A cubic interpolating phase polynomial from DDM-estimated coefficients}
+\subsection{Synthesis: cubic phase}
+
+\subsubsection{The phase part}
+
+In this section we describe how to obtain a cubic phase polynomial from
+local estimations of the coefficients of a quadratic phase polynomial.
+
+A complex sinusoid with cubic phase has the following form:
+\begin{equation}
+    \label{eq:cubicphasepoly}
+    \beta(n) = \exp \left(j\left(b_3 n^{3} + b_2 n^{2} + b_1 n + b_0
+        \right)\right)
+\end{equation}
+with $b_{i} \in \mathbb{R}$. This sinusoid has magnitude 1 everywhere, only its
+phase is changing.
 
 Once the $\boldsymbol{a}^{\tau}$ have been determined
 at two times $\tau_{0}$ and $\tau_{1}$, with $H = \tau_{1} - \tau_{0}$ and these
 times have between determined as connected (see
-Section~\ref{sec:partialtracking}), we can write a system of equations
+Chapter~\ref{chap:partialtracking}), we can write a system of equations
 to determine an interpolating cubic phase polynomial. To avoid numerical
 instabilities and for simplicity, we shift the time origin so that $\tau_{0} =
-0$. This means $c_0 = \Im \left\{ a^{\tau_0}_{0} \right\}$. To reduce the size
+0$. This means $b_0 = \Im \left\{ a^{\tau_0}_{0} \right\}$. To reduce the size
 of the system, we require that 
 \[
     \frac{d \phi}{d n} \left(\frac{H}{2} \right)
@@ -233,7 +328,11 @@ and
     a^{\tau_1}_{2} \right\} \right)
 \]
 i.e., the frequency and first-order frequency modulation in the middle of the
-segment are the average of the two measured coefficients. Finally we require
+segment are the average of the two measured coefficients. Finally we require the
+that the change in phase from time $0$ to $H$ correspond to that what was
+observed, but account for the cycles that were not observed by adding an integer
+number of $2\pi$ radians. If $\phi(n)=j(b_3 n^{3} + b_2 n^{2} + b_1 n + b_0)$,
+then
 \[
     \phi \left( H \right)
     =
@@ -245,7 +344,7 @@ Equation~\ref{eq:minfmmq}, in this case:
 \begin{equation}
     \label{eq:minfmcubic}
     \tilde{U} = \argmin_{U} \int_{0}^{H} \left(
-    6 c_3 t + 2 c_2 \right)^{2} dt
+    6 b_3 t + 2 b_2 \right)^{2} dt
 \end{equation}
 which is then rounded to the nearest integer to give $U^{\ast}$. To summarize we have
 \begin{equation}
@@ -255,9 +354,9 @@ which is then rounded to the nearest integer to give $U^{\ast}$. To summarize we
         3 H & 2 & 0
     \end{pmatrix}
     \begin{pmatrix}
-        c_{3} \\
-        c_{2} \\
-        c_{1}
+        b_{3} \\
+        b_{2} \\
+        b_{1}
     \end{pmatrix}
     =
     \begin{pmatrix}
@@ -270,12 +369,12 @@ which is then rounded to the nearest integer to give $U^{\ast}$. To summarize we
         a^{\tau_1}_{2} \right\} \right)
     \end{pmatrix}
 \end{equation}
-Solving for $c_1, \dotsc, c_3$, we have
+Solving for $b_1, \dotsc, b_3$, we have
 \[
     \begin{pmatrix}
-        c_{3} \\
-        c_{2} \\
-        c_{1}
+        b_{3} \\
+        b_{2} \\
+        b_{1}
     \end{pmatrix}
     =
     \begin{pmatrix}
@@ -483,37 +582,6 @@ were resynthesized using the estimated parameters and compared to the original.
 We are interested in seeing in what cases higher order phase polynomials will
 improve the accuracy of synthesis.
 
-\subsection{The analysis-synthesis system}
-
-\subsubsection{The McAulay-Quatieri method}
-
-For the MQ method, the model is a sinusoid of constant frequency (linear phase)
-in each analysis frame. To estimate the frequency of this sinusoid we find the
-bin with the most energy and find a refined estimate of the frequency as the
-maximum of a quadratic interpolating polynomial fit to this bin and its two
-neighbouring bins. This is a procedure documented in
-\cite[p.~45]{serra1989system}. The interpolation is best performed in the
-log-spectrum and on a spectrum produced using a window, such as a zero-padded
-Hann window, giving a wide enough main-lobe so that the three points lie on this
-lobe and not on side-lobes. A refined estimate of the amplitude of the sinusoid
-is obtained with this procedure as well.
-
-In the original paper by McAulay and Quatieri, they do not use this technique
-but, as they show an example analysis of a speech signal, instead adjust the
-analysis window to be a multiple of the period of the glottal pulse. The bins of
-the DTFT used in the analysis will be integer multiples of the frequency given
-as the reciprocal of this period. Under the model of the speech signal as
-harmonically related sinusoids, the best estimate for the frequency is the bin
-of a local maximum, its amplitude the modulus of the spectrum at this maximum, and
-the phase the argument.
-
-In our system, we use a fixed window size. To estimate the phase then we use
-Equation~\ref{eq:ddmestc0} with
-\[
-    \gamma_{\text{MQ}}(n)=\exp(2\pi\frac{k^{\ast}}{M}n)
-\]
-where $k^{\ast}$ is the bin we have determined to correspond to the frequency of
-the sinusoid. The inital phase is then $\Im \left\{ c_{0} \right\}$.
 
 \subsubsection{The extended methods}
 

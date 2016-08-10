@@ -1,6 +1,6 @@
 # need to finish section on sinusoid with exponential phase
 
-remove plot titles and put in caption
+# remove plot titles and put in caption
 
 # Need section on notation
 
