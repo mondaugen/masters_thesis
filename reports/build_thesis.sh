@@ -8,4 +8,5 @@ pdflatex thesis/thesis.tex
 BIBINPUTS=bib bibtex thesis.aux
 pdflatex thesis/thesis.tex
 pdflatex thesis/thesis.tex
+mv thesis.pdf 260218793_Esterer_Nicholas_Music_Techonology_thesis.pdf
 #dvipdf thesis.dvi
