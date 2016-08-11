@@ -26,6 +26,13 @@ check ordering of terms and abbreviations
 
 explain better the choice of parameter values in experiment 2
 
+differentiate between analysis and synthesis coefficients in chapter 4
+
+define p_1 and p_2 chapter 4
+
+fix partial tracking test parameter table
+
+
 Introduction:
 
 Give specific descriptions of techniques, for example when you speak of vehicles, you mean the example of using Kalman filtering to track a vehicle. This is maybe the removal of wide-sense-stationary noise from a deterministic signal.
