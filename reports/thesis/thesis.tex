@@ -11,6 +11,8 @@
 \usepackage{tablefootnote}
 \usepackage[labelsep=period]{caption}
 \usepackage[toc,page]{appendix}
+\usepackage{hyphenat}
+
 %\usepackage{gobble}
 \hypersetup{
     colorlinks=true,
@@ -61,9 +63,18 @@ Sum-of-Sinusoids Model}
     \copyright\ \the\year\ Nicholas Esterer
 }
 
+\pagenumbering{roman}
+
 \maketitle
+
+\begin{abstract}
+    \input{thesis/abstract.tex}
+\end{abstract}
+
 \tableofcontents
 \listoffigures
+
+\pagenumbering{arabic}
 
 \input{thesis/chapter_intro.tex}
 

@@ -1,0 +1,19 @@
+Perceptual studies have shown that signals with common amplitude\hyp{} and
+frequency\hyp{}modulation are heard as coming from the same source
+\cite{mcadams1989segregation}, \cite{marin1991segregation}. This thesis examines
+the classification of partials via their measured modulations. To include these
+modulations in a sum-of-sinusoids model a superlinear polynomial phase function
+is adopted whose parameters are estimated using the Distribution Derivative
+Method (DDM) \cite{betser2009sinusoidal}. For better estimation accuracy, a
+window is designed that has lower side-lobes than the canonical Hann window but
+that is also once-differentiable --- a requirement of the DDM. These estimated
+parameters are used in a new partial tracking algorithm based on linear
+programming. The resulting partials are classified using the clustering
+technique of Gaussian mixture models \cite{friedman2001elements} on frequency-
+and amplitude-modulation data. Once the partials have been classified into
+sources, the sources are synthesized from the measured sinusoidal parameters.
+The additional information provided by the DDM is incorporated into
+interpolating polynomials for the phase and amplitude of sinusoids. The quality
+of different model-orders for these polynomials is assessed on synthetic
+signals. The system is evaluated on both simulated data and on a mixture of real
+recordings of musical instruments.
