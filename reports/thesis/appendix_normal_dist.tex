@@ -1,0 +1,22 @@
+\chapter{The normal distribution}
+
+If a random variable $X$ is has mean $\mu = E(X)$ and variance $\sigma^{2} =
+E((X-\mu)^{2})$, where $E$ is the expectation operator, and is completely
+described by these two parameters, we say that draws from $X$, $x$, follow a
+normal distribution. Put another way, given a draw $x$ from $X$, the probability of
+obtaining $x$ for is given by
+\begin{equation}
+    \mathrm{p}_{\mathcal{N}}(x)
+    =
+    \mathcal{N}(x;\mu,\sigma)
+    =
+    \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp(-\frac{(x-\mu)^{2}}{2\sigma^{2}})
+\end{equation}
+When a random variable $X$ is distributed by a normal distribution with mean $\mu$
+and variance $\sigma^{2}$ we write
+\[
+    X \sim \mathcal{N}(\mu,\sigma)
+\]
+The normal distribution arises often in statistics in signal processing due to
+the \textit{Central Limit Theorem} \cite{feller2008introduction} and its
+relationship to least-squares estimation \cite{kay1993fundamentals}.

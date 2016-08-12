@@ -76,7 +76,9 @@ partial paths in Figure~\ref{plot:acgtra3xylofs4partials}.
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_partial_trajectories.pdf}
-    \caption{\label{plot:parclassaxpartialtrajectories}}
+    \CaptionWithTitle{%
+        \input{plots/partial_classification_acgtr_xylo_partial_trajectories.txt}%
+    }{\label{plot:parclassaxpartialtrajectories}}
 \end{figure}
 
 A line function is fit via least-squares to each partial, as shown in
@@ -85,7 +87,7 @@ on the amplitude modulation of each partial, or to an approximation, the slope o
 partials gives better results than examining the slope directly. This is perhaps
 because the log-length encodes both the starting amplitude and the slope---recall
 that the partials start on the first local maxium exceeding an amplitude
-threshold. To motivate the use of this metric, we plot the log-length vs. the
+threshold. To motivate the use of this metric, we plot the log-length vs.\ the
 starting frequency of
 partials from separate analyses of the guitar and xlyophone signals and overlay
 the plots (Figure~\ref{plot:partialclassificationacgtrxyloseptruememberships}).

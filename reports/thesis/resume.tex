@@ -1,23 +1,32 @@
-Ce mémoire va explorer une stratégie pour séparer les sons en mixture en
-utilisant une classification de partiels par leurs modulations. Les études sur
-la perception de son montrent que les signaux avec les modulations d'amplitude
-et fréquence en commun se ressemble \cite{mcadams1989segregation},
-\cite{marin1991segregation}. À inclure ces modulations dans le modèle de son
-``somme des sinusoïdes'', on adopte une modèle de polynôme superlinéaire a
-décrire leurs phases, dont l'estimation des paramètres est par le ``Distribution
-Derivative Method'' (DDM). Pour améliorer l'estimation, on propose une fenêtre
-avec les propriétés supérieur à la fenêtre canonique Hann, mais que admet une
-dérivée sur tout sa domaine, ce qui est requis par le DDM. Un nouveau algorithme
-pour la poursuite des partiels basé sur la programmation linéaire utilise ces
-paramètres estimés.  Une technique de classification par les mixtures gaussienne
-se sert des données de modulation en fréquence et d'amplitude des partiels
-trouvés à chercher les sources originales. Ces données son traitées par un
-analyse des composants principaux pour trouver le meilleur paramètre pour la
-classification. En suivant, les sources sont synthétisées avec leurs paramètres
-estimés. En cherchant les polynômes interpolant de la phase et de l'amplitude,
-on inclus l'information additionnelle donnée par le DDM et évalue la qualité de
-la synthèse avec les polynômes d'ordres différents sur les signaux synthétiques.
-Ce système pour séparer les sons est évalué sur les données simulées et sur une
-mixture des enregistrements des instruments de percussion. Ce dernier montre que
-l'utilisation de la modulation d'amplitude aide à la classification en l'absence
-de la modulation en fréquence.
+Dans ce mémoire nous explorons une stratégie de séparation de sources sonores
+s’appuyant sur une classification de partiels selon leurs modulations observées.
+Des études perceptives ont montré que des signaux dont les modulations
+d’amplitude et de fréquence sont communes sont perçus comme provenant d’une même
+source \cite{mcadams1989segregation}, \cite{marin1991segregation}. Afin
+d’inclure ces modulations dans le modèle de synthèse additif, la phase est
+représentée par une fonction polynomiale non-linéaire dont les paramètres sont
+estimés par la méthode de distribution dérivée (Distribution Derivative Method -
+DDM) \cite{betser2009sinusoidal}. Afin d’améliorer la qualité d’estimation, nous
+avons conçu une fenêtre dont la résolution dynamique est meilleure que celle de
+la fenêtre canonique de Hann, tout en étant dérivable sur tout son domaine,
+propriété requise par la technique DDM. Les paramètres ainsi estimés sont
+utilisés par un nouvel algorithme de suivi de partiels fondé sur le principe
+d’optimisation par programmation linéaire. Les partiels trouvés sont alors
+classifiés en différentes sources par une technique de mélange gaussiens
+appliquées aux paramètres de modulation de fréquence et d’amplitude. Au
+préalable une analyse en composantes principales (PCA) est utilisée afin de
+faire ressortir les paramètres les mieux appropriés pour la classification.  Une
+fois les partiels regroupés et classifiés en sources, celles-ci sont
+synthétisées en fonctions des paramètres associés aux trajets de partiels.
+
+Plus précisément, les informations additionnelles fournies par la DDM (dérivée
+de la fréquence et de la log-amplitude) sont prises en compte selon plusieurs
+stratégies impliquant des polynômes de reconstruction de phase et d’amplitude
+d’ordres différents. La qualité des signaux re-synthétisés est alors évaluée
+pour chacune de ses stratégies. 
+
+Enfin, ce système de séparation de sources est testé sur un mélange de signaux
+synthétiques puis sur un mélange de signaux instrumentaux réels de percussion et
+de corde pincée. Dans ce dernier cas, nous montrons que la prise en compte de la
+modulation d’amplitude aide à la classification en l’absence de modulation en
+fréquence.

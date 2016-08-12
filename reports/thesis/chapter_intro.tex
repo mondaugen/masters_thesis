@@ -1,4 +1,4 @@
-\chapter{Introduction}
+\chapter{Introduction \label{chap:intro}}
 In signal processing, a common task is the separation of a signal with known
 deterministic or statistical characteristics from another. This task has been
 well studied \cite{kay1993fundamentals} \cite{hayes2009statistical}
@@ -16,6 +16,48 @@ As an example of one of the complications, the choirs of the orchestra are sets
 of instruments actually designed to blend well; to sound as one instrument.
 Ironically, it is this criterion that we use to guide the source separation
 techniques described in the following.
+
+Source separation is a difficult problem because it involves simultaneuously
+estimating characteristics of the sources while separating them: for improved
+estimation, interference from other sources should be minimized; in order to
+remove interfering sources, their characteristics must be known. For the
+estimation problem, we must resort to using prior information: we assume we
+know the structure of the sources and can quantify in some way their
+characteristics, penalizing characterizations estimated by our system that do
+not match presumptions. For the separation problem, we often must resort to
+suboptimal solutions. These solutions may be adequate to aid a human in manual
+refinement of the sources, or serve as input to another technique.
+
+Source separation is not a topic unique to audio. 
+Applications exist in a variety of disciplines and entire conferences are
+dedicated to the subject (see, for example, \cite{zarzoso2010latent}).
+Here we will only consider applications pertinent to audio, acoustics
+and music. One of the most popular applications of audio source separation is
+for automated music transcription (see e.g., \cite{bertin2010enforcing}). Having
+access to both a representation of the musical score and its constituent
+sounds would be very convenient for composers and sound
+engineers. Those interested in isolating individual voices in a recording of
+multiple speakers (for honourable or dishonourable purposes) would 
+benefit from audio source separation --- \cite{mysore2012non} discusses a
+strategy using characterizations of language to aid in the separation. There are
+no doubt many more applications of source separation in the signal processing of
+audio.
+
+The general strategy explored in this thesis has four distinct steps.
+\begin{enumerate*}[itemjoin={{. }}]
+\item a model is chosen of the signals of interest
+\item realisations of this model are
+identified in the measurement signal
+\item once these have been identified, the parameters
+of the realisations are estimated
+\item the estimations are used to classify these
+realisations as one of a smaller set of higher level objects.
+\end{enumerate*}
+The strucutre of these objects is used to inform the selection of the new model,
+whose parameters are then estimated, etc. How our model realises these steps is
+discussed in Section~\ref{sec:amfmapproach}.
+
+This thesis is structured as follows.
 
 \section{Notation}
 
@@ -112,7 +154,23 @@ For matricies $\boldsymbol{X},\boldsymbol{Y} \in \mathbb{K}^{M,N}$
 
 Many authors denote random variables with a normally typeset uppercase letter.
 We will use this convention only when convenient, but will always state
-explicitly that a certain variable is random.
+explicitly that a certain variable is random. We distiguish between discrete and
+random variables in our notation.
+
+\subsubsection{Discrete random variables}
+
+If a random variable $X$ can only take on values in a discrete set, we say that this
+random variable is discrete-valued. Formally a discrete set $\Gamma$ of size $N$
+is one for which there exists an isomorphism $\mathscr{I}$ that maps $\Gamma$ on
+to the subset of the integers $[1 \dotsc, N]$. The probability that $X$ takes on
+the value $x$ is written $\mathrm{p}(X=x)$ for discrete random variables.
+
+\subsubsection{Continuous random variables}
+
+If a random variable $X$ can take on values in a set $\Gamma$ isomorphic to
+$\mathbb{R}$ we say this random variable is continous-valued. The probability
+that $X$ takes on the value $x$ is written $\mathrm{p}(x)$ for continuous random
+variables.
 
 \subsection{Complex numbers}
 
