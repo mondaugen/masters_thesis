@@ -1,1 +1,1 @@
-Polynomial evaluation error bound%
+$\mathscr{S}_{2,5}$ evaluation error bound%

@@ -1,1 +1,1 @@
-Phase function%
+$\mathscr{T}_{\text{exp.}}$, $\mathscr{S}_{1,3}$, $\mathscr{S}_{2,3}$ and $\mathscr{S}_{2,5}$: Phase functions%

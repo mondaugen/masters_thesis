@@ -599,21 +599,7 @@ estimated parameters and compared to the original.  We are interested in seeing
 in what cases higher order phase polynomials will improve the accuracy of
 synthesis.
 
-\subsubsection{The extended methods}
-
-Two extended methods are evaluated: the cubic and quartic phase and amplitude polynomials
-derived from DDM-estimated coefficients. For the polynomials of both orders, the
-DDM is used exactly as described in Section~\ref{sec:cubicphasepolyest} to estimate
-the parameters. The difference is in how the interpolating polynomials are
-formed between parameters estimated at two time points. For the cubic
-polynomials, the interpolation method described in
-Section~\ref{sec:cubicphasepoly} is used for phase, while that in
-Section~\ref{sec:cubicamppoly} is used for amplitude. For the quintic
-polynomials the interpolation methods described in
-Sections~\ref{sec:quinticphasepoly}~and~\ref{sec:quinticamppoly} are used for
-phase and amplitude, respectively.
-
-\subsection{Evaluation on sinusoid of cubic phase \label{sec:evalcubicphase}}
+\subsection{Evaluation on sinusoid of cubic phase and quartic amplitude \label{sec:evalcubicphase}}
 \begin{table}
     \caption{\label{tab:cubicsinphparams}}
     \begin{center}
@@ -633,6 +619,70 @@ phase and amplitude, respectively.
     \end{center}
 \end{table}
 
+% Plots of this section produced with
+% mq_cubic_test_less_fm_{1..3}.py
+% compare_mq_interp_funcs_1.py
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_all_spect.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_all_spect.txt}%
+    }{
+        Spectrograms of the true signal and estimated signals for the 
+        $\mathscr{T}_{3,4}$ signal.
+    \label{plot:mqmoderrorallspect}}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_true_vs_est_err.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_true_vs_est_err.txt}%
+    }{
+        The power of the error when subtracting the original signal from the estimated
+        signal. The local upper bound on the error was produced by connecting
+        the local maxima in the error data.
+    \label{plot:mqerrortruevsesterr}}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_func.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_logamp_func.txt}%
+    }{This compares the original log-amplitude function with the
+    interpolated log-amplitude functions. The log-amplitude functions are
+    considered because these are the real part of the polynomial exponents in
+    the complex sinusoid model.
+    \label{plot:mqmoderrcomplogampfunc}}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_logamp_err.txt}%
+    }{This shows the error of the interpolated amplitude functions when compared
+    with the original amplitude function for the three proposed methods.
+    \label{plot:mqmoderrcomplogamperr}}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_err_comp_phase_err.txt}%
+    }{This compares the theoretical phase function with the interpolated
+        phase functions. The phase functions are considered because these are
+        the imaginary part of the polynomial exponents in the complex sinusoidal
+        model.  The errors are ``wrapped'' to lie between $-\pi$ and $\pi$. The
+        errors stem from both the estimation of the phase and the interpolation
+        of phase between analysis points. As a frequency modulated sinusoid is
+        considered, it is not surprising that the stationary frequency
+        assumption of the $\mathscr{S}_{1,3}$ model exhibits the most errors.
+    \label{plot:mqmoderrcompphaseerr}}
+\end{figure}
+
 The initial evalutation illustrates how higher order phase polynomials will not
 necessarily improve the quality of synthesis if the underlying phase function is
 a polynomial of lower order than the polynomials used for synthesis. As we will
@@ -651,7 +701,8 @@ A quartic polynomial is used for the amplitude function
     x_{\mu}(n) = \exp \left(h_4 n^{4} + h_3 n^{3} + h_2 n^{2} + h_1 n + h_0 \right)
 \]
 and its amplitude break-points are summarized in
-Table~\ref{tab:quarticsinampparams}.
+Table~\ref{tab:quarticsinampparams}. This will be referred to as the
+$\mathscr{T}_{3,4}$ signal.
 
 These polynomials are chosen because their orders are greater than or equal to
 the order of the synthesis model in the $\mathscr{S}_{2,3}$ system and less than
@@ -663,72 +714,19 @@ $\mathcal{C}^{1}$ 4-Term Blackman-Harris was used (see
 Section~\ref{sec:optblackman}).
 
 The results of the evalution are presented in
-Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
-
-% Plots of this section produced with
-% mq_cubic_test_less_fm_{1..3}.py
-% compare_mq_interp_funcs_1.py
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_all_spect.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_mod_err_comp_all_spect.txt}%
-    }{
-        Spectrograms of the true signal and estimated signals for the polynomial
-        phase signal.
-    \label{plot:mqmoderrorallspect}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_true_vs_est_err.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_mod_err_comp_true_vs_est_err.txt}%
-    }{
-        The power of the error when subtracting the original signal from the estimated
-        signal. The local upper bound on the error was produced by connecting
-        the local maxima in the error data.
-    \label{plot:mqerrortruevsesterr}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_mod_err_comp_logamp_err.txt}%
-    }{This shows the error of the interpolated signals when compared
-    with the original signal for the three proposed methods.
-    \label{plot:mqmoderrcomplogamperr}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_func.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_mod_err_comp_logamp_func.txt}%
-    }{This compares the original log-amplitude function with the
-    interpolated log-amplitude functions. The log-amplitude functions are
-    considered because these are the real part of the polynomial exponents in
-    the complex sinusoid model.
-    \label{plot:mqmoderrcomplogampfunc}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_phase_err.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_mod_err_comp_phase_err.txt}%
-    }{This compares the theoretical phase function with the interpolated
-        phase functions. The phase functions are considered because these are
-        the imaginary part of the polynomial exponents in the complex sinusoidal
-        model.  The errors are ``wrapped'' to lie between $-\pi$ and $\pi$. The
-        errors stem from both the estimation of the phase and the interpolation
-        of phase between analysis points. As a frequency modulated sinusoid is
-        considered, it is not surprising that the stationary frequency
-        assumption of the McAulay-Quatieri model exhibits the most errors.
-    \label{plot:mqmoderrcompphaseerr}}
-\end{figure}
+Figures~\ref{plot:mqmoderrorallspect}~through~\ref{plot:mqmoderrcompphaseerr}.
+In Figure~\ref{plot:mqmoderrorallspect} we see informally that the synthesis
+quality is good for all model orders even though the $\mathscr{S}_{1,3}$ model
+assumes linear phase in its analysis. Figure~\ref{plot:mqerrortruevsesterr}
+shows how accurately the different model orders reconstruct the orignal signal.
+We see that the $\mathscr{2,5}$, although of higher order, is not systemically a
+better interpolator of the true underlying signal.
+Figure~\ref{plot:mqmoderrcomplogampfunc} shows the estimated amplitude functions
+along with the original and Figure~\ref{plot:mqmoderrcomplogampfunc} their
+respective errors in approximating the true amplitude function.  Finally,
+Figure~\ref{plot:mqmoderrcompphaseerr} shows that the models incorporating the
+non-stationary assumption in their analysis perform better at approximating the
+true phase function. 
 
 %\begin{figure}[!t]
 %    \centering
@@ -739,6 +737,30 @@ Figures~\ref{plot:mqcubicoriginalspec}~through~\ref{plot:mqmoderrcompphasefunc}.
 %\end{figure}
 
 \subsection{Evaluation on sinusoid of exponential phase \label{sec:evalexpphase}}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_all_spect.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_exp_err_comp_all_spect.txt}%
+    }{
+        Spectrograms of the true signal and estimated signals for the
+        exponential phase signal.
+    \label{plot:mqexperrorallspect}}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_true_vs_est_err.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_exp_err_comp_true_vs_est_err.txt}%
+    }{
+        The power of the error when subtracting the original signal from the
+        estimated signal for the signals of exponential phase. The local upper
+        bound on the error was produced by connecting the local maxima in the
+        error data.
+    \label{plot:mqexperrortruevsesterr}}
+\end{figure}
 
 The previous evaluation of this analysis-synthesis system was on a sinusoid with
 small order polynomial phase. In the cases where we observed overfitting, the
@@ -801,31 +823,6 @@ Figure~\ref{plot:mqexperrortruevsesterr} that the resynthesis accuracy is
 greater for higher order polynomials. Spectrograms of the original and estimated
 signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
 
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_true_vs_est_err.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_exp_err_comp_true_vs_est_err.txt}%
-    }{
-        The power of the error when subtracting the original signal from the
-        estimated signal for the signals of exponential phase. The local upper
-        bound on the error was produced by connecting the local maxima in the
-        error data.
-    \label{plot:mqexperrortruevsesterr}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_all_spect.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_exp_err_comp_all_spect.txt}%
-    }{
-        Spectrograms of the true signal and estimated signals for the
-        exponential phase signal.
-    \label{plot:mqexperrorallspect}}
-\end{figure}
-
 \section{Conclusion}
 
 \subsection{Polynomial phase function}
@@ -852,20 +849,20 @@ negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
     \CaptionWithTitle{%
         \input{plots/mq_mod_quintic_poly_eval_err.txt}%
     }{The error bound in evaluating the quintic amplitude and phase
-    polynomials using Horner's method. This plot was produced by plotting only
+        polynomials of $\mathscr{S}_{2,5}$ using Horner's method. This plot was produced by plotting only
     the local maxima of the error bound data in order to reduce the plot's
     range.\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}
 
 \subsection{Exponential phase function}
 
-The quintic interpolation, the polynomial of highest order, performs the most
-accurate resynthesis. This is consistent with the analytic property of the
-exponential function and an encouraging result as it suggests arbitrary analytic
-phase functions can be approximated with arbitrary accuracy simply by increasing
-the order of the interpolating polynomials. Many models of musical gestures
-involve such functions, apart from the portamento gesture modeled by an
-exponential phase function, vibrato can be modeled as a sinusoid with sinusoidal
-phase \cite{maher1990investigation}. The DDM-based analysis system combined with
-the higher order polynomial phase synthesis system presented here allow for
-accurate modeling of these gestures.
+The quintic interpolation $\mathscr{S}_{2,5}$, the polynomial of highest order,
+performs the most accurate resynthesis. This is consistent with the analytic
+property of the exponential function and an encouraging result as it suggests
+arbitrary analytic phase functions can be approximated with arbitrary accuracy
+simply by increasing the order of the interpolating polynomials. Many models of
+musical gestures involve such functions, apart from the portamento gesture
+modeled by an exponential phase function, vibrato can be modeled as a sinusoid
+with sinusoidal phase \cite{maher1990investigation}. The DDM-based analysis
+system combined with the higher order polynomial phase synthesis system
+presented here allows for accurate modeling of these gestures.
