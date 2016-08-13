@@ -1,51 +1,51 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces \input {plots/min4_blackman_td.txt}.}}{19}{figure.caption.10}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces \input {plots/min4_blackman_fd.txt}.}}{20}{figure.caption.11}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces \input {plots/c1_blackman_td.txt}.}}{21}{figure.caption.12}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces \input {plots/c1_blackman_fd.txt}.}}{22}{figure.caption.13}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces \input {plots/c1_vs_min_blackman_closeup.txt}.}}{23}{figure.caption.14}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces \input {plots/min4_blackman_td.txt}.}}{21}{figure.caption.10}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces \input {plots/min4_blackman_fd.txt}.}}{22}{figure.caption.11}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces \input {plots/c1_blackman_td.txt}.}}{23}{figure.caption.12}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces \input {plots/c1_blackman_fd.txt}.}}{24}{figure.caption.13}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces \input {plots/c1_vs_min_blackman_closeup.txt}.}}{25}{figure.caption.14}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces \input {plots/small_graph_ex.txt}.}}{30}{figure.caption.17}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces \input {plots/small_graph_ex_greedy_paths.txt}.}}{31}{figure.caption.18}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces \input {plots/small_graph_ex_lp_paths.txt}.}}{34}{figure.caption.19}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces \input {plots/mq_lp_compare_chirp_20.txt}.}}{35}{figure.caption.21}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces \input {plots/mq_lp_compare_chirp_15.txt}.}}{36}{figure.caption.22}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces \input {plots/mq_lp_compare_chirp_10.txt}.}}{37}{figure.caption.23}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces \input {plots/small_graph_ex.txt}.}}{32}{figure.caption.17}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces \input {plots/small_graph_ex_greedy_paths.txt}.}}{33}{figure.caption.18}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces \input {plots/small_graph_ex_lp_paths.txt}.}}{36}{figure.caption.19}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces \input {plots/mq_lp_compare_chirp_20.txt}.}}{37}{figure.caption.21}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces \input {plots/mq_lp_compare_chirp_15.txt}.}}{38}{figure.caption.22}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces \input {plots/mq_lp_compare_chirp_10.txt}.}}{39}{figure.caption.23}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces \input {plots/mq_mod_err_comp_all_spect.txt}.}}{52}{figure.caption.31}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces \input {plots/mq_mod_err_comp_true_vs_est_err.txt}.}}{53}{figure.caption.32}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces \input {plots/mq_mod_err_comp_logamp_func.txt}.}}{54}{figure.caption.33}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces \input {plots/mq_mod_err_comp_logamp_err.txt}.}}{55}{figure.caption.34}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces \input {plots/mq_mod_err_comp_phase_err.txt}.}}{56}{figure.caption.35}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces \input {plots/mq_exp_err_comp_all_spect.txt}.}}{57}{figure.caption.36}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces \input {plots/mq_exp_err_comp_true_vs_est_err.txt}.}}{58}{figure.caption.37}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces \input {plots/mq_mod_quintic_poly_eval_err.txt}.}}{59}{figure.caption.38}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces \input {plots/mq_mod_err_comp_all_spect.txt}.}}{54}{figure.caption.31}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces \input {plots/mq_mod_err_comp_true_vs_est_err.txt}.}}{55}{figure.caption.32}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces \input {plots/mq_mod_err_comp_logamp_func.txt}.}}{56}{figure.caption.33}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces \input {plots/mq_mod_err_comp_logamp_err.txt}.}}{57}{figure.caption.34}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces \input {plots/mq_mod_err_comp_phase_err.txt}.}}{58}{figure.caption.35}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces \input {plots/mq_exp_err_comp_all_spect.txt}.}}{59}{figure.caption.36}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces \input {plots/mq_exp_err_comp_true_vs_est_err.txt}.}}{60}{figure.caption.37}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces \input {plots/mq_mod_quintic_poly_eval_err.txt}.}}{61}{figure.caption.38}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces \input {plots/hsrp_test_7_multi_orig_data_plot_title.txt}.}}{64}{figure.caption.39}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces \input {plots/hsrp_test_7_multi_orig_spur_data_plot_title.txt}.}}{65}{figure.caption.40}
-\contentsline {figure}{\numberline {6.3}{\ignorespaces \input {plots/hsrp_test_7_multi_class_pcs_plot_title.txt}.}}{66}{figure.caption.41}
-\contentsline {figure}{\numberline {6.4}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_est_plot_title.txt}.}}{67}{figure.caption.42}
-\contentsline {figure}{\numberline {6.5}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_est_plot_title.txt}.}}{68}{figure.caption.43}
-\contentsline {figure}{\numberline {6.6}{\ignorespaces \input {plots/hsrp_test_7_multi_af_plot_title.txt}.}}{69}{figure.caption.44}
-\contentsline {figure}{\numberline {6.7}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_amp_plot_title.txt}.}}{70}{figure.caption.45}
-\contentsline {figure}{\numberline {6.8}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_amp_plot_title.txt}.}}{71}{figure.caption.46}
-\contentsline {figure}{\numberline {6.9}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_freq_plot_title.txt}.}}{72}{figure.caption.47}
-\contentsline {figure}{\numberline {6.10}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_freq_plot_title.txt}.}}{73}{figure.caption.48}
-\contentsline {figure}{\numberline {6.11}{\ignorespaces \input {plots/hsrp_test_7_multi_smooth_freq_amp_sol_plot_title.txt}.}}{74}{figure.caption.49}
-\contentsline {figure}{\numberline {6.12}{\ignorespaces \input {plots/ad_hoc_cluster_part_ex_plot_title.txt}.}}{79}{figure.caption.54}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces \input {plots/hsrp_test_7_multi_orig_data_plot_title.txt}.}}{66}{figure.caption.39}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces \input {plots/hsrp_test_7_multi_orig_spur_data_plot_title.txt}.}}{67}{figure.caption.40}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces \input {plots/hsrp_test_7_multi_class_pcs_plot_title.txt}.}}{68}{figure.caption.41}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_est_plot_title.txt}.}}{69}{figure.caption.42}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_est_plot_title.txt}.}}{70}{figure.caption.43}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces \input {plots/hsrp_test_7_multi_af_plot_title.txt}.}}{71}{figure.caption.44}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_amp_plot_title.txt}.}}{72}{figure.caption.45}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_amp_plot_title.txt}.}}{73}{figure.caption.46}
+\contentsline {figure}{\numberline {6.9}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_freq_plot_title.txt}.}}{74}{figure.caption.47}
+\contentsline {figure}{\numberline {6.10}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_freq_plot_title.txt}.}}{75}{figure.caption.48}
+\contentsline {figure}{\numberline {6.11}{\ignorespaces \input {plots/hsrp_test_7_multi_smooth_freq_amp_sol_plot_title.txt}.}}{76}{figure.caption.49}
+\contentsline {figure}{\numberline {6.12}{\ignorespaces \input {plots/ad_hoc_cluster_part_ex_plot_title.txt}.}}{81}{figure.caption.54}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_pcost_vs_bound.txt}.}}{82}{figure.caption.55}
-\contentsline {figure}{\numberline {7.2}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram.txt}.}}{83}{figure.caption.56}
-\contentsline {figure}{\numberline {7.3}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram_partials.txt}.}}{84}{figure.caption.57}
-\contentsline {figure}{\numberline {7.4}{\ignorespaces \input {plots/ac_gtr_orig_spec.txt}.}}{85}{figure.caption.58}
-\contentsline {figure}{\numberline {7.5}{\ignorespaces \input {plots/xylo_orig_spec.txt}.}}{86}{figure.caption.59}
-\contentsline {figure}{\numberline {7.6}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_partial_trajectories.txt}.}}{87}{figure.caption.60}
-\contentsline {figure}{\numberline {7.7}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}.}}{88}{figure.caption.61}
-\contentsline {figure}{\numberline {7.8}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_estimated_memberships.txt}.}}{89}{figure.caption.62}
-\contentsline {figure}{\numberline {7.9}{\ignorespaces \input {plots/ac_gtr_ss_spec.txt}.}}{90}{figure.caption.63}
-\contentsline {figure}{\numberline {7.10}{\ignorespaces \input {plots/xylo_ss_spec.txt}.}}{91}{figure.caption.64}
+\contentsline {figure}{\numberline {7.1}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_pcost_vs_bound.txt}.}}{84}{figure.caption.55}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram.txt}.}}{85}{figure.caption.56}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram_partials.txt}.}}{86}{figure.caption.57}
+\contentsline {figure}{\numberline {7.4}{\ignorespaces \input {plots/ac_gtr_orig_spec.txt}.}}{87}{figure.caption.58}
+\contentsline {figure}{\numberline {7.5}{\ignorespaces \input {plots/xylo_orig_spec.txt}.}}{88}{figure.caption.59}
+\contentsline {figure}{\numberline {7.6}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_partial_trajectories.txt}.}}{89}{figure.caption.60}
+\contentsline {figure}{\numberline {7.7}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}.}}{90}{figure.caption.61}
+\contentsline {figure}{\numberline {7.8}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_estimated_memberships.txt}.}}{91}{figure.caption.62}
+\contentsline {figure}{\numberline {7.9}{\ignorespaces \input {plots/ac_gtr_ss_spec.txt}.}}{92}{figure.caption.63}
+\contentsline {figure}{\numberline {7.10}{\ignorespaces \input {plots/xylo_ss_spec.txt}.}}{93}{figure.caption.64}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
