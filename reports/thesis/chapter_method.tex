@@ -1,11 +1,26 @@
-\chapter{Methodology}
+\chapter{Methodology\label{chap:method}}
 
-\section{Previous work on auditory source separation}
+There are two general audio source separation strategies that can be considered
+as forming a continuum of techniques that are some hybrid of the two: those that
+use physical or structural models of the sources are at one end of this
+continuum and at the other end are purely statistical methods. Here we give a
+brief overview of some previously proposed techniques.
 
-As this thesis is primarily concerned with musical signals, it would not be
-relevant to give an overview of all audio source separation techniques presented
-in the literature. The following is a brief overview of those applicable to
-musical signals.
+\section{Additive sinusoidal model}
+
+The additive sinusoidal model \cite{serra1989system}, \cite{mcaulay1986speech}
+is a convenient model with wide-spread use in the computer music community.
+Various authors have applied this model to the source separation problem. For
+example, in \cite{virtanen2003algorithm} a prior estimation of the fundamental
+frequencies is used in tandem with temporal and spectral smoothness constraints
+to separate sources estimated via an additive model. Similar to this thesis,
+\cite{creager2016musicalsource} uses an additive sinusoidal model to provide
+frequency-modulation cues to a latent component technique, and in
+\cite{li2009monaural}, common amplitude-modulation and fundamental frequency
+estimation are use to separate sources, the additive sinusoidal model being used
+to reconstruct the phases of overlapping harmonics using the fundamental
+frequencies. The additive sinusoidal model is also the model adopted in this
+thesis and its use is justified in Chapter~\label{chap:sigmod}.
 
 \section{Multiple fundamental frequency estimation}
 
@@ -38,6 +53,21 @@ applications such as automated music transcription (e.g.,
 
 \section{Principal latent component analysis (PLCA) and non-negative matrix
 factorizations (NMF)}
+
+The PLCA and NMF approaches to the audio source separation problem are very
+popular. An early and highly cited work that applies NMF to polyphonic music
+transcription is \cite{smaragdis2003non}. Since then many variations on this
+approach have been proposed. A technique using smoothness based on spectral
+difference and sparseness as regularization terms is presented in
+\cite{virtanen2007monaural}. In \cite{vincent2008harmonic} vectors in the
+resulting matrices are forced to be a linear combination of predefined ``basis
+spectra'', chosen for their harmonic and perceptual properties.
+\cite{bertin2010enforcing} explores the uses of different divergences for the
+purposes of upmixing and noise removal. We will discuss the technique in a bit
+more detail to demonstrate how it differs from the additive technique explored
+in this thesis.
+
+\subsection{Motivation}
 
 The power spectrum of a signal and consequently its spectrogram are always
 non-negative valued. If a signal is considered as consisting of a sum of
@@ -101,6 +131,10 @@ determined, we can synthesize the spectrogram of this source as
     \sum_{j \in
     \{\tilde{k}\}}\mathrm{p}_{l^{\ast}}(t,f|Z=j)\mathrm{p}_{l^{\ast}}(Z=j)
 \]
+PLCA can be extended by the use of ``kernel distributions'' that allow the
+specification of marginal distributions with both time and frequency extent, and
+``entropic priors'' that encourage sparsity in the resulting marginal
+distributions \cite{shashanka2008probabilistic}.
 
 \subsection{NMF}
 
@@ -111,9 +145,10 @@ $V_{m,n}=|X(nc_{t},mc_{f})|$ with non-negative entries. We seek an
 approximate factorization of $\boldsymbol{V} \in \mathbb{R}^{M \times N}_{+}$
 into matrices $\boldsymbol{W} \in \mathbb{R}^{M \times K}_{+}$ and
 $\boldsymbol{H} \in \mathbb{R}^{K \times N}_{+}$ such that
-\[
+\begin{equation}
     \boldsymbol{V} \approx \boldsymbol{W}\boldsymbol{H}
-\]
+    \label{eq:VaprxWH}
+\end{equation}
 This can be done by solving the program
 \[
     \min \mathcal{D}(\boldsymbol{V},\boldsymbol{W}\boldsymbol{H})
@@ -140,7 +175,9 @@ between two matrices $\boldsymbol{X}$ and $\boldsymbol{Y}$ is
     \mathcal{D}_{\text{KL}}(\boldsymbol{X},\boldsymbol{Y}) =
     \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} X_{m,n}\log(Y_{m,n})-X_{m,n}+Y_{m,n}
 \]
-can be minimzed using the following update equations for the $l$th iteration
+can be minimzed using the following update equations for the $l$th iteration%
+\footnote{It can be shown that these update equations are equivalent to those for PLCA 
+\cite{shashanka2008probabilistic}.}
 \[
     H_{a,b}^{l+1} =
     H_{a,b}^{l} \frac{\sum_{j=0}^{M-1}W_{j,a}^{l}V_{j,b}^{l} / (W^{l}H^{l})_{j,m}}
@@ -149,8 +186,6 @@ can be minimzed using the following update equations for the $l$th iteration
     W_{a,b}^{l} \frac{\sum_{j=0}^{N-1}H_{b,j}^{l+1}V_{a,j}^{l} / (W^{l}H^{l+1})_{a,j}}
     {\sum_{j=0}^{N-1}H_{b,j}^{l+1}}
 \]
-It can be shown that these update equations are equivalent to those for PLCA 
-\cite{shashanka2008probabilistic}.
 
 \subsubsection{The Itakura-Saito divergence \cite{fevotte2009nonnegative}}
 
@@ -210,6 +245,22 @@ between the spectrogram of the reconstructed signal and its original power
 spectrum, starting from an initial guess \cite{griffin1984signal}. Each
 iteration requires transforming a the signal to its spectrogram and then back to
 a time-domain signal, requiring considerable computational effort.
+
+\subsection{Extensions and shortcomings}
+
+As with PLCA, certain extensions can be integrated into NMF to encourage
+particular solutions. For example, to promote sparseness in the resulting
+matrices, i.e., to encourage that fewer entries be non-zero, one can add the
+regularization term
+\[
+    \alpha\sum_{m=0}^{M-1}\sum_{k=0}^{K-1} W_{m,k}^{2}
+    +
+    \beta\sum_{k=0}^{K-1}\sum_{n=0}^{N-1} H_{k,n}^{2}
+\]
+to the divergence to penalize matricies with large entries. A variety of
+regularization terms are possible \cite[ch.~3]{cichocki2009nonnegative}.
+
+%%% Add why doesn't model non-stationary audio well
 
 \section{An approach using amplitude- and frequency-modulation
 \label{sec:amfmapproach}}

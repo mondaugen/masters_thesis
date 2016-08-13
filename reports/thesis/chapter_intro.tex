@@ -1,21 +1,20 @@
 \chapter{Introduction \label{chap:intro}}
-In signal processing, a common task is the separation of a signal with known
-deterministic or statistical characteristics from another. This task has been
-well studied \cite{kay1993fundamentals} \cite{hayes2009statistical}
-\cite{poor2013introduction} and works well for problems of digital communication
-or object detection where these characteristics are well known. In digital
-communication, the signals and techniques to transmit them are often optimized
-by the designer to make them robust to corruption or interference. The designers
-of vehicles usually design them to be predictable and reliable and so their
-positions in time will reflect this. In this thesis we tacle a more difficult
-problem, that of the separation of a mixture of acoustic signals. The nature of
-these signals is different in that their design criteria are either
-mostly unknown or fundamentally different. For example, musical instruments are
-designed to have desirable acoustic properties which are generally subjective.
-As an example of one of the complications, the choirs of the orchestra are sets
-of instruments actually designed to blend well; to sound as one instrument.
-Ironically, it is this criterion that we use to guide the source separation
-techniques described in the following.
+
+\section{Motivation}
+
+This thesis was written in the information age where digital signals can be
+produced easily and are produced in great volumes. As stated in the introduction
+of \cite{hayes2009statistical}, signals are the means by which information is
+transmitted. In the past, producing a digital signal was costly and required
+specialized equipment, motivating the user of the equipment to carefully plan
+the process that was to be documented by encoding the measurements into the
+signal. Now these tools are widely available and accessible to everyone,
+increasing both the variance in quality, but also the potency of information.
+For this reason, new signal processing techniques require ways of removing
+extraneous information, that is, data that have meaning and structure, but that
+are not pertinent to the information of interest. In this thesis, a producer of
+information is a \textit{source}, and we have many sources transmitting
+information in a single signal. 
 
 Source separation is a difficult problem because it involves simultaneuously
 estimating characteristics of the sources while separating them: for improved
@@ -28,23 +27,27 @@ not match presumptions. For the separation problem, we often must resort to
 suboptimal solutions. These solutions may be adequate to aid a human in manual
 refinement of the sources, or serve as input to another technique.
 
-Source separation is not a topic unique to audio. 
-Applications exist in a variety of disciplines and entire conferences are
-dedicated to the subject (see, for example, \cite{zarzoso2010latent}).
-Here we will only consider applications pertinent to audio, acoustics
-and music. One of the most popular applications of audio source separation is
-for automated music transcription (see e.g., \cite{bertin2010enforcing}). Having
-access to both a representation of the musical score and its constituent
-sounds would be very convenient for composers and sound
-engineers. Those interested in isolating individual voices in a recording of
-multiple speakers (for honourable or dishonourable purposes) would 
+\section{Applications}
+
+Applications of source separation exist in a variety of disciplines and entire
+conferences are dedicated to the subject (see, for example,
+\cite{zarzoso2010latent}).  Here we will only consider applications pertinent to
+audio, acoustics and music. One of the most popular applications of audio source
+separation is for automated music transcription (see e.g.,
+\cite{bertin2010enforcing}). Having access to both a representation of the
+musical score and its constituent sounds would be very convenient for composers
+and sound engineers. Those interested in isolating individual voices in a
+recording of multiple speakers (for honourable or dishonourable purposes) would
 benefit from audio source separation --- \cite{mysore2012non} discusses a
 strategy using characterizations of language to aid in the separation. There are
-no doubt many more applications of source separation in the signal processing of
-audio.
+no doubt many more applications of source separation in the field of audio
+signal processing.
 
-The general strategy explored in this thesis has four distinct steps.
-\begin{enumerate*}[itemjoin={{. }}]
+\section{Organization}
+
+The general strategy explored in this thesis is an iterative process with four
+distinct steps.
+\begin{enumerate*}[label=(\arabic*),itemjoin={{. }}]
 \item a model is chosen of the signals of interest
 \item realisations of this model are
 identified in the measurement signal
@@ -54,10 +57,28 @@ of the realisations are estimated
 realisations as one of a smaller set of higher level objects.
 \end{enumerate*}
 The strucutre of these objects is used to inform the selection of the new model,
-whose parameters are then estimated, etc. How our model realises these steps is
-discussed in Section~\ref{sec:amfmapproach}.
+whose parameters are then estimated, etc.; the process can repeated to build
+up successively higher level models.
 
-This thesis is structured as follows.
+This thesis is structured according to these steps and is as follows.
+Chapter~\ref{chap:method} discusses previous approaches to audio source
+separation and introduces the method adopted here. The following,
+Chapter~\ref{chap:sigmod}, describes the signal model chosen to describe musical
+signals --- the additive sinusoidal model with polynomial log-amplitude and
+phase --- and describes a technique for estimating the parameters of models of
+arbitrary order. Techniques to identify these models in signals are discussed in
+Chapter~\ref{chap:partialtracking}, where a classical technique of partial
+tracking is compared to a new linear progamming formulation.
+Chapter~\ref{chap:exphsmodel} shows how the separated sources can be synthesized
+from the estimated model parameters using the additional information provided by
+the higher order polynomial model. Finally, two experiments are carried out that
+demonstrate the use of amplitude- and frequency-modulation to classify sources.
+The first, in Chapter~\ref{chap:amfmsep} is on synthetic data and the second in
+Chapter~\ref{chap:decaysep} on a recording of percussion and plucked string
+instruments. It is in these latter chapters where classification is performed
+and its adaptation to the particular audio source separation problem is
+discussed. The Appendices~\ref{chap:pca}~through~\ref{chap:normaldist} explain
+elements of these classification techniques.
 
 \section{Notation}
 
