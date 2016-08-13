@@ -66,7 +66,8 @@ separation and introduces the method adopted here. The following,
 Chapter~\ref{chap:sigmod}, describes the signal model chosen to describe musical
 signals --- the additive sinusoidal model with polynomial log-amplitude and
 phase --- and describes a technique for estimating the parameters of models of
-arbitrary order. Techniques to identify these models in signals are discussed in
+arbitrary order. We introduce a new analysis window to have more control over the
+estimation process. Techniques to identify these models in signals are discussed in
 Chapter~\ref{chap:partialtracking}, where a classical technique of partial
 tracking is compared to a new linear progamming formulation.
 Chapter~\ref{chap:exphsmodel} shows how the separated sources can be synthesized
@@ -94,7 +95,7 @@ $x_{i}$ and the entry in the $i$th row and $j$th column of a matrix $X$ is
 written $X_{i,j}$.  Both are scalars and therefore typeset normally. Sometimes
 we might find it convenient to extract a column vector or row vector from the
 matrix $\boldsymbol{X}$. We write $\boldsymbol{x}_{i,:}$ to extract all columns
-from the $i$th row and and $\boldsymbol{x}_{:,j}$ to extract all rows from the
+from the $i$th row and $\boldsymbol{x}_{:,j}$ to extract all rows from the
 $j$th column. These are the $i$th row vector and $j$th column vector
 respectively. The orientation of a vector will be clear from the context, but in
 general $\boldsymbol{x}$ is a column vector while $\boldsymbol{y}_{i,:}$ and
@@ -145,9 +146,10 @@ Canonically, the operator $\mathcal{O}$ is multiplication in which case
 \[
     W_{i,j} = x_{i} y_{j}
 \]
-but $\mathcal{O}$ can be defined arbitrarily as any function taking two inputs a
-returning a single output. The general outer product is also known as the
-\textit{Kronecker product}.
+This outer product is also known as the \textit{Kronecker product}, and we will
+omit the operator subscript when that is the case, i.e., we will simply write $\otimes$.  As stated
+above, however, $\mathcal{O}$ can be defined arbitrarily as any function taking
+two inputs a returning a single output.
 
 \subsubsection{Point-wise operators}
 
@@ -212,3 +214,11 @@ index.
 The logarithm base-$e$\footnote{$e$ is Euler's constant.} of $x$ is written
 $\log(x)$. The logarithm of any other base $b$ will be denoted as such:
 $\log_{b}(x)$.
+
+\subsection{Ultimate values}
+
+This thesis presents a number of iterative algorithms whose steps will 
+be counted using an index $l$ and whose solutions will take on the values
+$x_{l}$. We use the
+$\ast$ notation to refer to these values at the final iterates: the index of the
+final iteration is written\footnote{Arbitrary letters can be used.} $l^{\ast}$ and its value $x_{l^{\ast}}=x^{\ast}$.

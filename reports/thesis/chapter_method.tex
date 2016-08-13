@@ -1,14 +1,14 @@
 \chapter{Methodology\label{chap:method}}
 
-There are two general audio source separation strategies that can be considered
-as forming a continuum of techniques that are some hybrid of the two: those that
-use physical or structural models of the sources are at one end of this
-continuum and at the other end are purely statistical methods. Here we give a
-brief overview of some previously proposed techniques.
+Most audio source separation strategies use some combination of two general
+methodologies: at one end of this continuum are those that use physical or
+structural models of the sources and at the other, those that use purely
+statistical models. Here we give a brief overview of some previously proposed
+techniques.
 
 \section{Additive sinusoidal model}
 
-The additive sinusoidal model \cite{serra1989system}, \cite{mcaulay1986speech}
+The additive sinusoidal model \cite{serra1989system}, \cite{mcaulay1986speech},
 is a convenient model with wide-spread use in the computer music community.
 Various authors have applied this model to the source separation problem. For
 example, in \cite{virtanen2003algorithm} a prior estimation of the fundamental
@@ -20,7 +20,7 @@ frequency-modulation cues to a latent component technique, and in
 estimation are use to separate sources, the additive sinusoidal model being used
 to reconstruct the phases of overlapping harmonics using the fundamental
 frequencies. The additive sinusoidal model is also the model adopted in this
-thesis and its use is justified in Chapter~\label{chap:sigmod}.
+thesis, its use justified in Chapter~\ref{chap:sigmod}.
 
 \section{Multiple fundamental frequency estimation}
 
@@ -54,6 +54,20 @@ applications such as automated music transcription (e.g.,
 \section{Principal latent component analysis (PLCA) and non-negative matrix
 factorizations (NMF)}
 
+\subsection{Motivation}
+
+The power spectrum of a signal and consequently its spectrogram are always
+non-negative valued. If a signal is considered as consisting of a sum of
+original source signals, these source signals will have non-negative
+spectrograms as well. The following two techniques attempt to determine these
+spectrograms solely from a spectrogram of their mixture using techniques for
+determining latent variables. We will refer to techniques of this sort as
+\textit{latent variable models}. The technique is discussed in a bit more detail
+in the following to demonstrate how it differs from the additive technique
+explored in this thesis.
+
+\subsection{Approaches}
+
 The PLCA and NMF approaches to the audio source separation problem are very
 popular. An early and highly cited work that applies NMF to polyphonic music
 transcription is \cite{smaragdis2003non}. Since then many variations on this
@@ -63,17 +77,7 @@ difference and sparseness as regularization terms is presented in
 resulting matrices are forced to be a linear combination of predefined ``basis
 spectra'', chosen for their harmonic and perceptual properties.
 \cite{bertin2010enforcing} explores the uses of different divergences for the
-purposes of upmixing and noise removal. We will discuss the technique in a bit
-more detail to demonstrate how it differs from the additive technique explored
-in this thesis.
-
-\subsection{Motivation}
-
-The power spectrum of a signal and consequently its spectrogram are always
-non-negative valued. If a signal is considered as consisting of a sum of
-original source signals, these source signals will have non-negative
-spectrograms as well. The following two techniques attempt to determine these
-spectrograms solely from a spectrogram of their mixture.
+purposes of upmixing and noise removal.
 
 \subsection{PLCA}
 
@@ -82,7 +86,7 @@ being non-negative like a probability distribution, is considered as such
 \[
     c|X(t,f)| = \mathrm{p} (t,f)
 \]
-where c is a constant so that the distrubution integrate to 1. Explicitly,
+where c is a constant so that the distribution integrate to 1. Explicitly,
 we consider the probability that energy in the spectrogram lie in the vicinity
 of time $t$ and frequency $f$. With the hope of retrieving the spectrograms of
 the $P$ underlying sources, it is proposed
@@ -175,7 +179,7 @@ between two matrices $\boldsymbol{X}$ and $\boldsymbol{Y}$ is
     \mathcal{D}_{\text{KL}}(\boldsymbol{X},\boldsymbol{Y}) =
     \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} X_{m,n}\log(Y_{m,n})-X_{m,n}+Y_{m,n}
 \]
-can be minimzed using the following update equations for the $l$th iteration%
+and can be minimzed using the following update equations for the $l$th iteration%
 \footnote{It can be shown that these update equations are equivalent to those for PLCA 
 \cite{shashanka2008probabilistic}.}
 \[
@@ -218,15 +222,15 @@ update equations
     \frac{((\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-2}.\boldsymbol{V}^{l})\boldsymbol{H}^{l+1T}}
     {(\boldsymbol{W}^{l}\boldsymbol{H}^{l+1})^{.-1}\boldsymbol{H}^{l+1T}}
 \]
-Once convergence has been obtained the $k$th column of matrix $W$ will contain
+Once convergence has been obtained the $k$th column of matrix $\boldsymbol{W}$ will contain
 values representing the level of activation of the $k$th component at the
-frequency corresponding to the row index and the $k$th row of $H$ the level of
+frequency corresponding to the row index and the $k$th row of $\boldsymbol{H}$ the level of
 activation of the $k$th component at the time corresponding to the column index.
 If the set of components $\{ \tilde{k} \}$ belonging to the $p$th source has
 been determined, we can synthesize the spectrogram of this source as
 \[
     |X_{p}(nc_{t},mc_{f})| =
-    \sum_{j \in \{\tilde{k}\}}W_{,j}H_{j,}
+    \sum_{j \in \{\tilde{k}\}}W_{:,j}H_{j,:}
 \]
  
 \subsection{Synthesis of factorized spectrograms}
@@ -243,7 +247,7 @@ any phase information by using an algorithm that iteratively reconstructs the
 phase part of the STFT while minimizing the error
 between the spectrogram of the reconstructed signal and its original power
 spectrum, starting from an initial guess \cite{griffin1984signal}. Each
-iteration requires transforming a the signal to its spectrogram and then back to
+iteration requires transforming the signal to its spectrogram and then back to
 a time-domain signal, requiring considerable computational effort.
 
 \subsection{Extensions and shortcomings}
@@ -257,10 +261,23 @@ regularization term
     +
     \beta\sum_{k=0}^{K-1}\sum_{n=0}^{N-1} H_{k,n}^{2}
 \]
-to the divergence to penalize matricies with large entries. A variety of
+to the divergence to penalize matricies with large entries.$\alpha$ and $\beta$
+are terms that control the influence of this regularization. A variety of
 regularization terms are possible \cite[ch.~3]{cichocki2009nonnegative}.
 
-%%% Add why doesn't model non-stationary audio well
+Equation~\ref{eq:VaprxWH} can be seen as the sum
+\[
+    V
+    \approx
+    \sum_{k=-0}^{K-1}\boldsymbol{w}_{:,k}\otimes\boldsymbol{h}_{l,:}
+\]
+i.e., the sum of all the outer products between columns of $\boldsymbol{W}$ and
+rows of $\boldsymbol{H}$. From this perspective, we can see the columns of
+$\boldsymbol{W}$ as a collection of $K$ spectral ``templates'' and the rows of
+$\boldsymbol{H}$ as their time-varying gains. What this means is, sounds
+exhibiting frequency-modulation require a large number of columns in
+$\boldsymbol{W}$. This large number of columns makes the organizing of
+templates into sources a difficult task.
 
 \section{An approach using amplitude- and frequency-modulation
 \label{sec:amfmapproach}}
@@ -283,21 +300,44 @@ therefore comprises the following tasks:
 \begin{itemize}
     \item
         Decide on a signal model for the sound of interest, with parameters that
-        can be estimated and that are similar for similar sounds.
+        can be estimated and that are similar for similar sounds. We have chosen
+        the additive sinusoidal model with a higher order polynomial description
+        of amplitude and phase.
     \item
-        Estimate the signal parameters.
+        Locate regions in the signal where these signals are thought to be
+        present using a peak-picking technique. Estimate the signal parameters
+        at these locations. Here we use the Distribution Derivative Method
+        \cite{betser2009sinusoidal} to
+        estimate these parameters.
     \item
-        Classify the parameters and group them as sets of parameters coming from
-        the same source: the sound of interest.
+        Use these measurements as input to a partial tracking algorithm. We
+        compare the effectiveness of the original peak matching procedure of
+        McAulay and Quatieri \cite{mcaulay1986speech} and a new linear
+        programming formulation of the problem.
     \item
-        Choose a group of parameters and synthesize the separated signal from
-        them.
+        Classify the partials and group them as sets of parameters coming from
+        the same source: the sound of interest. The classification is carried
+        out on the frequency- and amplitude-modulation parameters. Principal
+        components analysis is used to preprocess the data before
+        classification.
+    \item
+        Choose a group of parameters (partials) and synthesize the separated
+        signal from them. We compare the quality of synthesis for three models.
+        The first assumes constant amplitude and linear phase at the analysis
+        step resulting in linear amplitude and cubic phase at the synthesis step
+        \cite{mcaulay1986speech}. The second assumes quadratic amplitude and
+        phase at the analysis step but constrains the amplitude to be cubic at
+        the synthesis step. The final model assumes quadratic amplitude and
+        phase at the analysis step resulting in a quartic model for phase and
+        amplitude at the synthesis step.
 \end{itemize}
 
-In this thesis we model the signals of interest as sums of sinsuoids with
-polynomial phase. This model is chosen because the derivatives of this
-polynomial are readily interpreted as the amplitude- and frequency-modulation
-functions of the sinusoids and techniques exist for estimating the polynomial
-coefficients from realizations of these signals. The polynomial phase sinusoid
-is defined in Section~\ref{sec:polynomphasemodel}.
-
+It should be noted that the strategy for source separation is similar to that
+proposed in \cite{creager2016musicalsource}. The work here differs in many
+respects. We have chosen to use solely the additive sinusoidal model as a
+model of the signals considered. Furthermore, in addition to
+frequency-modulation, we incorporate amplitude-modulation to aid in the source
+separation. Chapter~\ref{chap:decaysep} uses only the amplitude-modulation to
+classify partials into sources. This is similar to the strategy explored in
+\cite{li2009monaural}, but does not use a prior estimation of the fundamental
+frequencies of the sources.

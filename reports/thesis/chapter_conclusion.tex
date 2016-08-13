@@ -1,0 +1,103 @@
+\chapter{Conclusion\label{chap:conclusion}}
+
+Here we summarize the results of our work, highlight our contributions to the
+audio source separation problem, and suggest some possible extensions to the
+techniques presented in this thesis.
+
+\section{Results}
+
+\subsection{Quality of polynomial models for analysis and synthesis}
+
+In Chapter~\ref{chap:exphsmodel} we explored various orders of polynomial amplitude and
+phase models for analysis and sythesis and assessed their quality. A
+quadratic estimation of the phase and log-amplitude in the analysis step
+improved the synthesis quality over the constant amplitude and linear phase
+model in all cases considered. The use of a quintic phase
+polynomial in the synthesis step better approximated a signal with exponential
+phase. However, the use of the quintic phase and amplitude polynomial did not
+necessarily improve the synthesis of a signal with cubic phase and quartic
+amplitude. Nevertheless, the additional information provided by the DDM in the
+analysis stage was shown useful in postulating interpolating polynomials at the
+synthesis stage.
+
+\subsection{The use of amplitude-modulation in audio source separation}
+
+Chapters~\ref{chap:amfmsep}~and~\ref{chap:decaysep} explore the contribution of
+amplitude-modulation to the audio source separation problem on simulated data.
+In Chapter~\ref{chap:amfmsep} we consider both the amplitude- and
+frequency-modulation when classifying into sources. We adaptively selected the
+best variable on which to classify using principal components analysis and found
+that amplitude-modulation aided in the case of little frequency modulation. A
+post-processing step was required to extract the original sources. This step
+extracted sources based on the smoothness between analysis frames of the
+amplitude and frequency measurements.  Only the post-processing encouraging
+smoothness in frequency gave encouraging results --- smoothing in amplitude
+failed due to the rapidly varying amplitude in the transient regions of the
+sounds. In Chapter~\ref{chap:decaysep} we apply our source separation technique
+to a recording of a percussive and a plucked string instrument. These
+instruments exhibit virtually no frequency-modulation. We showed, as in
+Chapter~\ref{chap:amfmsep}, that it is
+possible to carry out source separation when the difference in
+amplitude-modulation of the two sources is sufficient. 
+
+\section{Contributions}
+
+\subsection{Design of continuous windows with lower side-lobes}
+
+The DDM requires the use of windows that are once differentiable. The canonical
+window with this property is the Hann window, however the Blackman-Harris window
+has better properties in terms of its out-of-band signal rejection. In
+Chapter~\ref{chap:sigmod}, starting
+from the description of a Blackman-Harris window, we used optimization
+techniques to search for a window close to the Blackman-Harris, but whose
+end-points are 0, thus allowing differentiation everywhere after windowing with
+a rectangular window (necessary to make the window have finite support).
+Informally, we found this to improve the estimation accuracy of the DDM.
+
+\subsection{Partial tracking using linear programming}
+
+The original peak-matching algorithm of McAulay and Quatieri
+\cite{mcaulay1986speech} searches for partials through a lattice of spectral
+analysis data by considering optimal peak-matches between two adjacent frames.
+In Chapter~\ref{chap:partialtracking} we show that this can be generalized to
+search for $L$ paths between an arbitrary number of a frames in a lattice, and
+that it is a greedy algorithm --- one that gives the shortest possible path
+without considering the lengths of the other paths in the solution. Also, it is
+shown that the complexity of this algorithm is exponential in the number of
+frames and therefore impractical to apply to even moderately sized problems. A
+linear program to search for the $L$ paths through a lattice with shortest total
+cost is introduced. We show that this algorithm is computationally tractable and
+that it outperforms the McAulay-Quatieri method on signals with a low SNR.
+
+\section{Future extensions}
+
+\subsection{Continuous analysis windows}
+
+It remains to be seen in what situations the continuous Blackman-Harris window
+improves the estimation accuracy of the DDM. For this, DDM-based analysis using
+both the Hann and continuous Blackman-Harris windows should
+be performed on mixtures of synthetic signals and the accuracy of
+analysis compared. Further improvements to the window design could be
+investigated, such as finding a continuous Blackman-Harris window with good
+trade-off between main-lobe width and side-lobe height.
+
+\subsection{Partial tracking in an optimization framework}
+
+The reinterpretation of partial tracking as an optimization problem allows the
+application of techniques from mathematical programming, a field with
+a rich body of knowledge \cite{boyd2004convex}. As discussed in
+Chapter~\ref{chap:partialtracking}, regularization could be used to encourage
+less ``jagged'' partial trajectories. The merits of partial tracking via
+linear programming should be assessed on real music and speech signals.
+
+\subsection{Signal modeling with nonlinear amplitude and phase polynomials}
+
+A non-stationary description of signals could make it possible to describe
+signals using fewer analysis frames as the signal can be more accuratly modeled
+between analysis points. As mentioned in \cite{betser2009sinusoidal}, it should
+be investigated whether or not such a model could contribute the field of audio
+coding. Specifically, compression ratios should be compared between analyses
+using a lower order model, but with more analysis frames, and those using higher order
+models but fewer analysis frames. Possible improvements to applications such as
+the time-stretching of transients and the extrapolation of missing signals
+(inpainting) should also be considered.
