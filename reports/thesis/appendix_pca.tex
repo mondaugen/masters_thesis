@@ -9,7 +9,7 @@ take on the data-point's corresponding values, we are interested in the
 variables that capture most of the data-points's variance. It turns out we can
 determine a linear transformation of our original dataset giving $p$ variables
 and their $p$ variances such that the resulting variable with the highest
-variance will have the maximum variance acheivable, under some constraints that
+variance will have the maximum variance achievable, under some constraints that
 will be explained shortly. 
 
 \section{Computation of principal components}
@@ -33,11 +33,11 @@ subject to
 The resulting function of $\boldsymbol{x}$,
 $f_1(\boldsymbol{x})=\boldsymbol{a}_{1}^{\ast T}\boldsymbol{x}$ is called the first
 \textit{principal component}. The second principal component
-$f_2(\boldsymbol{x})=\boldsymbol{a}_{2}^{\ast T}\boldsymbol{x}$ is found similary
+$f_2(\boldsymbol{x})=\boldsymbol{a}_{2}^{\ast T}\boldsymbol{x}$ is found similarly
 to the first, except with the additional constraint that it be uncorrelated
 (orthogonal) to the first component, i.e.,
 $\boldsymbol{a}_{2}^{\ast T}\boldsymbol{a}_{1}=0$, and the third is found by
-requiring orthognality with the first two principal components, etc.
+requiring orthogonality with the first two principal components, etc.
 
 The principal components now allow us to examine for grouping more easily as the
 total variance of the dataset has been captured in the first few principal component

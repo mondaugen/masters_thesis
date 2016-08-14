@@ -7,7 +7,7 @@
 \usepackage{amssymb}
 \usepackage{mathrsfs}
 \usepackage[final]{graphicx}
-\usepackage{algorithm2e}
+\usepackage[ruled]{algorithm2e}
 \usepackage{hyperref}
 \usepackage{tablefootnote}
 \usepackage[labelsep=period]{caption}
@@ -15,12 +15,19 @@
 \usepackage{hyphenat}
 \usepackage{array}
 \usepackage[inline]{enumitem}
+\usepackage{etoolbox}
+\usepackage{url}
+
+% Optionally use formatting 'fudges'
+\newtoggle{formfudge}
+\toggletrue{formfudge}
 
 %\usepackage{gobble}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    citecolor=black
+    citecolor=black,
+    urlcolor=black
 }
 \usepackage{setspace}
 \onehalfspacing
@@ -45,9 +52,9 @@
 \captionsetup{format=no-cap-title}
 \newcommand{\MyInput}[1]{\immediate\write18{cat #1}}
 
-\makeatletter
-\renewcommand{\@algocf@capt@plain}{above}% formerly {bottom}
-\makeatother
+%\makeatletter
+%\renewcommand{\@algocf@capt@plain}{above}% formerly {bottom}
+%\makeatother
 
 % Scale figures
 \def\figwidthscale{0.8}

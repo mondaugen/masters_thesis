@@ -32,7 +32,7 @@ samples, and $\tau_{0}=0$, so we have $\tau_{r} = rH$. The length of the window
 function $w$ is $M = VH + 1$ samples, with $V,H \in \mathbb{N}%
 $\footnote{%
     $M$ is always odd so one may wonder how the Fast Fourier Transform can be
-    used to invert $F_{\tau_{r}}$, the frequency domain representaion of
+    used to invert $F_{\tau_{r}}$, the frequency domain representation of
     $f_{\tau_{r}}$.  Recall that the DTFT can be interpreted as the coefficients
     of a Fourier series that give the periodic version of the analysed signal.
     Also recall that we use window functions that are real and even. In practice
@@ -122,7 +122,7 @@ Equation~\ref{eq:ddmestc0} with
     \gamma_{\text{MQ}}(n)=\exp(2\pi\frac{k^{\ast}}{M}n)
 \]
 where $k^{\ast}$ is the bin we have determined to correspond to the frequency of
-the sinusoid. The inital phase is then $\Im \left\{ c_{0} \right\}$.
+the sinusoid. The initial phase is then $\Im \left\{ c_{0} \right\}$.
 
 \subsection{Synthesis: cubic phase and linear log-amplitude \label{sec:S13synthesis}}
 
@@ -281,7 +281,7 @@ measuring --- this is true if the components are adequately separated in time
 and frequency. We could choose only two bins to have a non-singular system, and
 there are many possibilities for choosing different atoms
 \cite[p.~4639]{betser2009sinusoidal}. We choose three from the same frame to
-have improved estimation accuracy in situations where components are adaquately
+have improved estimation accuracy in situations where components are adequately
 separated in frequency, while avoiding a more sophisticated local peak selection
 procedure. Then $a_2$ and $a_1$ can be determined by solving the linear system
 \[
@@ -724,12 +724,12 @@ The signal was sampled with a sampling rate of 16000 Hz and was analysed every
 $\mathcal{C}^{1}$ 4-Term Blackman-Harris was used (see
 Section~\ref{sec:optblackman}).
 
-The results of the evalution are presented in
+The results of the evaluation are presented in
 Figures~\ref{plot:mqmoderrorallspect}~through~\ref{plot:mqmoderrcompphaseerr}.
 In Figure~\ref{plot:mqmoderrorallspect} we see informally that the synthesis
 quality is good for all model orders even though the $\mathscr{S}_{1,3}$ model
 assumes linear phase in its analysis. Figure~\ref{plot:mqerrortruevsesterr}
-shows how accurately the different model orders reconstruct the orignal signal.
+shows how accurately the different model orders reconstruct the original signal.
 We see that the $\mathscr{S}_{2,5}$, although of higher order, is not systemically a
 better interpolator of the true underlying signal.
 Figure~\ref{plot:mqmoderrcomplogampfunc} shows the estimated log-amplitude functions
@@ -780,7 +780,7 @@ polynomial used for synthesis was of higher order than the true underlying one
 polynomial. We propose evaluating the system on an infinitely differentiable and
 analytic phase function. The rationale behind this stems from the definition of
 an analytic function: one whose power series representation (a polynomial)
-converges to the function as the number of terms approches infinity. What this
+converges to the function as the number of terms approaches infinity. What this
 means is, in the region of convergence, the larger the number of terms in the
 approximating polynomial, the better the approximation to the true underlying
 function. The exponential function
@@ -850,7 +850,7 @@ the log-amplitude function. Depending on the underlying signal, perhaps better
 results can be obtained by postulating a lower-order log-amplitude function and
 higher-order phase function. The possibility of errors arising from numerical
 accuracy when evaluating the quintic polynomials has been ruled out.  We
-evalutated these polynomials using an implementation of Horner's method that
+evaluated these polynomials using an implementation of Horner's method that
 keeps track of the error bound \cite[p.~95]{higham2002accuracy}: the errors are
 negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
 

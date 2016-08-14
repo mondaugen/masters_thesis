@@ -40,7 +40,7 @@ quite developed, see \cite[ch.~20]{havelock2008handbook} for a review of
 modern techniques.
 
 There are some drawbacks to the technique. Many musical signals of interest such
-as unpitched percussion, do not always have a perceiveable fundamental
+as unpitched percussion, do not always have a perceivable fundamental
 frequency. A musical score describes notes as having distinct boundaries in time
 and frequency, which is not always true when one considers
 musical gestures such as portamento or \textit{dal niente}\footnote{``Out of
@@ -77,7 +77,7 @@ difference and sparseness as regularization terms is presented in
 resulting matrices are forced to be a linear combination of predefined ``basis
 spectra'', chosen for their harmonic and perceptual properties.
 \cite{bertin2010enforcing} explores the uses of different divergences for the
-purposes of upmixing and noise removal.
+purposes of up-mixing and noise removal.
 
 \subsection{PLCA}
 
@@ -86,7 +86,7 @@ being non-negative like a probability distribution, is considered as such
 \[
     c|X(t,f)| = \mathrm{p} (t,f)
 \]
-where c is a constant so that the distribution integrate to 1. Explicitly,
+where $c$ is a constant so that the distribution integrate to 1. Explicitly,
 we consider the probability that energy in the spectrogram lie in the vicinity
 of time $t$ and frequency $f$. With the hope of retrieving the spectrograms of
 the $P$ underlying sources, it is proposed
@@ -179,7 +179,7 @@ between two matrices $\boldsymbol{X}$ and $\boldsymbol{Y}$ is
     \mathcal{D}_{\text{KL}}(\boldsymbol{X},\boldsymbol{Y}) =
     \sum_{m=0}^{M-1}\sum_{n=0}^{N-1} X_{m,n}\log(Y_{m,n})-X_{m,n}+Y_{m,n}
 \]
-and can be minimzed using the following update equations for the $l$th iteration%
+and can be minimized using the following update equations for the $l$th iteration%
 \footnote{It can be shown that these update equations are equivalent to those for PLCA 
 \cite{shashanka2008probabilistic}.}
 \[
@@ -261,7 +261,7 @@ regularization term
     +
     \beta\sum_{k=0}^{K-1}\sum_{n=0}^{N-1} H_{k,n}^{2}
 \]
-to the divergence to penalize matricies with large entries. $\alpha$ and $\beta$
+to the divergence to penalize matrices with large entries. $\alpha$ and $\beta$
 are terms that control the influence of this regularization. A variety of
 regularization terms are possible \cite[ch.~3]{cichocki2009nonnegative}.
 

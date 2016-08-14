@@ -16,7 +16,7 @@ are not pertinent to the information of interest. In this thesis, a producer of
 information is a \textit{source}, and we have many sources transmitting
 information in a single signal. 
 
-Source separation is a difficult problem because it involves simultaneuously
+Source separation is a difficult problem because it involves simultaneously
 estimating characteristics of the sources while separating them: for improved
 estimation, interference from other sources should be minimized; in order to
 remove interfering sources, their characteristics must be known. For the
@@ -56,7 +56,7 @@ of the realisations are estimated
 \item the estimations are used to classify these
 realisations as one of a smaller set of higher level objects.
 \end{enumerate*}
-The strucutre of these objects is used to inform the selection of the new model,
+The structure of these objects is used to inform the selection of the new model,
 whose parameters are then estimated, etc.; the process can repeated to build
 up successively higher level models.
 
@@ -69,7 +69,7 @@ phase --- and describes a technique for estimating the parameters of models of
 arbitrary order. We introduce a new analysis window to have more control over the
 estimation process. Techniques to identify these models in signals are discussed in
 Chapter~\ref{chap:partialtracking}, where a classical technique of partial
-tracking is compared to a new linear progamming formulation.
+tracking is compared to a new linear programming formulation.
 Chapter~\ref{chap:exphsmodel} shows how the separated sources can be synthesized
 from the estimated model parameters using the additional information provided by
 the higher order polynomial model. Finally, two experiments are carried out that
@@ -83,7 +83,7 @@ elements of these classification techniques.
 
 \section{Notation}
 
-\subsection{Vectors and matricies}
+\subsection{Vectors and matrices}
 
 While scalars are typeset normally --- $x$ is an example of a scalar --- vectors
 and matrices are typeset in a boldface font, with matrices written with a
@@ -164,20 +164,20 @@ For matrix $\boldsymbol{X} \in \mathbb{K}^{M,N}$ and $p \in \mathbb{K}$
 \[
     W_{i,j}=X_{i,j}^{p}
 \]
-For matricies $\boldsymbol{X},\boldsymbol{Y} \in \mathbb{K}^{M,N}$
+For matrices $\boldsymbol{X},\boldsymbol{Y} \in \mathbb{K}^{M,N}$
 \[
     \boldsymbol{X}.\boldsymbol{Y} = \boldsymbol{W}
 \] where
 \[
     W_{i,j}=X_{i,j}Y_{i,j}
 \]
-(constrast these with canonical matrix multiplication).
+(contrast these with canonical matrix multiplication).
 
 \subsection{Random variables}
 
 Many authors denote random variables with a normally typeset uppercase letter.
 We will use this convention only when convenient, but will always state
-explicitly that a certain variable is random. We distiguish between discrete and
+explicitly that a certain variable is random. We distinguish between discrete and
 random variables in our notation.
 
 \subsubsection{Discrete random variables}
@@ -191,13 +191,13 @@ the value $x$ is written $\mathrm{p}(X=x)$ for discrete random variables.
 \subsubsection{Continuous random variables}
 
 If a random variable $X$ can take on values in a set $\Gamma$ isomorphic to
-$\mathbb{R}$ we say this random variable is continous-valued. The probability
+$\mathbb{R}$ we say this random variable is continuous-valued. The probability
 that $X$ takes on the value $x$ is written $\mathrm{p}(x)$ for continuous random
 variables.
 
 \subsection{Complex numbers}
 
-A complex number $z \in \mathbb{C}$ can be described in cartesian notation as
+A complex number $z \in \mathbb{C}$ can be described in Cartesian notation as
 \[
     z = a + jb, a,b \in \mathbb{R}
 \]

@@ -60,9 +60,11 @@ distance, then remove the $i_{l}$th row and $j_{l}$th column from consideration
 and continue until $L$ pairs have been determined or the distances exceed some
 threshold $\Delta$. This is summarized in Algorithm~\ref{alg:mq_peak_match}
 
+\iftoggle{formfudge}{%
+    \medskip
+}
+
 \begin{algorithm}[H]
-    \caption{A generalized McAulay-Quatieri peak-matching algorithm.%
-    \label{alg:mq_peak_match}}
     \KwIn{the cost matrix $\boldsymbol{C}$}
     \KwOut{$L$ pairs of indices $\Gamma_{i}$ and $\Gamma_{j}$}
     $\Gamma_{i} \leftarrow \varnothing$\;
@@ -78,7 +80,13 @@ threshold $\Delta$. This is summarized in Algorithm~\ref{alg:mq_peak_match}
         $\Gamma_{j} \leftarrow \Gamma{i} \cup j_{l}$\;
     }
     \KwRet{$\Gamma_{i},\Gamma_{j}$}
+    \caption{A generalized McAulay-Quatieri peak-matching algorithm.}%
+    \label{alg:mq_peak_match}
 \end{algorithm}
+
+\iftoggle{formfudge}{%
+    \newpage%
+}
 
 This is a greedy algorithm because on every iteration the smallest cost is
 identified and its indices are removed from consideration. Perhaps choosing a
@@ -86,7 +94,7 @@ slightly higher cost in one iteration would allow smaller costs to be chosen in
 successive iterations. This algorithm does not allow for that. In other terms,
 the algorithm does not find a set of pairs that represent a globally minimal sum of
 costs.
-Another drawback of the algorithm is that it only works between two sucessive
+Another drawback of the algorithm is that it only works between two successive
 frames. The cost function could be extended to consider $K$ frames ($K$
 arbitrary) of parameter sets, constructing a $K$-dimensional tensor instead of a
 matrix, but assuming equal numbers of parameter sets in all frames, the search
@@ -327,7 +335,7 @@ On the other hand, if each frame has a large number of nodes or many paths are
 searched, the LP formulation is superior.  Informally we have found this to
 agree with reality --- both algorithms were tried when producing the figures in
 Section~\ref{sec:mq_lp_compare_chirp}.  Indeed the Wolf formulation took
-prohibitvely long to compute when many paths were desired, as did the LP when
+prohibitively long to compute when many paths were desired, as did the LP when
 many frames were considered.
 
 It should be noted that in the special case that only 1 shortest path is
@@ -377,7 +385,7 @@ The parameters for the 6 chirps are presented in
 Table~\ref{tab:ptrackexamplechirpparams}.
 \begin{table}
     \caption{Parameters of $k$th chirp. $f_{0}$ and $f_{1}$ are the initial and
-    final frequncy of the chirp in Hz. \label{tab:ptrackexamplechirpparams}}
+    final frequency of the chirp in Hz. \label{tab:ptrackexamplechirpparams}}
     \begin{center}
         \begin{tabular}{l c c c c c}
             $k$ & $\phi_{k}$ & $\omega_{k}$ & $\psi_{k}$ & $f_{0}$ & $f_{1}$ \\
@@ -451,7 +459,7 @@ large number of spurious nodes.
 
 There are problems with the proposed approach. As discussed in
 \ref{sec:lppathsearch}, ``jagged'' paths should be removed using regularization.
-There are also situations where it is undesireable to have paths extend
+There are also situations where it is undesirable to have paths extend
 throughout the entire lattice. Acoustic signals produced by striking media, such
 as strings or bars, exhibit a spectrum where the upper partials decay more
 quickly than the lower ones (e.g., see Figure~\ref{plot:acgtra3specgram}) --- it

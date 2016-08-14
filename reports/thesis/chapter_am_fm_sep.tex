@@ -15,7 +15,7 @@ modulation.  On each frame of analysis data, i.e., for parameters belonging to
 the same time instant, we consider each data-point as a multi-dimensional random
 variable. With these random variables, we compute principal components in order
 to produce a variable with maximum variance. This variable is classified using a
-clustering algorithm and we evalutate the results. A summary follows:
+clustering algorithm and we evaluate the results. A summary follows:
 \begin{itemize}
     \item 
         Parameters are synthesized from a theoretical mixture of AM and FM
@@ -171,7 +171,7 @@ classification.
         in black or grey connect the points for source 1 or source 2
         respectively with optimal smoothness. Plots indicated with an \textit{a}
         are the paths with frequency smoothness as the criterion and those
-        indicated with \textit{b} are with amplitude smoothness as the citerion.
+        indicated with \textit{b} are with amplitude smoothness as the criterion.
     \label{plot:hsrp_test_7_multi_smooth_freq_amp_sol}}
 \end{figure}
 
@@ -199,7 +199,7 @@ Table~\ref{tab:ex2synthparams}.
         $f_{f,p}$ & Frequency of FM. \\ 
         $s_{p}$ & The signal representing the $p$th source. \\ 
         $a_{60,p}$ & The slope of the line in the argument of the exponential
-        desribing the amplitude variation. \\ 
+        describing the amplitude variation. \\ 
         $a_{k,60,p}$ & The coefficient of the harmonic number in the argument of
         the exponential describing the initial amplitude of a harmonic as a
         function of its harmonic number.
@@ -266,6 +266,10 @@ Typically when performing a short-time analysis,
 the time corresponding to $n = 0$ is made to be the centre of the window,
 therefore, $t$ is the time at the centre of the window and $N_{w}$, in samples,
 is the length of the middle (usually non-zero) portion of the window.
+
+\iftoggle{formfudge}{%
+    \newpage%
+}
 
 \subsection{The amplitude signal}
 
@@ -368,7 +372,7 @@ parameter above, e.g., $\omega_{\text{min}}$ and $\omega_{\text{max}}$ for the
 $\omega$ parameter. For this experiment $r = 0.25$, which is quite a large
 number of spurious points. This value is chosen to show that, given an
 acceptable accuracy of estimation of the true parameters, good source separation
-results can be acheived, even with such a high proportion of spurious points.
+results can be achieved, even with such a high proportion of spurious points.
 The parameters of the uniformly distributed random variables are given in
 Table~\ref{tab:amfmspuriousuniformparams}. Data-points are computed for the
 times $t_{n} = 0,\frac{H}{f_{s}},\frac{2 H}{f_{s}},\ldots,\frac{\left\lfloor
@@ -481,12 +485,14 @@ distribution). The initial guesses for the weights are simply $\frac{1}{N}$.
 GMM parameter estimation is discussed in Section~\ref{chap:gmm}. After
 convergence we have an estimated probability $\mathrm{p}(a_{1,l}(t) \text{ from
 distribution }p)$. We choose the distribution $p$ for each $a_{1,l}(t)$ that
-gives the highest probability of it having occured. The values
+gives the highest probability of it having occurred. The values
 $\mathbf{x}_{t}(t)$ corresponding to the $a_{1,l}(t)$ have this same
 classification. Those sharing the same classification can be interpreted as
 coming from the same source. The figure shows the results of the above steps
 carried out on a mixture of two sources synthesized with the 
 parameters summarized in Table~\ref{tab:synthparamamfmsep}.
+The length of the signal $N$ is 8000 samples and the analysis hop size $H$ is 256
+samples. 
 \begin{table}
     \begin{center}
         \begin{tabular}{c c c }
@@ -511,8 +517,6 @@ parameters summarized in Table~\ref{tab:synthparamamfmsep}.
     \caption{Synthesis parameters for source separation by frequency and
     amplitude modulation. \label{tab:synthparamamfmsep}}
 \end{table}
-The length of the signal $N$ is 8000 samples and the anlaysis hop size $H$ is 256
-samples. 
 
 %\begin{figure}[!t]
 %    \centering
@@ -540,7 +544,7 @@ spurious data added, Figure~\ref{plot:hsrp_test_7_multi_class_pcs} shows the
 principal components at each time frame and the initial guesses for the EM
 algorithm, Figure~\ref{plot:hsrp_test_7_multi_source_1_est} shows the initial
 classifications for source 1 and
-Figure~\ref{plot:hsrp_test_7_multi_source_2_est} the intial classifications for
+Figure~\ref{plot:hsrp_test_7_multi_source_2_est} the initial classifications for
 source 2 before the smoothing step.
 
 
@@ -561,7 +565,7 @@ source 2 before the smoothing step.
         \end{tabular}
     \end{center}
     \caption{The plot title numbers and the amount of noise added to the
-    synsthesis parameters for that realisation. \label{tab:amfmexpplotkey}}
+    synthesis parameters for that realisation. \label{tab:amfmexpplotkey}}
 \end{table}
 
 As seen in Figure~\ref{plot:hsrp_test_7_multi_source_1_est} and
@@ -615,7 +619,7 @@ vector $\boldsymbol{c}$ in the LP%
     possible classification connections between frame $h$ and $h+1$. Each source
     $m$ at time $h$ has a cost of being associated with a source $n$ at time
     $h+1$, which is stored in the index $4h + 2m + n$. This is merely how the
-    indices are layed out in the array representing the cost vector
+    indices are laid out in the array representing the cost vector
     $\boldsymbol{c}$. See Section~\ref{sec:lppathsearch} for more about
     $\boldsymbol{c}$.}
 \[

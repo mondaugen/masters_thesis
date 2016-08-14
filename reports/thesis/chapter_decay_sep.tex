@@ -140,23 +140,23 @@ cost-length ratio is excessive. See
 Figure~\ref{plot:acgtra3xylofs4costlengththresh} to see a plot of these values
 and the thresholding function. 
 
-\section{Motiviation}
+\section{Motivation}
 
 A line function is fit via least-squares to each partial, as shown in
 Figure~\ref{plot:parclassaxpartialtrajectories}. Our goal is to classify based
 on the amplitude modulation of each partial, or to an approximation, the slope of these line-functions. We found that examining the log-length of the
 partials gives better results than examining the slope directly. This is perhaps
 because the log-length encodes both the starting amplitude and the slope. Recall
-that the partials start on the first local maxium exceeding an amplitude
+that the partials start on the first local maximum exceeding an amplitude
 threshold --- those with lower starting amplitude and steeper amplitude slope will be
 shorter, while those with a higher starting amplitude and shallower slope will
 be longer. We see in
 Figure~\ref{plot:partialclassificationacgtrxyloseptruememberships} that using
-both the amplitude-slope and the intial amplitude of the partial gives clear
+both the amplitude-slope and the initial amplitude of the partial gives clear
 separation in a plot of the log-length vs.\ the
 average frequency of
-the partials. These partials are from separate overlayed analyses of the guitar
-and xlyophone signals. The experiment uses an analysis of a signal consisting of
+the partials. These partials are from separate overlaid analyses of the guitar
+and xylophone signals. The experiment uses an analysis of a signal consisting of
 a mixture of the sources, of course.
 
 The data-points have the form
@@ -208,7 +208,7 @@ Here $\boldsymbol{x} \in \mathbb{R}^{2}$ and $\boldsymbol{\beta} \in
 smooths in each dimension. 
 
 We use the two local maxima of this function as the initial means for the two
-sought classifying Gaussian distributions. The convolution function evalutated
+sought classifying Gaussian distributions. The convolution function evaluated
 at $\boldsymbol{\hat{a}}$ is
 \[
     f(\boldsymbol{\hat{a}}) = \sum_{\boldsymbol{a}_i \in \{\boldsymbol{a}\}}
