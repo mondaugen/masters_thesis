@@ -261,7 +261,7 @@ regularization term
     +
     \beta\sum_{k=0}^{K-1}\sum_{n=0}^{N-1} H_{k,n}^{2}
 \]
-to the divergence to penalize matricies with large entries.$\alpha$ and $\beta$
+to the divergence to penalize matricies with large entries. $\alpha$ and $\beta$
 are terms that control the influence of this regularization. A variety of
 regularization terms are possible \cite[ch.~3]{cichocki2009nonnegative}.
 
@@ -269,7 +269,7 @@ Equation~\ref{eq:VaprxWH} can be seen as the sum
 \[
     V
     \approx
-    \sum_{k=-0}^{K-1}\boldsymbol{w}_{:,k}\otimes\boldsymbol{h}_{l,:}
+    \sum_{k=-0}^{K-1}\boldsymbol{w}_{:,k}\otimes\boldsymbol{h}_{k,:}
 \]
 i.e., the sum of all the outer products between columns of $\boldsymbol{W}$ and
 rows of $\boldsymbol{H}$. From this perspective, we can see the columns of
@@ -332,12 +332,13 @@ therefore comprises the following tasks:
         amplitude at the synthesis step.
 \end{itemize}
 
-It should be noted that the strategy for source separation is similar to that
-proposed in \cite{creager2016musicalsource}. The work here differs in many
+It should be noted that the strategy for source separation relies on the same
+perceptual principle as in \cite{creager2016musicalsource}. The work here differs in many
 respects. We have chosen to use solely the additive sinusoidal model as a
-model of the signals considered. Furthermore, in addition to
+model of the signals considered. In addition to
 frequency-modulation, we incorporate amplitude-modulation to aid in the source
-separation. Chapter~\ref{chap:decaysep} uses only the amplitude-modulation to
+separation. The source separation itself differs technically from their
+approach as well. Chapter~\ref{chap:decaysep} uses only the amplitude-modulation to
 classify partials into sources. This is similar to the strategy explored in
 \cite{li2009monaural}, but does not use a prior estimation of the fundamental
 frequencies of the sources.

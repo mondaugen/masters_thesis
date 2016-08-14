@@ -5,7 +5,7 @@
 To build tools to analyse and synthesize signals some structure must be imposed
 on the signals. The structures chosen can reflect something about the behaviour
 of these signals as observed in the field, as we will see with sinusoidal
-models. Other structures are chosen phenomenalogically --- we do not really know
+models. Other structures are chosen phenomenologically --- we do not really know
 the underlying mechanism behind the production of these signals, but a
 particular structure is chosen for its mathematical or conceptual convenience,
 such as is the case when we consider higher order models for sinusoidal phase
@@ -34,9 +34,9 @@ later in this thesis.
 An LTI auto-regressive structure is a signal that can be desribed using the
 following \textit{difference equation}:
 
-\begin{equation}
+\[
     x(n) = \sum_{k=1}^{K} a_k x(n-k) + b_0 v(n)
-\end{equation}
+\]
 
 Here $x$ is the output of the system (what is heard or measured) and $v$ is the
 input. $K$ is the order of the model. Both are general functions of time which,
@@ -51,29 +51,29 @@ AR structures are excited in various ways: some are bowed, others struck, etc.
 To characterize the above structure we excite it with a simple signal, the
 \textit{Kronecker delta}
 
-\begin{equation}
+\[
     \delta(n) = \begin{cases}
         1 & n=0\\
         0 & \text{otherwise}
     \end{cases}
-\end{equation}
+\]
 
 This Kronecker delta input will yield its \textit{impulse
 response} from which we can derive many properties of the AR structure.
 
 As an example take the case where $K=1$ and $a_1 = r \exp(j\omega)$, 
-$r\text{,}\omega \in \mathbb{R}$, $|r|<1$. Then the difference equation is
-\begin{equation}
+$r, \omega \in \mathbb{R}$, $|r|<1$. Then the difference equation is
+\[
     x(n) = r \exp(j\omega) x(n-1) + v(n)
-\end{equation}
+\]
 Exciting this with the Kronecker delta we get
-\begin{equation}
+\[
     \begin{array}{c}
         x(0) = 1 \\
         x(1) = r \exp(j\omega) \\
         x(n) = r^n \exp(j\omega n)
     \end{array}
-\end{equation}
+\]
 which is a complex exponential starting at $n=0$ and periodic in
 $n_T=\frac{2\pi}{\omega}$ multiplied by the real-valued
 exponential $r^n$. In other words, the output is a damped sinusoid. From this
@@ -88,9 +88,9 @@ An alternative method for determining the frequencies and amplitudes of
 sinusoids in mixture is to take the inner product of the signal with a complex
 exponential of known frequency and see what you get
 
-\begin{equation}
+\[
     X(\omega) = \sum_{n=-\infty}^{\infty} x(n) \exp(-j \omega n)
-\end{equation}
+\]
 
 The function $X(\omega)$ will be large if $x(n)$ contains a complex exponential of
 frequency $\omega$ and small if it doesn't, effectively indicating which
@@ -140,7 +140,9 @@ is real, so we choose windows with this property. See
 \section{Polynomial Phase Models\label{sec:polynomphasemodel}}
 
 The DTFT and DTSTFT are very useful because they are invertible
-\cite{portnoff1976implementation} and fast algorithms exist for their 
+\cite{portnoff1976implementation}%
+\footnote{Provided proper sampling in time and frequency.}
+and fast algorithms exist for their 
 computation by digital computer \cite{van1992computational}. If the presence of
 a sinusoid is determined, e.g., by finding $\tau^{\ast}$ and $\omega^{\ast}$ such that
 $X$ is maximized, that signal can be removed or altered easily.
@@ -168,17 +170,17 @@ slowly varying amplitude and phase, plus some noise. The model is
     x(n)=\sum_{p=1}^{P} A_p(n) \exp(j \phi_p(n)) + \varepsilon
 \end{equation}
 
-where $\varepsilon \sim \mathcal{N}(0,\sigma)$, $\sigma^{2}$ quantifies the power of
+where $\varepsilon \sim \mathcal{N}(0,\sigma^{2})$, $\sigma^{2}$ quantifies the power of
 the noise, and $A_{p}(n),\phi_{p}(n) \in \mathbb{R}$ are functions of amplitude and
 phase respectively. In the following, we consider equivalent sinusoidal mixtures
-of complex-valued polynomial phase exponentials
-\begin{equation}
+of complex-valued polynomial phase and log-amplitude exponentials
+\[
     x(n)=\sum_{p=1}^{P} \exp(\mathcal{P}_p(n)) + \varepsilon
-\end{equation}
+\]
 where
-\begin{equation}
+\[
     \mathcal{P}_p(n) = \sum_{q=0}^{Q} c_q n^{q}
-\end{equation}
+\]
 and $c_q \in \mathbb{C}$. Note the form in
 Equation~\ref{eq:sumofsinesampphasesep} can be retrieved as
 \[
@@ -187,7 +189,8 @@ Equation~\ref{eq:sumofsinesampphasesep} can be retrieved as
     j\Im\left\{\mathcal{P}_p(n)\right\}
 \]
 In Chapter~\ref{chap:exphsmodel} we will see how estimations of these parameters
-at different times can be interpolated to create higher order phase functions
+at different times can be interpolated to create higher order phase and
+log-amplitude functions
 with improved synthesis quality.
 
 \section{Polynomial phase parameter estimation}
@@ -267,7 +270,7 @@ so we can estimate $c_0$ as
     c_0 = \log \left( \left\langle s , \gamma \right\rangle \right)
         - \log \left( \left\langle \gamma , \gamma \right\rangle \right)
 \end{equation}
-The estimation of the coefficients of a phase polynomial
+The estimation of the coefficients of a phase and log-amplitude polynomial
 using this method is known as the \textit{Distribution Derivative Method (DDM)}.
 
 \section{Choosing atom $\psi$ \label{sec:optblackman}}
@@ -330,11 +333,12 @@ using this method is known as the \textit{Distribution Derivative Method (DDM)}.
 \begin{table}
     \caption{\label{tab:optvs4termblackman}}
     \begin{center}
-        \begin{tabular}{l c c}
-            Window & Highest side-lobe level (dB) & 6-dB bandwidth in bins \\
+        \begin{tabular}{l p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
+            Window & Highest side-lobe level (dB) & 6-dB bandwidth in bins &
+            Side-lobe fall-off (dB/octave) \\
             \hline
-            Minimum & -92 & 2.72 \\
-            $\mathcal{C}^{1}$ & -90 & 2.66 \\
+            Minimum & -92 & 2.72 & 6 \\
+            $\mathcal{C}^{1}$ & -90 & 2.66 & 12 \\
         \end{tabular}
     \end{center}
 \end{table}
@@ -396,8 +400,8 @@ windows. For these windows, optimization techniques were used to search for
 coefficients giving minimum height of the highest side-lobe (maximum out-of-band
 rejection) \cite{rabiner1970approach}. The 4-term window whose coefficients $a$
 are listed in Table~\ref{tab:optblackman} has a maximum side-lobe level of 92
-dB, lower than the quantization noise of a 16-bit linear pulse code modulated
-signal. This window has a very large main-lobe which means two sinusoids of
+dB, just shy of the quantization noise of a 16-bit linear pulse code modulated
+signal (96 dB). This window has a very large main-lobe which means two sinusoids of
 similar frequency will be difficult to resolve. Furthermore, the window has a
 discontinuity at its boundaries, e.g., $w \left( \frac{N}{2} \right) \neq 0$ and
 is not once-differentiable. In any case the window is valuble in that it

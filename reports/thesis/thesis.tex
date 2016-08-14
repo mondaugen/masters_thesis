@@ -19,8 +19,8 @@
 %\usepackage{gobble}
 \hypersetup{
     colorlinks=true,
-%    linkcolor=blue,
-%    citecolor=gray
+    linkcolor=black,
+    citecolor=black
 }
 \usepackage{setspace}
 \onehalfspacing
@@ -44,6 +44,10 @@
 }
 \captionsetup{format=no-cap-title}
 \newcommand{\MyInput}[1]{\immediate\write18{cat #1}}
+
+\makeatletter
+\renewcommand{\@algocf@capt@plain}{above}% formerly {bottom}
+\makeatother
 
 % Scale figures
 \def\figwidthscale{0.8}
@@ -78,6 +82,8 @@ Sum-of-Sinusoids Model}
 \begin{abstract}
     \input{thesis/resume.tex}
 \end{abstract}
+
+\input{thesis/acknowledge.tex}
 
 \tableofcontents
 \listoffigures

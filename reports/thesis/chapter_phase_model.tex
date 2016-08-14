@@ -74,25 +74,30 @@ sinusoids are non-stationary\footnote{%
     time-stretching using the STFT \cite{roebel2003transient}.%
 }
 From Equation~\ref{eq:ddmsyseq} we know we can estimate a polynomial of
-arbitrary order for phase. We will see that using this additional information
-can give us an interpolating function closer to the underlying model.
+arbitrary order for the argument of the complex exponential. We will see that
+using this additional information can give us an interpolating function closer
+to the underlying model.
 
 \section{The interpolating analysis-synthesis system}
 
 In the following, we investigate the synthesis quality of three interpolating
 analysis-synthesis systems. The qualifier ``interpolating'' is used because each
 system takes the multiple sets of estimated parameters of a smaller order model
-and interpolates them with a higher oder model, which is then used for
-synthesis. The systems will be denoted $\mathscr{S}_{p,q}$ where $p$ is the
-order of the analysis system and $q$ the order of the synthesis system, e.g., a
-linear analysis system has $p=1$, etc.
+and interpolates them with a higher order model, which is then used for
+synthesis. This is necessary because we only have values every $H$ samples from
+the analysis step but require a value for every sample value in the output. The
+systems will be denoted $\mathscr{S}_{p,q}$ where $p$ is the order of the
+analysis system and $q$ the order of the synthesis system, e.g., a linear
+analysis system has $p=1$, etc.
 
 \section{$\mathscr{S}_{1,3}$: the McAulay-Quatieri method}
 
-\subsection{Analysis: linear phase \label{sec:S13analysis}}
+\subsection{Analysis: linear phase and constant amplitude%
+\label{sec:S13analysis}}
 
-For the McAulay-Quatieri method, the model is a sinusoid of constant frequency
-(linear phase) in each analysis frame. To estimate the frequency of this
+For the McAulay-Quatieri method, the analysis model is a sinusoid of constant frequency
+and amplitude
+(linear phase and constant log-amplitude) in each analysis frame. To estimate the frequency of this
 sinusoid we find the bin with the most energy and find a refined estimate of the
 frequency as the maximum of a quadratic interpolating polynomial fit to this bin
 and its two neighbouring bins. This is a procedure documented in
@@ -111,7 +116,7 @@ harmonically related sinusoids, the best estimate for the frequency is the bin
 of a local maximum, its amplitude the modulus of the spectrum at this maximum, and
 the phase the argument.
 
-In our system, we use a fixed window size. To estimate the phase then we use
+In our system, we use a fixed window size. To estimate the initial phase then we use
 Equation~\ref{eq:ddmestc0} with
 \[
     \gamma_{\text{MQ}}(n)=\exp(2\pi\frac{k^{\ast}}{M}n)
@@ -119,23 +124,25 @@ Equation~\ref{eq:ddmestc0} with
 where $k^{\ast}$ is the bin we have determined to correspond to the frequency of
 the sinusoid. The inital phase is then $\Im \left\{ c_{0} \right\}$.
 
-\subsection{Synthesis: cubic phase \label{sec:S13synthesis}}
+\subsection{Synthesis: cubic phase and linear log-amplitude \label{sec:S13synthesis}}
+
+\subsubsection{The phase part}
 
 Given two local maxima of the
 DTSTFT $X(\tau_0,\omega_0)$ and $X(\tau_1,\omega_1)$, where $H = \tau_1 -
 \tau_0$ we can conjecture a cubic
 polynomial phase function for the imaginary part of the phase argument
 
-\begin{equation}
+\[
     \tilde{\phi}(n) = \Im\left\{c_3\right\} (n-\tau_0)^3 + \Im\left\{c_2\right\} (n-\tau_0)^2 + \Im\left\{c_1\right\} (n-\tau_0) + \Im\left\{c_0\right\}
-\end{equation}
+\]
 
 By noting that we have 2 measurements of the phase and frequency,
 $\angle\{X(\tau_0,\omega_0)\}$ and $\angle\{X(\tau_1,\omega_1)\}$, and the frequency
 is the derivative of the phase, we can solve for the coefficients of the
 polynomial phase function using the following linear system of equations,
 assuming the DTSTFT was computed using a real and even window
-\begin{equation}
+\[
     \begin{pmatrix}
         0   & 0     & 0 & 1 \\
         H^3 & H^2   & H & 1 \\
@@ -155,7 +162,7 @@ assuming the DTSTFT was computed using a real and even window
         \omega_0 \\
         \omega_1        
     \end{pmatrix}
-\end{equation}
+\]
 We choose $M$ so that
 \begin{equation}
     \label{eq:minfmmq}
@@ -171,11 +178,13 @@ described by two points in the time-frequency plane, i.e., the signal
 would exhibit a large bandwidth. See \cite[p.~751]{mcaulay1986speech} for
 further clarification.
 
+\subsubsection{The amplitude part}
+
 As only two measurements of the amplitude of the sinusoid are available,
 $|X(\tau_0,\omega_0)|$ and $|X(\tau_1,\omega_1)|$, the coefficients
 $c_3$ and $c_2$ are purely imaginary and the real parts of $c_1$ and $c_0$ are
 determined as
-\begin{equation}
+\[
     \begin{pmatrix}
         0 & 1 \\
         H & 1
@@ -189,7 +198,7 @@ determined as
         \log(|X(\tau_0,\omega_0)|) \\
         \log(|X(\tau_1,\omega_1)|)
     \end{pmatrix}
-\end{equation}
+\]
 
 \section{$\mathscr{S}_{2,3}$ and $\mathscr{S}_{2,5}$: the DDM-based methods}
 
@@ -198,15 +207,16 @@ the additional parameters estimated via the DDM. For the $\mathscr{S}_{2,3}$
 model, we must introduce additional constraints into the system as we have more
 estimated parameters than are available in the synthesis model. It would be
 possible to solve this system via least-squares, but the proposed constraints
-simplify analytically the expression maximizing the smoothness of the phase
-function, and give satisfactory results. For the $\mathscr{S}_{2,5}$ model the
+simplify analytically the expression maximizing the smoothness of the phase and
+log-amplitude
+functions, and give satisfactory results. For the $\mathscr{S}_{2,5}$ model the
 derivation is straightforward as in the $\mathscr{S}_{1,3}$ case --- there are
 the same number of estimated parameters as there are parameters in the model.
 
-\subsection{Analysis: quadratic phase \label{sec:s235analysis}}
+\subsection{Analysis: quadratic phase and log-amplitude \label{sec:s235analysis}}
 
 The DDM is used on segments of the signal to estimate the parameters of sinusoid
-with a complex quadratic phase polynomial. This sinusoid has the form
+with a complex quadratic polynomial argument. This sinusoid has the form
 \begin{equation}
     \label{eq:quadraticphasepoly}
     x_{a}(n) = \exp \left(a_2 n^{2} + a_1 n + a_0 \right)
@@ -215,7 +225,7 @@ with $a_{i} \in \mathbb{C}$.
 
 We can estimate the coefficients of Equation~\ref{eq:quadraticphasepoly} using
 the DDM. We write Equation~\ref{eq:ddmsyseq} in matrix form with $Q=2$
-\begin{equation}
+\[
     \begin{pmatrix}
         \left\langle \mathcal{T}^{0} x , \overline{\psi}_{1} \right\rangle &
         2\left\langle \mathcal{T}^{1} x , \overline{\psi}_{1} \right\rangle \\
@@ -233,25 +243,25 @@ the DDM. We write Equation~\ref{eq:ddmsyseq} in matrix form with $Q=2$
         \vdots \\
         -\left\langle  x , \frac{d\overline{\psi}_{R}}{dn} \right\rangle
     \end{pmatrix}
-\end{equation}
+\]
 
 From this we recognize we need to define three functions
-\begin{equation}
+\[
     \left\langle \mathcal{T}^{0} x , \overline{\psi}_{k} \right\rangle 
     =
     \sum_{m=0}^{M-1} w(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
-\end{equation}
-\begin{equation}
+\]
+\[
     \left\langle \mathcal{T}^{1} x , \overline{\psi}_{k} \right\rangle
     =
     \sum_{m=0}^{M-1} m w(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
-\end{equation}
-\begin{equation}
+\]
+\[
     \left\langle  x , \frac{d\overline{\psi}_{k}}{dn} \right\rangle
     =
     -j 2 \pi \frac{k}{M} X_{p_{1}} \left( \tau , k \right) + 
     \sum_{m=0}^{M-1} \frac{dw}{dn}(m) x(m + \tau) \exp(-j 2 \pi \frac{k m}{M})
-\end{equation}
+\]
 Where $M$ is the length of the window and $k$ is the frequency
 ``bin''\footnote{For tractability, the functions $X(\tau,k)$ are only evaluated at
     a finite number of frequencies, which are often called ``bins'' in the
@@ -274,7 +284,7 @@ there are many possibilities for choosing different atoms
 have improved estimation accuracy in situations where components are adaquately
 separated in frequency, while avoiding a more sophisticated local peak selection
 procedure. Then $a_2$ and $a_1$ can be determined by solving the linear system
-\begin{equation}
+\[
     \begin{pmatrix}
         \left\langle \mathcal{T}^{0} x , \overline{\psi}_{k-1} \right\rangle &
         \left\langle \mathcal{T}^{1} x , \overline{\psi}_{k-1} \right\rangle \\
@@ -293,7 +303,7 @@ procedure. Then $a_2$ and $a_1$ can be determined by solving the linear system
         -\left\langle  x , \frac{d\overline{\psi}_{k}}{dn} \right\rangle \\
         -\left\langle  x , \frac{d\overline{\psi}_{k+1}}{dn} \right\rangle
     \end{pmatrix}
-\end{equation}
+\]
 With $a_{1}$ and $a_{2}$ determined, we can use Equation~\ref{eq:ddmestc0} to
 estimate $a_0$. We will write $a^{\tau}_{i}$ to refer to coefficient $i$
 determined at time $\tau$.
@@ -301,8 +311,8 @@ determined at time $\tau$.
 \subsection{Synthesis: cubic order ($\mathscr{S}_{2,3}$)
 \label{sec:s23synthesis}}
 
-In this section we describe how to obtain a cubic phase polynomial from
-local estimations of the coefficients of a quadratic phase polynomial.
+In this section we describe how to obtain a cubic phase and log-amplitude polynomial from
+local estimations of the coefficients of a quadratic phase and log-amplitude polynomial.
 
 \subsubsection{The phase part}
 
@@ -339,7 +349,7 @@ and
     a^{\tau_1}_{2} \right\} \right)
 \]
 i.e., the frequency and first-order frequency modulation in the middle of the
-segment are the average of the two measured coefficients. Finally we require the
+segment are the average of the two measured coefficients. Finally we require
 that the change in phase from time $0$ to $H$ correspond to that what was
 observed, but account for the cycles that were not observed by adding an integer
 number of $2\pi$ radians. If $\phi(n)=j(b_3 n^{3} + b_2 n^{2} + b_1 n + b_0)$,
@@ -358,7 +368,7 @@ Equation~\ref{eq:minfmmq}, in this case:
     6 b_3 t + 2 b_2 \right)^{2} dt
 \end{equation}
 which is then rounded to the nearest integer to give $U^{\ast}$. To summarize we have
-\begin{equation}
+\[
     \begin{pmatrix}
         H^{3} & H^{2} & H \\
         \frac{3}{4}H^{2} & H & 1 \\
@@ -379,7 +389,7 @@ which is then rounded to the nearest integer to give $U^{\ast}$. To summarize we
         \frac{1}{2} \left( \Im \left\{ a^{\tau_0}_{2} \right\} + \Im \left\{
         a^{\tau_1}_{2} \right\} \right)
     \end{pmatrix}
-\end{equation}
+\]
 Solving for $b_1, \dotsc, b_3$, we have
 \[
     \begin{pmatrix}
@@ -419,11 +429,11 @@ and then rounded to obtain $U^{\ast}$.
 
 \subsubsection{The amplitude part}
 
-Solving for the cubic polynomial describing the local amplitude function
-\begin{equation}
-    \mu(n) = \exp \left(c_3 n^{3} + c_2 n^{2} + c_1 n + c_0 \right)
-\end{equation}
-with $c_i \in \mathbb{R}$, is more straightforward analytically as it does not
+Solving for the cubic polynomial describing the local log-amplitude function
+\[
+    \mu(n) = \exp \left(d_3 n^{3} + d_2 n^{2} + d_1 n + d_0 \right)
+\]
+with $d_i \in \mathbb{R}$, is more straightforward analytically as it does not
 require solving to maximize the smoothness of resulting polynomial. To require
 continuity at the end-points of our polynomial, we require
 \[
@@ -433,7 +443,7 @@ and
 \[
     \mu(H) = \Re \left\{ a^{\tau_1}_0 \right\}
 \]
-The first constraint is satisfied simply by setting $c_0 = \Re \left\{
+The first constraint is satisfied simply by setting $d_0 = \Re \left\{
 a^{\tau_0}_0 \right\}$. The second will be accounted for in a constrained
 least-squares solution for the other coefficients. The other observations are
 \[
@@ -449,7 +459,7 @@ least-squares solution for the other coefficients. The other observations are
     \frac{d^2 \mu}{dn^2} (H) = \Re \left\{ a^{\tau_1}_2 \right\}
 \]
 The constrained least-squares problem to be solved is then
-\begin{equation}
+\[
     \begin{pmatrix}
         0 & 0 & 1 \\
         3 H^2 & 2 H & 1 \\
@@ -457,9 +467,9 @@ The constrained least-squares problem to be solved is then
         6 H & 2 & 0
     \end{pmatrix}
     \begin{pmatrix}
-        c_3 \\
-        c_2 \\
-        c_1
+        d_3 \\
+        d_2 \\
+        d_1
     \end{pmatrix}
     =
     \begin{pmatrix}
@@ -468,16 +478,16 @@ The constrained least-squares problem to be solved is then
         \Re \left\{ a^{\tau_0}_2 \right\} \\
         \Re \left\{ a^{\tau_1}_2 \right\}
     \end{pmatrix}
-\end{equation}
+\]
 subject to
 \[
     \begin{pmatrix}
         H^3 & H^2 & H
     \end{pmatrix}
     \begin{pmatrix}
-        c_3 \\
-        c_2 \\
-        c_1
+        d_3 \\
+        d_2 \\
+        d_1
     \end{pmatrix}
     =
     \begin{pmatrix}
@@ -493,7 +503,7 @@ interpretation of weighted least-squares \cite[p.~266]{golub1996matrix}.
 
 Solving for the coefficients of a quintic phase polynomial is done very
 similarly to Section~\ref{sec:s23synthesis}. As we have the same number of
-analysed parameters and synthesis parameters, no constraints have to be
+analysis and synthesis parameters, no constraints have to be
 introduced to solve the system apart from the value $U$ that maximizes
 smoothness of the phase function. The quintic phase polynomial is%
 \footnote{Remember, this sinusoid has constant amplitude of 1 and
@@ -515,7 +525,7 @@ with $u_i \in \mathbb{R}$. We have
 \]
 and solving for the remaining coefficients is done using the linear system of
 equations:
-\begin{equation}
+\[
     \begin{pmatrix}
         H^5 & H^4 & H^3 \\
         5 H^4 & 4 H^3 & 3 H^2 \\
@@ -533,7 +543,7 @@ equations:
         -H \ImNe{ a^{\tau_0}_2 } + \ImNe{ a^{\tau_1}_1 } - \ImNe{ a^{\tau_0}_1 } \\
         \ImNe{ a^{\tau_1}_2 } - \ImNe{ a^{\tau_0}_2 }
     \end{pmatrix}
-\end{equation}
+\]
 The smoothness maximizing $\tilde{U}$ is found as
 % M=np.round((20.*H*(w_i0+w_i1)+(H**2.)*(psi_i0-psi_i1)+40.*(phi_i0-phi_i1))/(80.*np.pi))
 \[
@@ -550,7 +560,7 @@ two analysis frames.
 
 \subsubsection{The amplitude part}
 
-Solving for the quintic amplitude polynomial
+Solving for the quintic log-amplitude polynomial
 \begin{equation}
     \label{eq:quinticamppoly}
     \rho(n) = \exp \left(v_5 n^{5} + v_4 n^{4} + v_3 n^{3} + v_2 n^{2} + v_1 n + v_0 \right)
@@ -567,7 +577,7 @@ with $v_i \in \mathbb{R}$, is as follows:
 \]
 and solving for the remaining coefficients is done using the linear system of
 equations:
-\begin{equation}
+\[
     \begin{pmatrix}
         H^5 & H^4 & H^3 \\
         5 H^4 & 4 H^3 & 3 H^2 \\
@@ -585,7 +595,7 @@ equations:
         -H \ReNe{ a^{\tau_0}_2 } + \ReNe{ a^{\tau_1}_1 } - \ReNe{ a^{\tau_0}_1 } \\
         \ReNe{ a^{\tau_1}_2 } - \ReNe{ a^{\tau_0}_2 }
     \end{pmatrix}
-\end{equation}
+\]
 
 \section{Evaluation}
 
@@ -596,10 +606,10 @@ synthesized and then analysed frame-by-frame using the DDM to estimate their
 initial phase (amplitude), frequency (amplitude slope), and frequency-modulation
 (amplitude-modulation). Afterwards, the signals were resynthesized using the
 estimated parameters and compared to the original.  We are interested in seeing
-in what cases higher order phase polynomials will improve the accuracy of
+in what cases higher order phase and log-amplitude polynomials will improve the accuracy of
 synthesis.
 
-\subsection{Evaluation on sinusoid of cubic phase and quartic amplitude \label{sec:evalcubicphase}}
+\subsection{Evaluation on a sinusoid of cubic phase and quartic log-amplitude \label{sec:evalcubicphase}}
 \begin{table}
     \caption{\label{tab:cubicsinphparams}}
     \begin{center}
@@ -662,8 +672,8 @@ synthesis.
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_err_comp_logamp_err.eps}
     \CaptionWithTitle{%
         \input{plots/mq_mod_err_comp_logamp_err.txt}%
-    }{This shows the error of the interpolated amplitude functions when compared
-    with the original amplitude function for the three proposed methods.
+    }{This shows the error of the interpolated log-amplitude functions when compared
+    with the original log-amplitude function for the three proposed methods.
     \label{plot:mqmoderrcomplogamperr}}
 \end{figure}
 
@@ -683,10 +693,11 @@ synthesis.
     \label{plot:mqmoderrcompphaseerr}}
 \end{figure}
 
-The initial evalutation illustrates how higher order phase polynomials will not
-necessarily improve the quality of synthesis if the underlying phase function is
+The initial evaluation illustrates how higher order phase and log-amplitude polynomials will not
+necessarily improve the quality of synthesis if the underlying phase and
+log-amplitude functions are
 a polynomial of lower order than the polynomials used for synthesis. As we will
-see, the estimated phase functions suffer from ``overfitting''.
+see, the estimated phase and log-amplitude functions suffer from ``overfitting''.
 
 The synthesized signal has 3 frequency break-points and an initial phase,
 therefore its phase function can be interpolated by a cubic polynomial
@@ -696,7 +707,7 @@ therefore its phase function can be interpolated by a cubic polynomial
 the frequency break-points are summarized in Table~\ref{tab:cubicsinphparams}. The
 initial phase is $0$ radians.
 
-A quartic polynomial is used for the amplitude function
+A quartic polynomial is used for the log-amplitude function
 \[
     x_{\mu}(n) = \exp \left(h_4 n^{4} + h_3 n^{3} + h_2 n^{2} + h_1 n + h_0 \right)
 \]
@@ -719,11 +730,11 @@ In Figure~\ref{plot:mqmoderrorallspect} we see informally that the synthesis
 quality is good for all model orders even though the $\mathscr{S}_{1,3}$ model
 assumes linear phase in its analysis. Figure~\ref{plot:mqerrortruevsesterr}
 shows how accurately the different model orders reconstruct the orignal signal.
-We see that the $\mathscr{2,5}$, although of higher order, is not systemically a
+We see that the $\mathscr{S}_{2,5}$, although of higher order, is not systemically a
 better interpolator of the true underlying signal.
-Figure~\ref{plot:mqmoderrcomplogampfunc} shows the estimated amplitude functions
+Figure~\ref{plot:mqmoderrcomplogampfunc} shows the estimated log-amplitude functions
 along with the original and Figure~\ref{plot:mqmoderrcomplogampfunc} their
-respective errors in approximating the true amplitude function.  Finally,
+respective errors in approximating the true log-amplitude function.  Finally,
 Figure~\ref{plot:mqmoderrcompphaseerr} shows that the models incorporating the
 non-stationary assumption in their analysis perform better at approximating the
 true phase function. 
@@ -763,7 +774,7 @@ true phase function.
 \end{figure}
 
 The previous evaluation of this analysis-synthesis system was on a sinusoid with
-small order polynomial phase. In the cases where we observed overfitting, the
+small order polynomial phase and log-amplitude. In the cases where we observed overfitting, the
 polynomial used for synthesis was of higher order than the true underlying one
 --- the interpolating polynomials were more times differentiable than the true
 polynomial. We propose evaluating the system on an infinitely differentiable and
@@ -794,16 +805,16 @@ $f_{0}$ we compute
 \[
     f_{1}=f_{0}2^{\frac{b}{12}}=f_{0}\exp(\log(2)\frac{b}{12})
 \]
-So a linear transition from pitch $b_{0}$ to $b_{1}$ is an exponential change in
-frequency. This could be observed in recordings of performances of the
-\textit{portamento} gesture.
+So a linear transition from pitch $b_{0}$ to $b_{1}$ (in semitones) is an
+exponential change in frequency. This could be observed in recordings of
+performances of the \textit{portamento} gesture.
 
 We synthesize a sinusoid  of length $N$ samples with exponential phase and use
 the same analysis system as in Section~\ref{sec:evalcubicphase} to evaluate the
 synthesis accuracy for piece-wise interpolating polynomials of cubic and quartic
 order for phase. The signal $x$ is defined
 \[
-    x(n) = \exp(\frac{2\pi f_{0}}{\log(2)c_{1}}\exp(j(c_{1}n + c_{0})))
+    x(n) = \exp(\frac{2\pi f_{0}}{c_{1}}\exp(j(c_{1}n + c_{0})))
 \]
 with
 \[
@@ -815,8 +826,8 @@ and
 \]
 i.e., a signal starting at pitch $b_{0}$ with frequency $f_{0}$ and arriving at
 pitch $b_{1}$ in $N$ samples. We keep the amplitude of the signal constant in
-this evalutation as we are interested in the accuracy of the phase
-reconstruction. The same proceduare as in
+this evaluation as we are interested in the accuracy of the phase
+reconstruction. The same procedure as in
 Section~\ref{sec:evalcubicphase} is used to estimate the parameters of
 piece-wise interpolating phase polynomials. We can see in
 Figure~\ref{plot:mqexperrortruevsesterr} that the resynthesis accuracy is
@@ -825,10 +836,10 @@ signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
 
 \section{Conclusion}
 
-\subsection{Polynomial phase function}
+\subsection{Polynomial phase and log-amplitude function}
 
 Out of the three proposed methods it appears that the modified cubic
-interpolation method works superiorly for the signal model considered. We obseve
+interpolation method works superiorly for the signal model considered. We observe
 overfitting by the higher-order quintic model in
 Figure~\ref{plot:mqmoderrcomplogampfunc}, compromising the accuracy of
 resynthesis.  Even the proposed cubic model shows some overfitting in this case.
@@ -836,7 +847,7 @@ This is consistent with the results of \cite{girin2003comparing}. From
 Figure~\ref{plot:mqmoderrcompphaseerr} it is clear that the DDM based methods
 provide superior estimation of the phase function --- this is not the case for
 the log-amplitude function. Depending on the underlying signal, perhaps better
-results can be obtained by postulating a lower-order amplitude function and
+results can be obtained by postulating a lower-order log-amplitude function and
 higher-order phase function. The possibility of errors arising from numerical
 accuracy when evaluating the quintic polynomials has been ruled out.  We
 evalutated these polynomials using an implementation of Horner's method that
@@ -848,7 +859,7 @@ negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
     \CaptionWithTitle{%
         \input{plots/mq_mod_quintic_poly_eval_err.txt}%
-    }{The error bound in evaluating the quintic amplitude and phase
+    }{The error bound in evaluating the quintic log-amplitude and phase
         polynomials of $\mathscr{S}_{2,5}$ using Horner's method. This plot was produced by plotting only
     the local maxima of the error bound data in order to reduce the plot's
     range.\label{plot:mqmodquinticpolyevalerr}}
@@ -859,10 +870,10 @@ negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
 The quintic interpolation $\mathscr{S}_{2,5}$, the polynomial of highest order,
 performs the most accurate resynthesis. This is consistent with the analytic
 property of the exponential function and an encouraging result as it suggests
-arbitrary analytic phase functions can be approximated with arbitrary accuracy
-simply by increasing the order of the interpolating polynomials. Many models of
-musical gestures involve such functions, apart from the portamento gesture
-modeled by an exponential phase function, vibrato can be modeled as a sinusoid
-with sinusoidal phase \cite{maher1990investigation}. The DDM-based analysis
-system combined with the higher order polynomial phase synthesis system
-presented here allows for accurate modeling of these gestures.
+analytic phase functions can be approximated with arbitrary accuracy simply by
+increasing the order of the interpolating polynomials. Many models of musical
+gestures involve such functions, apart from the portamento gesture modeled by an
+exponential phase function, vibrato can be modeled as a sinusoid with sinusoidal
+phase \cite{maher1990investigation}. The DDM-based analysis system combined with
+the higher order polynomial phase and log-amplitude synthesis system presented here
+allows for accurate modeling of these gestures.

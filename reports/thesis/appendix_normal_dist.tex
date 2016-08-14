@@ -4,19 +4,38 @@ If a random variable $X$ is has mean $\mu = E(X)$ and variance $\sigma^{2} =
 E((X-\mu)^{2})$, where $E$ is the expectation operator, and is completely
 described by these two parameters, we say that draws from $X$, $x$, follow a
 normal distribution. Put another way, given a draw $x$ from $X$, the probability of
-obtaining $x$ for is given by
-\begin{equation}
+obtaining $x$ is given by
+\[
     \mathrm{p}_{\mathcal{N}}(x)
     =
-    \mathcal{N}(x;\mu,\sigma)
+    \mathcal{N}(x;\mu,\sigma^{2})
     =
     \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp(-\frac{(x-\mu)^{2}}{2\sigma^{2}})
-\end{equation}
+\]
 When a random variable $X$ is distributed by a normal distribution with mean $\mu$
 and variance $\sigma^{2}$ we write
 \[
-    X \sim \mathcal{N}(\mu,\sigma)
+    X \sim \mathcal{N}(\mu,\sigma^{2})
 \]
-The normal distribution arises often in statistics in signal processing due to
-the \textit{Central Limit Theorem} \cite{feller2008introduction} and its
-relationship to least-squares estimation \cite{kay1993fundamentals}.
+In the case that $\boldsymbol{\tilde{x}}$ is an $N$-dimensional random vector%
+\footnote{We write $\boldsymbol{\tilde{x}}$ because $\boldsymbol{X}$ would be a
+matrix.} characterized by
+the multidimensional mean $\boldsymbol{\mu} = E(\boldsymbol{\tilde{x}})$ and
+covariance matrix
+$\boldsymbol{\Sigma} =
+E((\boldsymbol{\tilde{x}}-\boldsymbol{\mu})(\boldsymbol{\tilde{x}}-\boldsymbol{\mu})^{T})$
+then the probability of obtaining a realization $\boldsymbol{x}$ is given by
+\[
+    ((2\pi)^{N}|\boldsymbol{\Sigma}|)^{-1/2}%
+    \exp(\D-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu})^{T}%
+    \boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}))
+\]
+$|\boldsymbol{\Sigma}|$ means the determinant of $\boldsymbol{\Sigma}$. Similar
+to above, when a random vector is distributed by a normal distribution, we write
+\[
+    \boldsymbol{\tilde{x}} \sim \mathcal{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})
+\]
+The normal distribution, also called the Gaussian distribution, arises
+often in statistics and signal processing due to the \textit{Central Limit
+Theorem} \cite{feller2008introduction} and its relationship to least-squares
+estimation \cite{kay1993fundamentals}.

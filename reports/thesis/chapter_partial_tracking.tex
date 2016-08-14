@@ -8,10 +8,10 @@ estimations to form a partial. We will call these local estimations ``analysis
 points'' or ``parameter sets''.
 
 This chapter presents an interpretation of the \textit{peak matching} procedure
-of McAulay and Quatieri\cite{mcaulay1986speech}, a classical approach to discovering partials. Our
+of McAulay and Quatieri \cite{mcaulay1986speech}, a classical approach to discovering partials. Our
 interpretation allows for the specification of an arbitrary cost function
 measuring the plausibility that a set of analysis points form the path of a
-partial. With this path interpretation, we present a technique that finds the
+partial. With this path interpretation, we were able to design a technique that finds the
 optimal set of paths under a constraint on the number of paths. The chapter
 concludes with an example of partial tracking on a synthetic signal.
 
@@ -61,9 +61,10 @@ and continue until $L$ pairs have been determined or the distances exceed some
 threshold $\Delta$. This is summarized in Algorithm~\ref{alg:mq_peak_match}
 
 \begin{algorithm}[H]
-    \caption{\label{alg:mq_peak_match}}
+    \caption{A generalized McAulay-Quatieri peak-matching algorithm.%
+    \label{alg:mq_peak_match}}
     \KwIn{the cost matrix $\boldsymbol{C}$}
-    \KwOut{$L$ index pairs $\Gamma_{i}$ and $\Gamma_{j}$}
+    \KwOut{$L$ pairs of indices $\Gamma_{i}$ and $\Gamma_{j}$}
     $\Gamma_{i} \leftarrow \varnothing$\;
     $\Gamma_{j} \leftarrow \varnothing$\;
     \For{$l \leftarrow 0$ to $L-1$}{
@@ -90,7 +91,7 @@ frames. The cost function could be extended to consider $K$ frames ($K$
 arbitrary) of parameter sets, constructing a $K$-dimensional tensor instead of a
 matrix, but assuming equal numbers of parameter sets in all frames, the search
 space would grow exponentially with $K$. Nevertheless, the method is simple to
-implement, computationally negligble when $K$ is small, and works well with a
+implement, computationally negligible when $K$ is small, and works well with a
 variety of signals encountered in audio \cite{mcaulay1986speech}
 \cite{smith1987parshl}.
 
@@ -299,7 +300,7 @@ the linear program is polynomial in the number of variables, see
 \cite{karmarkar1984new} for a proof and the demonstration of a fast algorithm
 for finding its solution. In practice, to extract paths from the solution, we do
 not test equality with $0$ or $1$ but rather test if the solution vector's
-values are greather than some threshold. This may mean that suboptimal solutions
+values are greater than some threshold. This may mean that suboptimal solutions
 may still be close enough. The tolerance of the solutions to suboptimality
 should be investigated, as if they are tolerant, fewer iterations of a
 barrier-based algorithm would be required to solve the problem. More information
@@ -314,20 +315,20 @@ complexity of our algorithm is different from that in this paper.  Assuming we
 use the algorithm in \cite{karmarkar1984new} to solve the LP, our program has a
 complexity of $O(M^{7}B^{2})$ where $M$ is the number of nodes (parameter sets)
 and $B$ is the number of bits used to represent each number in the input. The
-complexity of the algorithm in \cite{wolf1989finding} is equivalent to the
-Viterbi algorithm for finding the single best path through a trellis whose $h$th
-frame has $\binom{N_{h}}{L}\binom{N_{h+1}}{L}L!$ connections where $N_{h}$ and
-$N_{h+1}$ are the number of nodes in two consecutive frames of the original
+complexity of the algorithm by Wolf in \cite{wolf1989finding} is equivalent to
+the Viterbi algorithm for finding the single best path through a trellis whose
+$h$th frame has $\binom{N_{h}}{L}\binom{N_{h+1}}{L}L!$ connections where $N_{h}$
+and $N_{h+1}$ are the number of nodes in two consecutive frames of the original
 lattice. Therefore, assuming a constant number $N$ of nodes in each frame, its
 complexity is $O((\binom{N}{L}^{2}L!)^{2}T)$. If there are few nodes in each
-frame and a small number of paths are searched, the Viterbi formulation is
-superior as its complexity increases linearly with the number of frames in the
-lattice. On the other hand, if each frame has a large number of nodes or many
-paths are searched, the LP formulation is superior.  Informally we have found
-this to agree with reality --- both algorithms were tried when producing the
-figures in Section~\ref{sec:mq_lp_compare_chirp}.  Indeed the Viterbi
-formulation took prohibitvely long to compute when many paths were desired, as
-did the LP when many frames were considered.
+frame and a small number of paths are searched, Wolf's formulation is superior
+as its complexity increases linearly with the number of frames in the lattice.
+On the other hand, if each frame has a large number of nodes or many paths are
+searched, the LP formulation is superior.  Informally we have found this to
+agree with reality --- both algorithms were tried when producing the figures in
+Section~\ref{sec:mq_lp_compare_chirp}.  Indeed the Wolf formulation took
+prohibitvely long to compute when many paths were desired, as did the LP when
+many frames were considered.
 
 It should be noted that in the special case that only 1 shortest path is
 searched an algorithm exists that requires on the order of $N^{2}T$ calculations
@@ -387,8 +388,8 @@ Table~\ref{tab:ptrackexamplechirpparams}.
 \end{table}
 
 Two 1 second long signals are synthesized at a sampling rate of 16000 Hz, the
-first with chrips 0--2, the second with chirps 3--5. We add
-Gaussian distributed white noise at several SNR to evalute the technique in the
+first with chirps 0--2, the second with chirps 3--5. We add
+Gaussian distributed white noise at several SNR to evaluate the technique in the
 presence of noise.
 
 A spectrogram of each signal is computed with an analysis window length of 1024
@@ -404,10 +405,10 @@ We search for partial tracks using both the greedy and LP strategies. Both
 algorithms use the distance metric $\mathcal{D}_{\text{pr.}}$ between two parameters sets:
 \[
     \mathcal{D}_{\text{pr.}} \left( \theta_{i}^{h},
-    \theta_{j,}^{h+1} \right) = \left( \omega_{i}^{h} +
+    \theta_{j}^{h+1} \right) = \left( \omega_{i}^{h} +
     \psi_{i}^{h} H - \omega_{j}^{h+1} \right)
 \]
-Which is the error in predicting $j$th frequency in frame $h+1$ from the $i$th
+which is the error in predicting $j$th frequency in frame $h+1$ from the $i$th
 parameters in frame $h$. For the greedy method, the search for partial paths is
 restricted to one frame ahead like in \cite{mcaulay1986speech}. For the LP
 method, to keep the computation time reasonable, we search over 6 frames for 6
@@ -416,30 +417,17 @@ To maintain connected paths, the search on the next frames uses the end nodes of
 the last search as starting points. For both methods, the search is restricted
 to nodes between frequencies 250 to 2250 Hz.
 
-%\begin{figure}[!t]
-%    %\centering
-%    \centering
-%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
-%    \caption{ Line-segments representing the discovered partial paths.
-%    \label{plot:mq_lp_compare_chirp_hint20}}
-%\end{figure}
-%\begin{figure}[!t]
-%    %\centering
-%    \centering
-%    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
-%    \caption{ Line-segments representing the discovered partial paths.
-%    \label{plot:mq_lp_compare_chirp_hint15}}
-%\end{figure}
 Figures~\ref{plot:mq_lp_compare_chirp_10},~\ref{plot:mq_lp_compare_chirp_15}~and~\ref{plot:mq_lp_compare_chirp_20}
-show discovered partial trajectories for signals with SNR of 10, 15 and 20 dB
+show discovered partial trajectories for signals with a SNR of 10, 15 and 20 dB
 respectively. We can see that while the greedy method begins to perform poorly
-at an SNR of 15dB, the LP method still gives plausible partial trajectories for
+at a SNR of 15dB, the LP method still gives plausible partial trajectories for
 SNRs of 10 and 15 dB. At lower signal to noise ratios, the LP formulation gives
 some paths that do not correspond to an underlying partial. These could be filtered
 out by examining the cost of these paths and comparing them to the costs of the
 others. Those that deviate from a mean cost more than a certain amount should be
 rejected. This is the strategy used in Chapter~\ref{chap:decaysep} and
-illustrated in Figure~\ref{plot:acgtra3xylofs4costlengththresh}.
+illustrated in Figure~\ref{plot:acgtra3xylofs4costlengththresh}. In any case,
+the lower SNRs are relatively challenging for any partial tracking technique.
 
 But why did the LP discover a path not present in the underlying signal? This is
 due to the cost function, which finds a path with minimum prediction error in
@@ -455,7 +443,7 @@ can be found in \cite[ch.~6.3]{boyd2004convex}.
 \section{Conclusion}
 
 In this chapter we reformulated the classical greedy algorithm of McAulay and
-Quatieri and showed that can be seen as a greedy algorithm for finding the $L$
+Quatieri and showed that it can be seen as a greedy algorithm for finding the $L$
 shortest paths in a lattice. An algorithm was then proposed minimizing the sum
 of the $L$ paths, using a linear programming approach. It was shown on synthetic
 signals that the new approach finds plausible paths in lattices with a

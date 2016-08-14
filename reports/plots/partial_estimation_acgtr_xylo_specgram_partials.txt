@@ -1,1 +1,1 @@
-Spectrogram and partial trajectories of mixture%
+Spectrogram of mixture and partial trajectories%
