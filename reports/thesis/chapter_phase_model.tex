@@ -10,11 +10,11 @@ technique presented simply synthesizes signals of short duration using the
 estimated parameters and blends these segments together. We recognize that
 having multiple estimations of parameters at discrete times within the partial
 duration allow us to postulate, via interpolation, functions describing the
-partial of higher order than those whose parameters were estimated during
+partial of higher-order than those whose parameters were estimated during
 analysis. It is shown that this strategy is not always to our advantage ---
-interpolants of higher order than the underlying function can suffer from errors
+interpolants of higher-order than the underlying function can suffer from errors
 due to over-fitting. In the case of functions that are always better
-approximated by higher order polynomials, we will see that there is an advantage
+approximated by higher-order polynomials, we will see that there is an advantage
 to using high order interpolation. These cases are illustrated through the
 analysis and synthesis of synthetic signals.
 
@@ -83,7 +83,7 @@ to the underlying model.
 In the following, we investigate the synthesis quality of three interpolating
 analysis-synthesis systems. The qualifier ``interpolating'' is used because each
 system takes the multiple sets of estimated parameters of a smaller order model
-and interpolates them with a higher order model, which is then used for
+and interpolates them with a higher-order model, which is then used for
 synthesis. This is necessary because we only have values every $H$ samples from
 the analysis step but require a value for every sample value in the output. The
 systems will be denoted $\mathscr{S}_{p,q}$ where $p$ is the order of the
@@ -606,7 +606,7 @@ synthesized and then analysed frame-by-frame using the DDM to estimate their
 initial phase (amplitude), frequency (amplitude slope), and frequency-modulation
 (amplitude-modulation). Afterwards, the signals were resynthesized using the
 estimated parameters and compared to the original.  We are interested in seeing
-in what cases higher order phase and log-amplitude polynomials will improve the accuracy of
+in what cases higher-order phase and log-amplitude polynomials will improve the accuracy of
 synthesis.
 
 \subsection{Evaluation on a sinusoid of cubic phase and quartic log-amplitude \label{sec:evalcubicphase}}
@@ -693,7 +693,7 @@ synthesis.
     \label{plot:mqmoderrcompphaseerr}}
 \end{figure}
 
-The initial evaluation illustrates how higher order phase and log-amplitude polynomials will not
+The initial evaluation illustrates how higher-order phase and log-amplitude polynomials will not
 necessarily improve the quality of synthesis if the underlying phase and
 log-amplitude functions are
 a polynomial of lower order than the polynomials used for synthesis. As we will
@@ -730,7 +730,7 @@ In Figure~\ref{plot:mqmoderrorallspect} we see informally that the synthesis
 quality is good for all model orders even though the $\mathscr{S}_{1,3}$ model
 assumes linear phase in its analysis. Figure~\ref{plot:mqerrortruevsesterr}
 shows how accurately the different model orders reconstruct the original signal.
-We see that the $\mathscr{S}_{2,5}$, although of higher order, is not systemically a
+We see that the $\mathscr{S}_{2,5}$, although of higher-order, is not systemically a
 better interpolator of the true underlying signal.
 Figure~\ref{plot:mqmoderrcomplogampfunc} shows the estimated log-amplitude functions
 along with the original and Figure~\ref{plot:mqmoderrcomplogampfunc} their
@@ -775,7 +775,7 @@ true phase function.
 
 The previous evaluation of this analysis-synthesis system was on a sinusoid with
 small order polynomial phase and log-amplitude. In the cases where we observed overfitting, the
-polynomial used for synthesis was of higher order than the true underlying one
+polynomial used for synthesis was of higher-order than the true underlying one
 --- the interpolating polynomials were more times differentiable than the true
 polynomial. We propose evaluating the system on an infinitely differentiable and
 analytic phase function. The rationale behind this stems from the definition of
@@ -831,7 +831,7 @@ reconstruction. The same procedure as in
 Section~\ref{sec:evalcubicphase} is used to estimate the parameters of
 piece-wise interpolating phase polynomials. We can see in
 Figure~\ref{plot:mqexperrortruevsesterr} that the resynthesis accuracy is
-greater for higher order polynomials. Spectrograms of the original and estimated
+greater for higher-order polynomials. Spectrograms of the original and estimated
 signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
 
 \section{Conclusion}
@@ -875,5 +875,5 @@ increasing the order of the interpolating polynomials. Many models of musical
 gestures involve such functions, apart from the portamento gesture modeled by an
 exponential phase function, vibrato can be modeled as a sinusoid with sinusoidal
 phase \cite{maher1990investigation}. The DDM-based analysis system combined with
-the higher order polynomial phase and log-amplitude synthesis system presented here
+the higher-order polynomial phase and log-amplitude synthesis system presented here
 allows for accurate modeling of these gestures.
