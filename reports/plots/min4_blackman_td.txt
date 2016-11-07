@@ -1,1 +1,1 @@
-Minimum 4-Term Blackman-Harris: Time Domain%
+Minimum 4-Term Blackman-Harris: Time-domain%

@@ -1,1 +1,1 @@
-$\mathscr{T}_{3,4}$ vs. $\mathscr{S}_{1,3}$, $\mathscr{S}_{2,3}$ and $\mathscr{S}_{2,5}$: upper error bound%
+$\mathscr{T}_{3,4}$ vs. $\mathscr{S}_{1,3}$, $\mathscr{S}_{2,3}$ and $\mathscr{S}_{2,5}$: Upper error bound%

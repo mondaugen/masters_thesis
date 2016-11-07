@@ -1,1 +1,1 @@
-$\mathscr{T}_{\text{exp.}}$ vs. $\mathscr{S}_{1,3}$, $\mathscr{S}_{2,3}$ and $\mathscr{S}_{2,5}$: upper error bound%
+$\mathscr{T}_{\text{exp.}}$ vs. $\mathscr{S}_{1,3}$, $\mathscr{S}_{2,3}$ and $\mathscr{S}_{2,5}$: Upper error bound%

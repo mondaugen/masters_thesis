@@ -1,1 +1,1 @@
-$\mathcal{C}^{1}$ 4-Term Blackman-Harris: Time Domain%
+$\mathcal{C}^{1}$ 4-Term Blackman-Harris: Time-domain%

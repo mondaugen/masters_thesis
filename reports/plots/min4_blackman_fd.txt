@@ -1,1 +1,1 @@
-Minimum 4-Term Blackman-Harris: Frequency Domain%
+Minimum 4-Term Blackman-Harris: Frequency-domain%
