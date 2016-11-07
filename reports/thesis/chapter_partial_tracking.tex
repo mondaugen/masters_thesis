@@ -145,7 +145,7 @@ algorithm similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a
 tensor of distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry
 $C_{i,j,h}$ represents the cost of travelling on the path connecting the $i$th
 node in layer 0, the $j$th node in layer 1 and the $h$th node in layer 2. This
-cost is the sum of the euclidean distances giving the lengths of the
+cost is the sum of the Euclidean distances giving the lengths of the
 connections. This is the greedy method of searching for the best paths whose
 optimality criterion is to find the set of best paths containing the absolute
 best path. We see in Figure~\ref{plot:simple_graph_greedy_paths} that the
