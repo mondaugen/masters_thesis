@@ -23,12 +23,12 @@ but that is everywhere differentiable.
 
 \section{Time-Frequency Representations \label{sec:timefreqrep}}
 
-As most musical instruments are resonating media and excited resonating media
+As most musical instruments are resonating media, and excited resonating media
 are well described as linear time-invariant (LTI) auto-regressive (AR)
-structures, popular models of musical audio are some variation of this
+structures, many popular models of musical audio are some variation of this
 description \cite{fletcher2012physics}. Strictly speaking, incorporating
-moving-average (MA) structures into a model of musical signals can improve its
-quality, but is more difficultly cast in the sum-of-sinusoids model adopted
+moving-average (MA) structures into a model of musical signals could improve its
+quality, but such a model would preclude the sum-of-sinusoids model adopted
 later in this thesis.
 
 An LTI auto-regressive structure is a signal that can be described using the
@@ -43,7 +43,7 @@ input. $K$ is the order of the model. Both are general functions of time which,
 in the case of properly sampled digital audio, can be considered at discrete
 times $n \in \mathbb{Z}$ without any loss of information
 \cite[ch.~2]{crochiere1983multi}.  $a_k,b_0 \in \mathbb{C}$ and are constants.
-Casually\footnote{No pun intended.} you can think of the output of the system at
+Casually you can think of the output of the system at
 time $n$ as being a linear combination of past outputs, plus some of the scaled
 input.
 
@@ -86,14 +86,14 @@ for more information.
 
 An alternative method for determining the frequencies and amplitudes of
 sinusoids in mixture is to take the inner product of the signal with a complex
-exponential of known frequency and see what you get
+exponential of known frequency
 
 \[
     X(\omega) = \sum_{n=-\infty}^{\infty} x(n) \exp(-j \omega n)
 \]
 
 The function $X(\omega)$ will be large if $x(n)$ contains a complex exponential of
-frequency $\omega$ and small if it doesn't, effectively indicating which
+frequency $\omega$ and small if it does not, effectively indicating which
 sinusoidal functions are present in the signal. This transformation of a signal
 as a function of time $n$ into one as a function of frequency $\omega$ is known
 as the \textit{Discrete-time Fourier Transform} (DTFT). 
@@ -132,7 +132,7 @@ If the Fourier transform of the window function is not purely real its imaginary
 part will offset the phase of this sinusoid. It is usually simpler to avoid this
 complication. The Fourier transform of a real even function
 \[
-    f(n) = f(-n), f(n) \in \mathbb{R} \Rightarrow f\text{ is real and even.}
+    f(n) = f(-n), f(n) \in \mathbb{R}
 \]
 is real, so we choose windows with this property. See
 \cite[p.~52]{harris1978use} for a concrete illustration of this.
