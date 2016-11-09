@@ -9,10 +9,10 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces \input {plots/small_graph_ex.txt}.}}{32}{figure.caption.18}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces \input {plots/small_graph_ex_greedy_paths.txt}.}}{33}{figure.caption.19}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces \input {plots/small_graph_ex_lp_paths.txt}.}}{36}{figure.caption.20}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces \input {plots/mq_lp_compare_chirp_20.txt}.}}{37}{figure.caption.22}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces \input {plots/mq_lp_compare_chirp_15.txt}.}}{38}{figure.caption.23}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces \input {plots/mq_lp_compare_chirp_10.txt}.}}{39}{figure.caption.24}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces \input {plots/small_graph_ex_lp_paths.txt}.}}{35}{figure.caption.20}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces \input {plots/mq_lp_compare_chirp_20.txt}.}}{38}{figure.caption.23}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces \input {plots/mq_lp_compare_chirp_15.txt}.}}{39}{figure.caption.24}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces \input {plots/mq_lp_compare_chirp_10.txt}.}}{40}{figure.caption.25}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {5.1}{\ignorespaces \input {plots/mq_mod_err_comp_all_spect.txt}.}}{54}{figure.caption.34}
 \contentsline {figure}{\numberline {5.2}{\ignorespaces \input {plots/mq_mod_err_comp_true_vs_est_err.txt}.}}{55}{figure.caption.35}

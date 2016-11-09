@@ -42,23 +42,22 @@ other paths may be compromised under this criterion.
 In \cite[p.~748]{mcaulay1986speech} the peak matching algorithm is described in
 a number of steps; we summarize them here in a way comparable with the linear
 programming formulation to be presented in the sequel. In that paper, the
-parameters are the instantaneous amplitude, phase and frequency and are indexed
-by frequency as $\omega_0^{h}, \dotsc, \omega_{M-1}^{h}$ and $\omega_0^{h+1},
-\dotsc, \omega_{N-1}^{h+1}$ but we will allow for arbitrary parameter sets.
-Define a distance function $\mathcal{D} \left( \theta_{i},\theta_{j} \right)$
-that computes the similarity between $K=2$ sets of parameters. We will now
-consider a method that finds $L$ pairs of parameters that are closest.
+parameters of adjacent frames $h$ and $h+1$ are the instantaneous amplitude,
+phase, and frequency and are indexed by frequency as $\omega_0^{h}, \dotsc,
+\omega_{M-1}^{h}$ and $\omega_0^{h+1}, \dotsc, \omega_{N-1}^{h+1}$ but we will
+allow for arbitrary parameter sets.  Define a distance function $\mathcal{D}
+\left( \theta_{i},\theta_{j} \right)$ that computes the similarity between $K=2$
+sets of parameters. We will now consider a method that finds $L$ pairs of
+parameters that are closest.
 
-We compute the cost matrix $\boldsymbol{C}$
-\[
-    \boldsymbol{C} = \theta^{h} \otimes_{\mathcal{D}} \theta^{h+1}
-\]
-so that the $i$th row and $j$th column contain $C_{i,j} = \mathcal{D} \left(
-\theta_{i}^{h},\theta_{j}^{h+1} \right)$.  For each $l \in \left[0 \dotsc L-1
-\right]$, find the indices $i_{l}$ and $j_{l}$ corresponding to the shortest
+We compute the cost matrix $\boldsymbol{C}$ \[ \boldsymbol{C} = \theta^{h}
+\otimes_{\mathcal{D}} \theta^{h+1} \] so that the $i$th row and $j$th column
+contain $C_{i,j} = \mathcal{D} \left( \theta_{i}^{h},\theta_{j}^{h+1} \right)$.
+For each $l \in \left[0 \dotsc L-1 \right]$, find the indices $i_{l}$ and
+$j_{l}$ corresponding to the shortest
 distance, then remove the $i_{l}$th row and $j_{l}$th column from consideration
 and continue until $L$ pairs have been determined or the distances exceed some
-threshold $\Delta$. This is summarized in Algorithm~\ref{alg:mq_peak_match}
+threshold $\Delta$. This is summarized in Algorithms~\ref{alg:mq_peak_match}
 
 \iftoggle{formfudge}{%
     \medskip
@@ -241,8 +240,15 @@ $\boldsymbol{a}^{b}$ and $\boldsymbol{a}^{c}$ constraints are derived from
 $\boldsymbol{a}^{p}$ and $\boldsymbol{a}^{s}$, so only the latter need to be
 stored.
 
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex_lp_paths.eps}
+    \CaptionWithTitle{%
+        \input{plots/small_graph_ex_lp_paths.txt}%
+    }{\label{plot:simple_graph_lp_paths}}
+\end{figure}
+
 The complete \textit{linear program (LP)} solving the $L$ shortest paths problem is then
-\begin{samepage}
 \[
     \min_{\boldsymbol{x}} \left\langle \boldsymbol{c}, \boldsymbol{x} \right\rangle
 \]
@@ -270,26 +276,18 @@ subject to
 \[
     \boldsymbol{0} \leq \boldsymbol{x} \leq \boldsymbol{1}
 \]
-\end{samepage}
 where $\boldsymbol{A}_{\text{s}}$ is the matrix with
 $\boldsymbol{a}^{\text{s},m}$ as its rows for $m \in [0 \dotsc M-1]$ and
 $\boldsymbol{A}_{\text{p}}$ is the matrix with $\boldsymbol{a}^{\text{p},m}$ as
 its rows, etc.
 
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/small_graph_ex_lp_paths.eps}
-    \CaptionWithTitle{%
-        \input{plots/small_graph_ex_lp_paths.txt}%
-    }{\label{plot:simple_graph_lp_paths}}
-\end{figure}
-
 The solution of the two best paths using the LP formulation
 is shown in Figure~\ref{plot:simple_graph_lp_paths} and a comparison of the
 total costs is shown in Table~\ref{tab:greedy_lp_cost_compare}
 
-\begin{table}
-    \caption{\label{tab:greedy_lp_cost_compare} Comparison of total costs}
+\begin{table}[!b]
+    \caption{\label{tab:greedy_lp_cost_compare} Comparison of total costs in
+    Figure~\ref{plot:simple_graph_lp_paths}}
     \begin{center}
         \begin{tabular}{c c}
             Greedy & LP \\
@@ -319,7 +317,7 @@ on linear programming and optimization in general can be found in
 
 The LP formulation of the $L$-best paths problem gives results equivalent to the
 solution to the $L$-best paths problem proposed in \cite{wolf1989finding}. The
-complexity of our algorithm is different from that in this paper.  Assuming we
+complexity of our algorithm is different.  Assuming we
 use the algorithm in \cite{karmarkar1984new} to solve the LP, our program has a
 complexity of $O(M^{7}B^{2})$ where $M$ is the number of nodes (parameter sets)
 and $B$ is the number of bits used to represent each number in the input. The
@@ -346,34 +344,6 @@ this algorithm is known as the Viterbi algorithm \cite{forney1973viterbi}.
 
 \section{Partial paths on an example signal\label{sec:mq_lp_compare_chirp}}
 
-\begin{figure}[!t]
-    %\centering
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_lp_compare_chirp_20.txt}%
-    }{ Line-segments representing the discovered partial paths.
-    \label{plot:mq_lp_compare_chirp_20}}
-\end{figure}
-\begin{figure}[!t]
-    %\centering
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_lp_compare_chirp_15.txt}%
-    }{ Line-segments representing the discovered partial paths.
-    \label{plot:mq_lp_compare_chirp_15}}
-\end{figure}
-\begin{figure}[!t]
-    %\centering
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_10.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_lp_compare_chirp_10.txt}%
-    }{ Line-segments representing the discovered partial paths.
-    \label{plot:mq_lp_compare_chirp_10}}
-\end{figure}
-
 We compare the greedy and LP based methods for peak matching on a synthetic
 signal. The signal is composed of $K=6$ chirps of constant amplitude, the $k$th
 chirp $s$ at sample $n$ described by the equation
@@ -383,7 +353,8 @@ chirp $s$ at sample $n$ described by the equation
 \]
 The parameters for the 6 chirps are presented in
 Table~\ref{tab:ptrackexamplechirpparams}.
-\begin{table}
+
+\begin{table}[!b]
     \caption{Parameters of $k$th chirp. $f_{0}$ and $f_{1}$ are the initial and
     final frequency of the chirp in Hz. \label{tab:ptrackexamplechirpparams}}
     \begin{center}
@@ -399,6 +370,37 @@ Two 1 second long signals are synthesized at a sampling rate of 16000 Hz, the
 first with chirps 0--2, the second with chirps 3--5. We add
 Gaussian distributed white noise at several SNR to evaluate the technique in the
 presence of noise.
+
+\begin{figure}[!t]
+    %\centering
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_20.txt}%
+    }{ Line-segments representing the discovered partial paths. See
+        Table~\ref{tab:ptrackexamplechirpparams} for the chirp parameters.
+    \label{plot:mq_lp_compare_chirp_20}}
+\end{figure}
+\begin{figure}[!t]
+    %\centering
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_15.txt}%
+    }{ Line-segments representing the discovered partial paths. See
+        Table~\ref{tab:ptrackexamplechirpparams} for the chirp parameters.
+    \label{plot:mq_lp_compare_chirp_15}}
+\end{figure}
+\begin{figure}[!t]
+    %\centering
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_10.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_lp_compare_chirp_10.txt}%
+    }{ Line-segments representing the discovered partial paths. See
+        Table~\ref{tab:ptrackexamplechirpparams} for the chirp parameters.
+    \label{plot:mq_lp_compare_chirp_10}}
+\end{figure}
 
 A spectrogram of each signal is computed with an analysis window length of 1024
 samples and a hop-size $H$ of 256 samples. Local maxima are searched in 150 Hz
@@ -425,9 +427,11 @@ To maintain connected paths, the search on the next frames uses the end nodes of
 the last search as starting points. For both methods, the search is restricted
 to nodes between frequencies 250 to 2250 Hz.
 
-Figures~\ref{plot:mq_lp_compare_chirp_10},~\ref{plot:mq_lp_compare_chirp_15}~and~\ref{plot:mq_lp_compare_chirp_20}
-show discovered partial trajectories for signals with a SNR of 10, 15 and 20 dB
-respectively. We can see that while the greedy method begins to perform poorly
+Figures~\ref{plot:mq_lp_compare_chirp_20},~\ref{plot:mq_lp_compare_chirp_15},%
+~and~\ref{plot:mq_lp_compare_chirp_10}
+show discovered partial trajectories for signals with a SNR of 20, 15, and 10
+dB,
+respectively. It is seen that while the greedy method begins to perform poorly
 at a SNR of 15dB, the LP method still gives plausible partial trajectories for
 SNRs of 10 and 15 dB. At lower SNRs, the LP formulation gives
 some paths that do not correspond to an underlying partial. These could be filtered
