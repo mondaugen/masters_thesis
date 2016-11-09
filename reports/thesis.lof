@@ -1,11 +1,11 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces \input {plots/min4_blackman_td.txt}.}}{22}{figure.caption.11}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces \input {plots/min4_blackman_fd.txt}.}}{23}{figure.caption.12}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces \input {plots/c1_blackman_td.txt}.}}{24}{figure.caption.13}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces \input {plots/c1_blackman_fd.txt}.}}{25}{figure.caption.14}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces \input {plots/c1_vs_min_blackman_closeup.txt}.}}{26}{figure.caption.15}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces \input {plots/min4_blackman_td.txt}.}}{23}{figure.caption.11}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces \input {plots/min4_blackman_fd.txt}.}}{24}{figure.caption.12}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces \input {plots/c1_vs_min_blackman_closeup.txt}.}}{25}{figure.caption.13}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces \input {plots/c1_blackman_td.txt}.}}{26}{figure.caption.14}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces \input {plots/c1_blackman_fd.txt}.}}{27}{figure.caption.15}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces \input {plots/small_graph_ex.txt}.}}{32}{figure.caption.18}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces \input {plots/small_graph_ex_greedy_paths.txt}.}}{33}{figure.caption.19}
