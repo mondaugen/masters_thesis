@@ -161,8 +161,8 @@ functions.
 acoustic signals are quasi-harmonic \cite{fletcher2012physics}, meaning that
 they consist of a sum of sinusoids whose frequencies are roughly integer
 multiples of a fundamental frequency. For these kinds of signals, most of the
-energy can be attributed to sinusoids and so, if we neglect the noisy part of
-the signal, the signal can be described by a small number of sinusoids with
+energy can be attributed to sinusoids and so
+the signal can be described by a small number $P$ of sinusoids with
 slowly varying amplitude and phase, plus some noise. The model is
 
 \begin{equation}
@@ -170,14 +170,16 @@ slowly varying amplitude and phase, plus some noise. The model is
     x(n)=\sum_{p=1}^{P} A_p(n) \exp(j \phi_p(n)) + \varepsilon
 \end{equation}
 
-where $\varepsilon \sim \mathcal{N}(0,\sigma^{2})$, $\sigma^{2}$ quantifies the power of
-the noise, and $A_{p}(n),\phi_{p}(n) \in \mathbb{R}$ are functions of amplitude and
-phase respectively. In the following, we consider equivalent sinusoidal mixtures
-of complex-valued polynomial phase and log-amplitude exponentials
+where $\varepsilon \sim \mathcal{N}(0,\sigma^{2})$, $\sigma^{2}$ quantifies the
+power of the noise, and $A_{p}(n),\phi_{p}(n) \in \mathbb{R}$ are the functions of
+amplitude and phase respectively for the $p$th sinusoid. In the following, we
+consider equivalent sinusoidal mixtures of complex-valued polynomial phase and
+log-amplitude exponentials
 \[
     x(n)=\sum_{p=1}^{P} \exp(\mathcal{P}_p(n)) + \varepsilon
 \]
-where
+where $\mathcal{P}_p$ is the complex valued polynomial of order $Q$ describing
+the argument of the $p$th sinusoid, i.e.,
 \[
     \mathcal{P}_p(n) = \sum_{q=0}^{Q} c_q n^{q}
 \]
