@@ -197,12 +197,14 @@ with improved synthesis quality.
 
 \section{Polynomial phase parameter estimation}
 \label{sec:ddm_description}
-More recently a set of techniques have been developed that use some combination
-of derivatives of the analysis window $w$ or the signal $x$ to estimate the
-polynomial coefficients directly \cite{hamilton2011non}. For this thesis we will
-only consider a technique that does not estimate derivatives of the signal and
-only requires a once-differentiable analysis window as it is relatively easy to
-implement and suits our purposes.
+Assuming this sinusoidal model, how can we then
+estimate the parameters describing a signal of interest? Recently a set of
+techniques have been developed that use some combination of derivatives of the
+analysis window $w$ or the signal $x$ to estimate the polynomial coefficients
+directly \cite{hamilton2011non}. For this thesis we will only consider a
+technique that does not estimate derivatives of the signal and only requires a
+once-differentiable analysis window as it is relatively easy to implement and
+suits our purposes.
 
 The following is adapted from \cite{betser2009sinusoidal}. Consider the inner
 product of the signal $x(n) = \exp(\mathcal{P}_p(n)) $ and a
