@@ -28,25 +28,29 @@ clustering algorithm and we evaluate the results. A summary follows:
         bin with too few other values are discarded to remove spurious data
         points.
     \item
-        Initial means and standard deviations for the Gaussian mixture models
+        Initial means and standard deviations for the GMMs (see
+        Appendix~\ref{chap:gmm})
         are made by dividing the histogram into equal parts by area and choosing
         the centres of these parts.
     \item
-        The EM algorithm for Gaussian mixture models is carried out to classify
-        the sources.
+        The EM algorithm (see Appendix~\ref{chap:gmm}) for GMMs is carried out to
+        classify the sources.
 \end{itemize}
 \section{Evaluation}
 The algorithm is run on a typical source separation problem to evaluate its
 plausibility. Two sources are synthesized, each exhibiting both frequency- and
 amplitude-modulation. The amplitude and frequency of the frequency-modulation
-are chosen to be realistic with respect to acoustic sounds --- $\pm12.5$ cents
+are chosen to be realistic with respect to musical instrument sounds ---
+$\pm12.5$ cents
 surrounding the fundamental at around $6$ Hz (see
 Table~\ref{tab:synthparamamfmsep}), similar to the measurements obtained in
 \cite{mellody2000time} for violin vibrato. Because musical sounds exhibit a wide
-variety of amplitude envelopes, one was chosen that seemed realistic, but that
-was not based on any particular instrument or recording. For this
+variety of amplitude envelopes, one is chosen that is realistic, but that
+is not based on any particular instrument or recording. For this
 process all that is important to carry out source separation is the relative
-amplitude modulation of the two sources. 
+amplitude-modulation of the two sources --- a reasonable assumption for
+recordings of a mixture of two different instruments or two performers of the same
+instrument.
 
 To have control over the frequency- and amplitude-modulation separately, we
 compute the parameters of a function describing the amplitude envelope, and one
@@ -54,28 +58,32 @@ describing oscillatory part. The parameters are combined when carrying out the
 classification.
 
 % Plots produced in this section with signal_modeling/test/plot_all_am_fm_sep.sh
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_data}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_data}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_orig_data_plot_title.txt}%
     }{Line-segments describing the frequency and frequency modulation
-    of both sources with no added spurious parameters.\label{plot:hsrp_test_7_multi_orig_data}}
+    of both sources with no added spurious parameters. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}. \label{plot:hsrp_test_7_multi_orig_data}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_spur_data}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_orig_spur_data}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_orig_spur_data_plot_title.txt}%
         }{Line-segments describing the frequency and frequency modulation
-        of the original data and the spurious data.
+        of the original data and the spurious data. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_orig_spur_data}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_class_pcs}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_class_pcs}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_class_pcs_plot_title.txt}%
         }{The PCs for each theoretical analysis time-point. $\mu_{i}^{0}$ and
@@ -83,87 +91,103 @@ classification.
     the initial mean and standard deviation guesses for the EM algorithm fitting
     the GMM parameters to the $i$th source. These values are also visible on the
     plot. The spurious points rejected using the process described in
-    Section~\ref{sec:amfmseppreparecluster} are included for comparison.
+    Section~\ref{sec:amfmseppreparecluster} are included for comparison. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_class_pcs}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_est}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_est}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_source_1_est_plot_title.txt}%
         }{Line-segments classified as belonging to Source 1. The
         classification is done on each frame so classifications in consecutive
         frames may not belong to the same true source. This is because the
         ordering of the clusters in each frame in
-        Figure~\ref{plot:hsrp_test_7_multi_class_pcs} is not predictable.
+        Figure~\ref{plot:hsrp_test_7_multi_class_pcs} is not predictable. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_source_1_est}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_est}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_est}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_source_2_est_plot_title.txt}%
         }{Line-segments classified as belonging to Source 2. See
         Figure~\ref{plot:hsrp_test_7_multi_source_1_est} for more
-        information.
+        information. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_source_2_est}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_af}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_af}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_af_plot_title.txt}%
         }{ Line-segments representing the instantaneous amplitude and amplitude slope at
-        analysis time points. 
+        analysis time points. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_af}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_amp}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_amp}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_source_2_smooth_amp_plot_title.txt}%
         }{Line-segments classified as belonging to source 2 after smoothing
-        in amplitude.
+        in amplitude. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_source_2_smooth_amp}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_amp}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_amp}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_source_1_smooth_amp_plot_title.txt}%
         }{Line-segments classified as belonging to source 1 after smoothing
-        in amplitude using $\mathcal{D}_{a}$.
+        in amplitude using $\mathcal{D}_{a}$. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_source_1_smooth_amp}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_freq}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_2_smooth_freq}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_source_2_smooth_freq_plot_title.txt}%
         }{Line-segments classified as belonging to source 2 after smoothing
-        in frequency using $\mathcal{D}_{f}$.
+        in frequency using $\mathcal{D}_{f}$. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_source_2_smooth_freq}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_freq}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_source_1_smooth_freq}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_source_1_smooth_freq_plot_title.txt}%
         }{Line-segments classified as belonging to source 1 after smoothing
-        in frequency.
+        in frequency. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_source_1_smooth_freq}}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{hsrp_test_7_multi_smooth_freq_amp_sol}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{hsrp_test_7_multi_smooth_freq_amp_sol}.eps}
     \CaptionWithTitle{%
         \input{plots/hsrp_test_7_multi_smooth_freq_amp_sol_plot_title.txt}%
         }{The points originally classified as source 1 are marked with
@@ -171,7 +195,9 @@ classification.
         in black or grey connect the points for source 1 or source 2
         respectively with optimal smoothness. Plots indicated with an \textit{a}
         are the paths with frequency smoothness as the criterion and those
-        indicated with \textit{b} are with amplitude smoothness as the criterion.
+        indicated with \textit{b} are with amplitude smoothness as the criterion. The amount of noise added
+    and the corresponding plot title number are summarized in
+Table~\ref{tab:amfmexpplotkey}.
     \label{plot:hsrp_test_7_multi_smooth_freq_amp_sol}}
 \end{figure}
 
@@ -267,9 +293,9 @@ the time corresponding to $n = 0$ is made to be the centre of the window,
 therefore, $t$ is the time at the centre of the window and $N_{w}$, in samples,
 is the length of the middle (usually non-zero) portion of the window.
 
-\iftoggle{formfudge}{%
-    \newpage%
-}
+%\iftoggle{formfudge}{%
+%    \newpage%
+%}
 
 \subsection{The amplitude signal}
 
@@ -341,6 +367,7 @@ argument parameters (those multiplied by $j$ in Equation~\eqref{eq:rm_model})
     A_{f,p} f_{f,p}  \cos \left( 2 \pi f_{f,p} t +
     \phi_{0,f,p} \right) \mathcal{K}_{B_{p}} \left( k \right) 
 \]
+
 To simulate the noise that would be present in an estimation of the signal
 parameters from an arbitrary signal, we create noise corrupted values by
 substituting the random variables:
@@ -392,7 +419,6 @@ times $t_{n} = 0,\frac{H}{f_{s}},\frac{2 H}{f_{s}},\ldots,\frac{\left\lfloor
 \end{table}
 
 \section{Computation of principal components}
-
 At each time $t$ we have $L$ data-points. As the source of each data-point is
 now unknown, we replace the $k$ and $p$ indices with index $l$. We only consider
 the amplitude and frequency modulation. According to our model, the frequency
@@ -518,9 +544,9 @@ samples.
     amplitude modulation. \label{tab:synthparamamfmsep}}
 \end{table}
 
-%\begin{figure}[!t]
+%\begin{figure}[t]
 %    \centering
-%\includegraphics[width=\figwidthscale\textwidth]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
+%\includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{/home/sandman/Documents/development/masters_thesis/experiment_1/plots/time_frequency_spurious.ps}
 %\end{figure}
 \section{Results \label{sec:amfmsepresults}}
 
@@ -546,7 +572,6 @@ algorithm, Figure~\ref{plot:hsrp_test_7_multi_source_1_est} shows the initial
 classifications for source 1 and
 Figure~\ref{plot:hsrp_test_7_multi_source_2_est} the initial classifications for
 source 2 before the smoothing step.
-
 
 \begin{table}
     \begin{center}
@@ -674,9 +699,9 @@ PLCA but can also resolve the phases of the sinusoids which are discarded in
 most NMF or PLCA implementations\footnote{See \cite{bronson2015exploration} for
 an approach that does take into consideration the phase information in the
 spectrogram.}.
-\begin{figure}[!t]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/{ad_hoc_cluster_part_ex}.eps}
+    \includegraphics[width=\chapamfmsepfigwidthscale\textwidth]{plots/{ad_hoc_cluster_part_ex}.eps}
     \CaptionWithTitle{%
         \input{plots/ad_hoc_cluster_part_ex_plot_title.txt}%
         }{The data points are convolved with some smoothing kernels giving a

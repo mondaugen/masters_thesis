@@ -1,5 +1,7 @@
 \documentclass[openright,twoside,letterpaper,12pt]{report}
 \usepackage[utf8]{inputenc}
+%\usepackage{parskip}
+\usepackage{titlesec}
 \usepackage{McGillLogo}
 \usepackage[fancyhdr]{McECEThesis}
 \usepackage{amsmath}
@@ -17,9 +19,9 @@
 \usepackage[inline]{enumitem}
 \usepackage{etoolbox}
 \usepackage{url}
-\usepackage{titlesec}
 % Cheating
 \usepackage[all]{nowidow}
+\usepackage{float}
 
 % Optionally use formatting 'fudges'
 \newtoggle{formfudge}
@@ -59,9 +61,12 @@
 \setlength{\textfloatsep}{0.5cm}
 
 % adjust spacing around paragraphs
-\titlespacing\section{0pt}{6pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
-\titlespacing\subsection{0pt}{6pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
-\titlespacing\subsubsection{0pt}{6pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+\titlespacing*{\section}{0pt}{6pt plus 1pt minus 1pt}{6pt plus 1pt minus 1pt}
+\titlespacing*{\subsection}{0pt}{6pt plus 1pt minus 1pt}{6pt plus 1pt minus 1pt}
+\titlespacing*{\subsubsection}{0pt}{6pt plus 1pt minus 1pt}{6pt plus 1pt minus 1pt}
+
+% adjust size of figures in chapter 6
+\def\chapamfmsepfigwidthscale{0.9}
 
 %\makeatletter
 %\renewcommand{\@algocf@capt@plain}{above}% formerly {bottom}
