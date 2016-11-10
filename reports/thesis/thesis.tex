@@ -17,6 +17,9 @@
 \usepackage[inline]{enumitem}
 \usepackage{etoolbox}
 \usepackage{url}
+\usepackage{titlesec}
+% Cheating
+\usepackage[all]{nowidow}
 
 % Optionally use formatting 'fudges'
 \newtoggle{formfudge}
@@ -54,6 +57,11 @@
 
 % adjust spacing around figures
 \setlength{\textfloatsep}{0.5cm}
+
+% adjust spacing around paragraphs
+\titlespacing\section{0pt}{6pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{6pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{6pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
 
 %\makeatletter
 %\renewcommand{\@algocf@capt@plain}{above}% formerly {bottom}

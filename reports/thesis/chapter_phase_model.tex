@@ -610,24 +610,6 @@ in what cases higher-order phase and log-amplitude polynomials will improve the 
 synthesis.
 
 \subsection{Evaluation on a sinusoid of cubic phase and quartic log-amplitude \label{sec:evalcubicphase}}
-\begin{table}
-    \caption{\label{tab:cubicsinphparams}}
-    \begin{center}
-        \begin{tabular}{l|c c c}
-            Time (seconds) & 0 & 0.25 & 0.5 \\
-            Frequency (Hz) & 100 & 200 & 100
-        \end{tabular}
-    \end{center}
-\end{table}
-\begin{table}
-    \caption{\label{tab:quarticsinampparams}}
-    \begin{center}
-        \begin{tabular}{l|c c c c}
-            Time (seconds) & 0 & 0.1 & 0.3 & 0.5 \\
-            Amplitude (dB) & -10 & 0 & 0 & -10
-        \end{tabular}
-    \end{center}
-\end{table}
 
 % Plots of this section produced with
 % mq_cubic_test_less_fm_{1..3}.py
@@ -707,6 +689,16 @@ therefore its phase function can be interpolated by a cubic polynomial
 the frequency break-points are summarized in Table~\ref{tab:cubicsinphparams}. The
 initial phase is $0$ radians.
 
+\begin{table}[!b]
+    \caption{\label{tab:cubicsinphparams}}
+    \begin{center}
+        \begin{tabular}{l|c c c}
+            Time (seconds) & 0 & 0.25 & 0.5 \\
+            Frequency (Hz) & 100 & 200 & 100
+        \end{tabular}
+    \end{center}
+\end{table}
+
 A quartic polynomial is used for the log-amplitude function
 \[
     x_{\mu}(n) = \exp \left(h_4 n^{4} + h_3 n^{3} + h_2 n^{2} + h_1 n + h_0 \right)
@@ -714,6 +706,16 @@ A quartic polynomial is used for the log-amplitude function
 and its amplitude break-points are summarized in
 Table~\ref{tab:quarticsinampparams}. This will be referred to as the
 $\mathscr{T}_{3,4}$ signal.
+
+\begin{table}[!b]
+    \caption{\label{tab:quarticsinampparams}}
+    \begin{center}
+        \begin{tabular}{l|c c c c}
+            Time (seconds) & 0 & 0.1 & 0.3 & 0.5 \\
+            Amplitude (dB) & -10 & 0 & 0 & -10
+        \end{tabular}
+    \end{center}
+\end{table}
 
 These polynomials are chosen because their orders are greater than or equal to
 the order of the synthesis model in the $\mathscr{S}_{2,3}$ system and less than
@@ -748,7 +750,6 @@ true phase function.
 %\end{figure}
 
 \subsection{Evaluation on sinusoid of exponential phase \label{sec:evalexpphase}}
-
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_all_spect.eps}
@@ -759,7 +760,6 @@ true phase function.
         exponential phase signal.
     \label{plot:mqexperrorallspect}}
 \end{figure}
-
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_exp_err_comp_true_vs_est_err.eps}
@@ -772,7 +772,6 @@ true phase function.
         error data.
     \label{plot:mqexperrortruevsesterr}}
 \end{figure}
-
 The previous evaluation of this analysis-synthesis system was on a sinusoid with
 small-order polynomial phase and log-amplitude. In the cases where we observed overfitting, the
 polynomial used for synthesis was of higher-order than the true underlying one
@@ -838,6 +837,17 @@ signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
 
 \subsection{Polynomial phase and log-amplitude function}
 
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
+    \CaptionWithTitle{%
+        \input{plots/mq_mod_quintic_poly_eval_err.txt}%
+    }{The error bound in evaluating the quintic log-amplitude and phase
+        polynomials of $\mathscr{S}_{2,5}$ using Horner's method. This plot was produced by plotting only
+    the local maxima of the error bound data in order to reduce the plot's
+    range.\label{plot:mqmodquinticpolyevalerr}}
+\end{figure}
+
 Out of the three proposed methods it appears that the modified cubic
 interpolation method works superiorly for the signal model considered. We observe
 overfitting by the higher-order quintic model in
@@ -853,17 +863,6 @@ accuracy when evaluating the quintic polynomials has been ruled out.  We
 evaluated these polynomials using an implementation of Horner's method that
 keeps track of the error bound \cite[p.~95]{higham2002accuracy}: the errors are
 negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/mq_mod_quintic_poly_eval_err.eps}
-    \CaptionWithTitle{%
-        \input{plots/mq_mod_quintic_poly_eval_err.txt}%
-    }{The error bound in evaluating the quintic log-amplitude and phase
-        polynomials of $\mathscr{S}_{2,5}$ using Horner's method. This plot was produced by plotting only
-    the local maxima of the error bound data in order to reduce the plot's
-    range.\label{plot:mqmodquinticpolyevalerr}}
-\end{figure}
 
 \subsection{Exponential phase function}
 
