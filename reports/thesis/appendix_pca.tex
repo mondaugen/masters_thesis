@@ -42,35 +42,5 @@ requiring orthogonality with the first two principal components, etc.
 The principal components now allow us to examine for grouping more easily as the
 total variance of the dataset has been captured in the first few principal component
 variables. These transformed data-points can now be classified using a
-classification algorithm.
-
-Before we continue describing classification techniques we will briefly discuss
-the nature of our classification problem. If accurate and consistent
-measurements of data-points can be made, and a large enough sample of
-data-points is available to train a model, then to predict the classification of
-new points, a function $g=\hat{h} \left( \boldsymbol{x} \right)$ is postulated,
-giving the classification $g$ of a data-point $\boldsymbol{x}$. For example, if
-there are only two classes, we might postulate a linear
-classifier
-\[
-    \hat{h}(\boldsymbol{x}) = \begin{cases}
-        0 \text{ if } \boldsymbol{\beta}^{T}\boldsymbol{x} > c \\
-        1 \text{ if } \boldsymbol{\beta}^{T}\boldsymbol{x} < c
-    \end{cases}
-\]
-where 0 and 1 indicate membership in class 0 or 1. Techniques for choosing
-$\hat{h}$ are discussed in \cite{friedman2001elements} and often require data on
-which to ``train'' a classifier, i.e., determine a function $\hat{h}$ that
-classifies well a dataset with known classifications.  Here we do not have a
-sample dataset because of the large number of possible situations and the
-difficulty of consistently estimating underlying model parameters (see, for
-example, Section~\ref{sec:mq_lp_compare_chirp}). As training to find a suitable
-$\hat{h}$ is not possible, we propose \textit{kernels} that reflect the
-hypothesized underlying structure of the distribution of $\boldsymbol{x}$. To
-elaborate, we may observe that the classification of a
-point is indicated by its nearness to other points in the same class, i.e., its
-membership to a cluster. The proposed kernel is a parameterized model of a
-cluster, whose parameters we can adjust until they fit the observed data well.
-We then choose the kernel that best explains the data to indicate what class
-these data are in. The following section describes a technique using normal
-distributions as kernels, which is the technique used in later experiments.
+classification algorithm --- see Appendix~\ref{chap:gmm} for the classification
+algorithm used for the experiments in this thesis.
