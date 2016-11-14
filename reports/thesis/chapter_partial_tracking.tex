@@ -31,7 +31,7 @@ exclusive to a single path or is not on a path.
 %referred to as \textit{peak matching} \cite{mcaulay1986speech}
 %or \textit{partial tracking} \cite{smith1987parshl} \cite{depalle1993tracking}.
 
-\section{A Greedy Method}
+\section{A greedy method}
 
 In this section, we present the McAulay-Quatieri method of peak matching. It is
 conceptually simple and a set of short paths can be computed quickly, but
@@ -102,7 +102,7 @@ implement, computationally negligible when $K$ is small, and works well with a
 variety of signals encountered in audio \cite{mcaulay1986speech}
 \cite{smith1987parshl}.
 
-\section{An Optimal Method \label{sec:lppathsearch}}
+\section{An optimal method \label{sec:lppathsearch}}
 
 There is a way to find a set of paths over multiple frames ($K > 2$) having the
 lowest total cost if
@@ -377,7 +377,10 @@ presence of noise.
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_20.eps}
     \CaptionWithTitle{%
         \input{plots/mq_lp_compare_chirp_20.txt}%
-    }{ Line-segments representing the discovered partial paths. See
+    }{ Line-segments representing the frequency and frequency-slope at local
+        spectrogram maxima. In the bottom two plots the line segments not deemed
+        by the respective algorithms as belonging to a partial path are
+        discarded, revealing the estimated partial trajectories. See
         Table~\ref{tab:ptrackexamplechirpparams} for the chirp parameters.
     \label{plot:mq_lp_compare_chirp_20}}
 \end{figure}
@@ -387,7 +390,10 @@ presence of noise.
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_15.eps}
     \CaptionWithTitle{%
         \input{plots/mq_lp_compare_chirp_15.txt}%
-    }{ Line-segments representing the discovered partial paths. See
+    }{ Line-segments representing the frequency and frequency-slope at local
+        spectrogram maxima. In the bottom two plots the line segments not deemed
+        by the respective algorithms as belonging to a partial path are
+        discarded, revealing the estimated partial trajectories. See
         Table~\ref{tab:ptrackexamplechirpparams} for the chirp parameters.
     \label{plot:mq_lp_compare_chirp_15}}
 \end{figure}
@@ -397,7 +403,10 @@ presence of noise.
     \includegraphics[width=\figwidthscale\textwidth]{plots/mq_lp_compare_chirp_10.eps}
     \CaptionWithTitle{%
         \input{plots/mq_lp_compare_chirp_10.txt}%
-    }{ Line-segments representing the discovered partial paths. See
+    }{ Line-segments representing the frequency and frequency-slope at local
+        spectrogram maxima. In the bottom two plots the line segments not deemed
+        by the respective algorithms as belonging to a partial path are
+        discarded, revealing the estimated partial trajectories. See
         Table~\ref{tab:ptrackexamplechirpparams} for the chirp parameters.
     \label{plot:mq_lp_compare_chirp_10}}
 \end{figure}
