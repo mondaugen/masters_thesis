@@ -9,7 +9,8 @@ techniques presented in this thesis.
 \subsection{Quality of polynomial models for analysis and synthesis}
 
 In Chapter~\ref{chap:exphsmodel} we explored various orders of polynomial amplitude and
-phase models for analysis and synthesis and assessed their quality. A
+phase models for analysis and synthesis and assessed their fidelity in
+reproducing synthetic signals of with polynomial and exponential phase functions. A
 quadratic estimation of the phase and log-amplitude in the analysis step
 improved the synthesis quality over the constant amplitude and linear phase
 model in all cases considered. The use of a quintic phase
@@ -20,20 +21,32 @@ amplitude. Nevertheless, the additional information provided by the DDM in the
 analysis stage was shown useful in postulating interpolating polynomials at the
 synthesis stage.
 
-\subsection{The use of amplitude-modulation in audio source separation}
+\subsection{The use of amplitude- and frequency-modulation in audio source separation}
 
-Chapters~\ref{chap:amfmsep}~and~\ref{chap:decaysep} explore the contribution of
-amplitude-modulation to the audio source separation problem on simulated data.
-In Chapter~\ref{chap:amfmsep} we consider both the amplitude- and
+Chapter~\ref{chap:amfmsep} explored the contribution of amplitude- and
+frequency-modulation to the source separation problem on simulated data.
+Chapter~\ref{chap:decaysep} investigated, using real recordings, how to overcome
+the case where no frequency-modulation was present in either of the sources and
+so only amplitude-modulation could be used to perform separation.
+
+\subsubsection{Source separation of simulated data using amplitude- and
+frequency-modulation}
+
+In Chapter~\ref{chap:amfmsep} we considered both the amplitude- and
 frequency-modulation when classifying into sources. We adaptively selected the
 best variable on which to classify using principal components analysis and found
-that amplitude-modulation aided in the case of little frequency modulation. A
+that amplitude-modulation aided in the case of little frequency-modulation. A
 post-processing step was required to extract the original sources. This step
 extracted sources based on the smoothness between analysis frames of the
 amplitude and frequency measurements.  Only the post-processing encouraging
 smoothness in frequency gave encouraging results --- smoothing in amplitude
 failed due to the rapidly varying amplitude in the transient regions of the
-sounds. In Chapter~\ref{chap:decaysep} we apply our source separation technique
+sounds.
+
+\subsubsection{Source separation of a mixture of real recordings with no
+frequency-modulation}
+
+In Chapter~\ref{chap:decaysep} we applied our source separation technique
 to a recording of a percussive and a plucked string instrument. These
 instruments exhibit virtually no frequency-modulation. We showed, as in
 Chapter~\ref{chap:amfmsep}, that it is
@@ -46,13 +59,18 @@ amplitude-modulation of the two sources is sufficient.
 
 The DDM requires the use of windows that are once differentiable. The canonical
 window with this property is the Hann window, however the Blackman-Harris window
-has better properties in terms of its out-of-band signal rejection. In
+has better properties in terms of its out-of-band signal rejection, but is not
+differentiable. In
 Chapter~\ref{chap:sigmod}, starting
 from the description of a Blackman-Harris window, we used optimization
 techniques to search for a window close to the Blackman-Harris, but whose
 end-points are 0, thus allowing differentiation everywhere after windowing with
 a rectangular window (necessary to make the window have finite support).
-Informally, we found this to improve the estimation accuracy of the DDM.
+Although no formal quantification of the improvement was performed, we found
+this to improve the estimation accuracy of the DDM for signals sufficiently
+separated in frequency (separated by at least the bandwidth of the main-lobe of
+the frequency domain representation of the window) when compared with the DDM
+using the Hann window.
 
 \subsection{Partial tracking using linear programming}
 
