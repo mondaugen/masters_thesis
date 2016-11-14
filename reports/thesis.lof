@@ -36,16 +36,16 @@
 \contentsline {figure}{\numberline {6.11}{\ignorespaces \input {plots/hsrp_test_7_multi_smooth_freq_amp_sol_plot_title.txt}.}}{81}{figure.caption.56}
 \contentsline {figure}{\numberline {6.12}{\ignorespaces \input {plots/ad_hoc_cluster_part_ex_plot_title.txt}.}}{82}{figure.caption.57}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}.}}{86}{figure.caption.58}
-\contentsline {figure}{\numberline {7.2}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_partial_trajectories.txt}.}}{87}{figure.caption.59}
-\contentsline {figure}{\numberline {7.3}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_pcost_vs_bound.txt}.}}{88}{figure.caption.60}
-\contentsline {figure}{\numberline {7.4}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram.txt}.}}{89}{figure.caption.61}
-\contentsline {figure}{\numberline {7.5}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram_partials.txt}.}}{90}{figure.caption.62}
-\contentsline {figure}{\numberline {7.6}{\ignorespaces \input {plots/ac_gtr_orig_spec.txt}.}}{91}{figure.caption.63}
-\contentsline {figure}{\numberline {7.7}{\ignorespaces \input {plots/xylo_orig_spec.txt}.}}{92}{figure.caption.64}
-\contentsline {figure}{\numberline {7.8}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_estimated_memberships.txt}.}}{93}{figure.caption.65}
-\contentsline {figure}{\numberline {7.9}{\ignorespaces \input {plots/ac_gtr_ss_spec.txt}.}}{94}{figure.caption.66}
-\contentsline {figure}{\numberline {7.10}{\ignorespaces \input {plots/xylo_ss_spec.txt}.}}{95}{figure.caption.67}
+\contentsline {figure}{\numberline {7.1}{\ignorespaces \input {plots/ac_gtr_orig_spec.txt}.}}{86}{figure.caption.58}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces \input {plots/xylo_orig_spec.txt}.}}{86}{figure.caption.58}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram.txt}.}}{87}{figure.caption.59}
+\contentsline {figure}{\numberline {7.4}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_specgram_partials.txt}.}}{88}{figure.caption.60}
+\contentsline {figure}{\numberline {7.5}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_partial_trajectories.txt}.}}{88}{figure.caption.60}
+\contentsline {figure}{\numberline {7.6}{\ignorespaces \input {plots/partial_estimation_acgtr_xylo_pcost_vs_bound.txt}.}}{89}{figure.caption.61}
+\contentsline {figure}{\numberline {7.7}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}.}}{90}{figure.caption.62}
+\contentsline {figure}{\numberline {7.8}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_estimated_memberships.txt}.}}{92}{figure.caption.63}
+\contentsline {figure}{\numberline {7.9}{\ignorespaces \input {plots/ac_gtr_ss_spec.txt}.}}{93}{figure.caption.64}
+\contentsline {figure}{\numberline {7.10}{\ignorespaces \input {plots/xylo_ss_spec.txt}.}}{94}{figure.caption.65}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

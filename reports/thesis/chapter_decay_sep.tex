@@ -3,97 +3,8 @@
 
 % plot produced with
 % plot_pep_3_3d.py
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_sep_true_memberships.eps}
-    \CaptionWithTitle{%
-        \input{plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}%
-    }{This shows the distribution of partials when plotting their two principal components
-        derived from their mean frequency and log-length. In this case, the
-        source memberships of the partials are known. We see that there is
-        generally a separation of the partials into two clusters corresponding
-        to the two sources.
-        \label{plot:partialclassificationacgtrxyloseptruememberships}}
-\end{figure}
 
 % plots produced with ../../signal_modeling/test/partial_estimation_plot_3_3c.py
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_partial_trajectories.pdf}
-    \CaptionWithTitle{%
-        \input{plots/partial_classification_acgtr_xylo_partial_trajectories.txt}%
-    }{\label{plot:parclassaxpartialtrajectories}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.eps}
-    \CaptionWithTitle{%
-        \input{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.txt}%
-    }{Paths, represented as circles, are considered only if their
-    path cost is smaller than the threshold function, the black curve. The
-threshold is higher for shorter partials as to not reject those that
-represent the transient region of the sound. The partials during this time
-typically have rapidly changing frequency- and amplitude-modulation, so
-their path costs could be disproportionately high.%
-\label{plot:acgtra3xylofs4costlengththresh}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram.eps}
-    \CaptionWithTitle{%
-        \input{plots/partial_estimation_acgtr_xylo_specgram.txt}%
-    }{\label{plot:acgtra3xylofs4specgram}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram_partials.eps}
-    \CaptionWithTitle{%
-        \input{plots/partial_estimation_acgtr_xylo_specgram_partials.txt}%
-    }{\label{plot:acgtra3xylofs4partials}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_orig_spec.eps}
-    \CaptionWithTitle{%
-        \input{plots/ac_gtr_orig_spec.txt}%
-    }{\label{plot:acgtra3specgram}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_orig_spec.eps}
-    \CaptionWithTitle{%
-        \input{plots/xylo_orig_spec.txt}%
-    }{\label{plot:xylofs4specgram}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_estimated_memberships.eps}
-    \CaptionWithTitle{%
-        \input{plots/partial_classification_acgtr_xylo_estimated_memberships.txt}%
-    }{\label{plot:partialclassificationacgtrxylosepestimatedmemberships}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_ss_spec.eps}
-    \CaptionWithTitle{%
-        \input{plots/ac_gtr_ss_spec.txt}%
-    }{\label{plot:acgtra3specgramss}}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_ss_spec.eps}
-    \CaptionWithTitle{%
-        \input{plots/xylo_ss_spec.txt}%
-    }{\label{plot:xylofs4specgramss}}
-\end{figure}
 
 \section{Introduction}
 
@@ -106,6 +17,34 @@ underlying source.
 
 \section{Description of problem}
 
+\begin{figure}%[t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_orig_spec.eps}
+    \CaptionWithTitle{%
+        \input{plots/ac_gtr_orig_spec.txt}%
+    }{The fundamental is $\text{A}_{3}$ or 220 Hz.%
+    \label{plot:acgtra3specgram}}
+
+    \vspace*{\floatsep}
+
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_orig_spec.eps}
+    \CaptionWithTitle{%
+        \input{plots/xylo_orig_spec.txt}%
+    }{The fundamental is $\text{F}_{4}^{\sharp}$ or approximately 370 Hz.%
+    \label{plot:xylofs4specgram}}
+\end{figure}
+
+\begin{figure}[t]%[t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram.eps}
+    \CaptionWithTitle{%
+        \input{plots/partial_estimation_acgtr_xylo_specgram.txt}%
+    }{This spectrogram is the sum of the spectrograms in
+    Figure~\ref{plot:acgtra3specgram}~and~\ref{plot:xylofs4specgram}.%
+    \label{plot:acgtra3xylofs4specgram}}
+\end{figure}
+
 We start with a recording of an acoustic guitar playing $\text{A}_{3}$ and
 a xylophone playing $\text{F}_{4}^{\sharp}$.  The recordings are from
 \cite{opolko1987mcgill} and have been mixed down to one channel (by simply
@@ -117,6 +56,22 @@ window, DFT size of 4096 samples and a hop size of 512 samples. We see that
 neither source exhibits much frequency-modulation. The spectrogram of
 the mixture can be seen in Figure~\ref{plot:acgtra3xylofs4specgram} and the
 partial paths in Figure~\ref{plot:acgtra3xylofs4partials}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_specgram_partials.eps}
+    \CaptionWithTitle{%
+        \input{plots/partial_estimation_acgtr_xylo_specgram_partials.txt}%
+    }{\label{plot:acgtra3xylofs4partials}}
+
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_partial_trajectories.pdf}
+    \CaptionWithTitle{%
+        \input{plots/partial_classification_acgtr_xylo_partial_trajectories.txt}%
+    }{Line functions are fit to the partial trajectory data of each partial to
+    examine their general amplitude slopes.%
+\label{plot:parclassaxpartialtrajectories}}
+\end{figure}
 
 The mixture of the two signals was analysed using the DDM for finding the
 coefficients of a cubic complex phase polynomial. Local maxima in each frame
@@ -140,12 +95,43 @@ cost-length ratio is excessive. See
 Figure~\ref{plot:acgtra3xylofs4costlengththresh} to see a plot of these values
 and the thresholding function. 
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.eps}
+    \CaptionWithTitle{%
+        \input{plots/partial_estimation_acgtr_xylo_pcost_vs_bound.txt}%
+    }{Paths, represented as circles, are considered only if their
+    path cost is smaller than the threshold function, the black curve. The
+threshold is higher for shorter partials as to not reject those that
+represent the transient region of the sound. The partials during this time
+typically have rapidly changing frequency- and amplitude-modulation, so
+their path costs could be disproportionately high.%
+\label{plot:acgtra3xylofs4costlengththresh}}
+\end{figure}
+
 \section{Motivation}
 
-A line function is fit via least-squares to each partial, as shown in
-Figure~\ref{plot:parclassaxpartialtrajectories}. Our goal is to classify based
-on the amplitude modulation of each partial, or to an approximation, the slope of these line functions. We found that examining the log-length of the
-partials gives better results than examining the slope directly. This is perhaps
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_sep_true_memberships.eps}
+    \CaptionWithTitle{%
+        \input{plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}%
+    }{This shows the distribution of partials when plotting their two principal components
+        derived from their mean frequency and log-length. In this case, the
+        source memberships of the partials are known. We see that there is
+        generally a separation of the partials into two clusters corresponding
+        to the two sources.
+        \label{plot:partialclassificationacgtrxyloseptruememberships}}
+\end{figure}
+
+Line functions (functions of time) are fit to the amplitude and frequency data
+on each partial trajectory via least-squares, as shown in
+Figure~\ref{plot:parclassaxpartialtrajectories}. Here roughly two kinds of
+partial slope with respect to amplitude are observed --- those that are steep and brief and
+others that are longer and more gradual. Our goal is to classify based
+on the amplitude modulation of each partial, or to an approximation, the slope
+of these line functions. We found that examining the log-length of the partials
+gives better results than examining the slope directly. This is perhaps
 because the log-length encodes both the starting amplitude and the slope. Recall
 that the partials start on the first local maximum exceeding an amplitude
 threshold --- those with lower starting amplitude and steeper amplitude slope will be
@@ -190,11 +176,12 @@ of the guitar body.
 
 \section{Classification}
 
-Our intention is now to use GMM on a set of unclassified partials to yield a
-plausible source separation. GMM fitting is sensitive to its initial guess of
-the parameters as the algorithm can converge to a local maximum of the likelihood
-function \cite[p.~187]{kay1993fundamentals}.  To find an initial guess we
-convolve the scatter plot with kernel $\mathscr{K}$, giving a continuous function.
+Our intention is now to use GMM (see Appendix~\ref{chap:gmm}) on a set of
+unclassified partials to yield a plausible source separation. GMM fitting is
+sensitive to its initial guess of the parameters as the algorithm can converge
+to a local maximum of the likelihood function
+\cite[p.~187]{kay1993fundamentals}.  To find an initial guess we convolve the
+scatter plot with kernel $\mathscr{K}$, giving a continuous function.
 $\mathscr{K}$ is defined%
 \footnote{Note its similarity to the normal distribution, defined in
 Appendix~\ref{chap:normaldist}.}
@@ -206,6 +193,19 @@ Appendix~\ref{chap:normaldist}.}
 Here $\boldsymbol{x} \in \mathbb{R}^{2}$ and $\boldsymbol{\beta} \in
 \mathbb{R}^{2 \times 2}$ controls the extent of the kernel, i.e., how much it
 smooths in each dimension. 
+
+\begin{figure}[t]%[!t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/partial_classification_acgtr_xylo_estimated_memberships.eps}
+    \CaptionWithTitle{%
+        \input{plots/partial_classification_acgtr_xylo_estimated_memberships.txt}%
+    }{The contours of the function resulting from convolving the data-points with kernels are
+        represented by the lines. It is from the local maxima of these functions
+        that the EM algorithm begins its search for the mixture of Gaussians
+        (not shown) that give the classifications. A marker's classification is
+        indicated by its colour.%
+    \label{plot:partialclassificationacgtrxylosepestimatedmemberships}}
+\end{figure}
 
 We use the two local maxima of this function as the initial means for the two
 sought classifying Gaussian distributions. The convolution function evaluated
@@ -272,13 +272,20 @@ the best results. The covariance matrix $\boldsymbol{\Sigma}^{0}$ is computed as
     \boldsymbol{\Sigma}^{0} = \boldsymbol{S}(\{ \boldsymbol{a} \}) +
     \epsilon\boldsymbol{I}
 \]
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/ac_gtr_ss_spec.eps}
+    \CaptionWithTitle{%
+        \input{plots/ac_gtr_ss_spec.txt}%
+    }{\label{plot:acgtra3specgramss}}
+\end{figure}%
 where $\boldsymbol{S}$ computes the sample covariance and
 $\boldsymbol{\epsilon}\boldsymbol{I}$ is a matrix whose only non-zero entries
 are on the main diagonal and are equal to a small constant to avoid a singular
-initial covariance matrix. 100 iterations of the EM algorithm are performed to
-compute classifications. Each point is assigned to its most likely cluster using
-the final estimated Gaussian distributions. The final classifications for this
-classification task can be seen in
+initial covariance matrix. 100 iterations of the EM algorithm (see
+\ref{chap:gmm}) are performed to compute classifications. Each point is assigned
+to its most likely cluster using the final estimated Gaussian distributions. The
+final classifications for this classification task can be seen in
 Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}.
 
 \section{Synthesis}
@@ -290,6 +297,14 @@ Section~\ref{sec:s23synthesis}. Spectrograms of the source separated signals
 are shown in Figure~\ref{plot:acgtra3specgramss} and
 Figure~\ref{plot:xylofs4specgramss}. 
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\figwidthscale\textwidth]{plots/xylo_ss_spec.eps}
+    \CaptionWithTitle{%
+        \input{plots/xylo_ss_spec.txt}%
+    }{\label{plot:xylofs4specgramss}}
+\end{figure}
+
 \section{Conclusion}
 
 After an informal listening, the source separation is perceptually
@@ -297,7 +312,7 @@ convincing.\footnote{Soundfiles can be downloaded from \par
 \url{https://drive.google.com/file/d/0B8B4c04j8tBwZDFraEZ1dFZHRFU/view?usp=sharing}}
 At least one partial from the guitar can be heard in the xylophone recording,
 however --- it is difficult to separate partials that do not have sufficient
-spacial separation in
+spatial separation in
 Figure~\ref{plot:partialclassificationacgtrxylosepestimatedmemberships}. Another
 drawback of the current technique is that it requires some tuning of the
 parameters $\theta_{w}$ and $\theta_{\boldsymbol{\beta}_{\boldsymbol{a}}}$.
@@ -308,4 +323,7 @@ separated in time or frequency, they cannot be separated as their analysis will
 yield simply one partial when there are in fact many. In any case, it is important
 to see that source separation can be carried out by only considering the
 amplitude modulation (in this case, the decay rate) in relation to the partial
-frequency.
+frequency. Apart from the combination of instruments presented here many
+plausible situations can be imagined where this technique could be carried out:
+e.g., with a mixture of sustained instruments such as violin, voice or horns and
+pitched percussive instruments such as the piano or guitar.
