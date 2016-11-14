@@ -24,17 +24,17 @@
 \contentsline {figure}{\numberline {5.8}{\ignorespaces \input {plots/mq_mod_quintic_poly_eval_err.txt}.}}{61}{figure.caption.41}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {6.1}{\ignorespaces \input {plots/hsrp_test_7_multi_orig_data_plot_title.txt}.}}{66}{figure.caption.42}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces \input {plots/hsrp_test_7_multi_orig_spur_data_plot_title.txt}.}}{67}{figure.caption.43}
-\contentsline {figure}{\numberline {6.3}{\ignorespaces \input {plots/hsrp_test_7_multi_class_pcs_plot_title.txt}.}}{68}{figure.caption.44}
-\contentsline {figure}{\numberline {6.4}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_est_plot_title.txt}.}}{69}{figure.caption.45}
-\contentsline {figure}{\numberline {6.5}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_est_plot_title.txt}.}}{70}{figure.caption.46}
-\contentsline {figure}{\numberline {6.6}{\ignorespaces \input {plots/hsrp_test_7_multi_af_plot_title.txt}.}}{71}{figure.caption.47}
-\contentsline {figure}{\numberline {6.7}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_amp_plot_title.txt}.}}{72}{figure.caption.48}
-\contentsline {figure}{\numberline {6.8}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_amp_plot_title.txt}.}}{73}{figure.caption.49}
-\contentsline {figure}{\numberline {6.9}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_freq_plot_title.txt}.}}{74}{figure.caption.50}
-\contentsline {figure}{\numberline {6.10}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_freq_plot_title.txt}.}}{75}{figure.caption.51}
-\contentsline {figure}{\numberline {6.11}{\ignorespaces \input {plots/hsrp_test_7_multi_smooth_freq_amp_sol_plot_title.txt}.}}{76}{figure.caption.52}
-\contentsline {figure}{\numberline {6.12}{\ignorespaces \input {plots/ad_hoc_cluster_part_ex_plot_title.txt}.}}{83}{figure.caption.57}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces \input {plots/hsrp_test_7_multi_af_plot_title.txt}.}}{67}{figure.caption.43}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces \input {plots/hsrp_test_7_multi_orig_spur_data_plot_title.txt}.}}{68}{figure.caption.45}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces \input {plots/hsrp_test_7_multi_class_pcs_plot_title.txt}.}}{72}{figure.caption.49}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_est_plot_title.txt}.}}{74}{figure.caption.50}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_est_plot_title.txt}.}}{75}{figure.caption.51}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_amp_plot_title.txt}.}}{77}{figure.caption.52}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_amp_plot_title.txt}.}}{78}{figure.caption.53}
+\contentsline {figure}{\numberline {6.9}{\ignorespaces \input {plots/hsrp_test_7_multi_source_1_smooth_freq_plot_title.txt}.}}{79}{figure.caption.54}
+\contentsline {figure}{\numberline {6.10}{\ignorespaces \input {plots/hsrp_test_7_multi_source_2_smooth_freq_plot_title.txt}.}}{80}{figure.caption.55}
+\contentsline {figure}{\numberline {6.11}{\ignorespaces \input {plots/hsrp_test_7_multi_smooth_freq_amp_sol_plot_title.txt}.}}{81}{figure.caption.56}
+\contentsline {figure}{\numberline {6.12}{\ignorespaces \input {plots/ad_hoc_cluster_part_ex_plot_title.txt}.}}{82}{figure.caption.57}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {7.1}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_sep_true_memberships.txt}.}}{86}{figure.caption.58}
 \contentsline {figure}{\numberline {7.2}{\ignorespaces \input {plots/partial_classification_acgtr_xylo_partial_trajectories.txt}.}}{87}{figure.caption.59}
