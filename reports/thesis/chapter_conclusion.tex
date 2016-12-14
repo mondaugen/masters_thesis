@@ -29,7 +29,7 @@ Chapter~\ref{chap:decaysep} investigated, using real recordings, how to overcome
 the case where no frequency-modulation was present in either of the sources and
 so only amplitude-modulation could be used to perform separation.
 
-\subsubsection{Source separation of simulated data using amplitude- and
+\subsubsection{Using amplitude- and
 frequency-modulation}
 
 In Chapter~\ref{chap:amfmsep} we considered both the amplitude- and
@@ -43,7 +43,7 @@ smoothness in frequency gave encouraging results --- smoothing in amplitude
 failed due to the rapidly varying amplitude in the transient regions of the
 sounds.
 
-\subsubsection{Source separation of a mixture of real recordings with no
+\subsubsection{Real recordings with no
 frequency-modulation}
 
 In Chapter~\ref{chap:decaysep} we applied our source separation technique
@@ -78,14 +78,14 @@ The original peak-matching algorithm of McAulay and Quatieri
 \cite{mcaulay1986speech} searches for partials through a lattice of spectral
 analysis data by considering optimal peak-matches between two adjacent frames.
 In Chapter~\ref{chap:partialtracking} we show that this can be generalized to
-search for $L$ paths between an arbitrary number of a frames in a lattice, and
+search for $L$ paths between an arbitrary number of frames in a lattice, and
 that it is a greedy algorithm --- one that gives the shortest possible path
 without considering the lengths of the other paths in the solution. Also, it is
 shown that the complexity of this algorithm is exponential in the number of
 frames and therefore impractical to apply to even moderately sized problems. A
 linear program to search for the $L$ paths through a lattice with shortest total
 cost is introduced. We show that this algorithm is computationally tractable and
-that it outperforms the McAulay-Quatieri method on signals with a low SNR.
+that it outperforms the McAulay-Quatieri method on signals with low SNRs.
 
 \section{Future extensions}
 
@@ -113,7 +113,7 @@ linear programming should be assessed on real music and speech signals.
 A non-stationary description of signals could make it possible to describe
 signals using fewer analysis frames as the signal can be more accurately modeled
 between analysis points. As mentioned in \cite{betser2009sinusoidal}, it should
-be investigated whether or not such a model could contribute the field of audio
+be investigated whether or not such a model could contribute to the field of audio
 coding. Specifically, compression ratios should be compared between analyses
 using a lower order model, but with more analysis frames, and those using higher-order
 models but fewer analysis frames. Possible improvements to applications such as

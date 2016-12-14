@@ -17,7 +17,7 @@ to separate sources estimated via an additive model. Similar to this thesis,
 \cite{creager2016musicalsource} uses an additive sinusoidal model to provide
 frequency-modulation cues to a latent component technique, and in
 \cite{li2009monaural}, common amplitude-modulation and fundamental frequency
-estimation are use to separate sources, the additive sinusoidal model being used
+estimation are used to separate sources, the additive sinusoidal model being used
 to reconstruct the phases of overlapping harmonics using the fundamental
 frequencies. The additive sinusoidal model is also the model adopted in this
 thesis and its use is justified in Chapter~\ref{chap:sigmod}.
@@ -56,7 +56,10 @@ factorizations (NMF)}
 
 \subsection{Motivation}
 
-The power spectrum of a signal and consequently its spectrogram are always
+Finding it difficult to specify a detailed model for all types of acoustic sources,
+we can attempt source separation with a more general criterion: that different
+sources only combine constructively in a mixture. This is a plausible criterion as
+the power spectrum of a signal and consequently its spectrogram are always
 non-negative valued. If a signal is considered as consisting of a sum of
 original source signals, these source signals will have non-negative
 spectrograms as well. The following two techniques attempt to determine these

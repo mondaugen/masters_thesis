@@ -10,7 +10,7 @@ points'' or ``parameter sets''.
 This chapter presents an interpretation of the \textit{peak matching} procedure
 of McAulay and Quatieri \cite{mcaulay1986speech}, a classical approach to discovering partials. Our
 interpretation allows for the specification of an arbitrary cost function
-measuring the plausibility that a set of analysis points form the path of a
+measuring the plausibility that a set of analysis points forms the path of a
 partial. With this path interpretation, we were able to design a technique that finds the
 optimal set of paths under a constraint on the number of paths. The chapter
 concludes with an example of partial tracking on a synthetic signal.
@@ -140,7 +140,7 @@ find the two shortest paths. We will now examine the resulting paths from two
 algorithms using different criteria for shortness.
 
 In Figure~\ref{plot:simple_graph_greedy_paths} we find the paths using an
-algorithm similar to Algorithm~\ref{alg:mq_peak_match} but search instead over a
+algorithm similar to Algorithms~\ref{alg:mq_peak_match} but search instead over a
 tensor of distances $C \in \mathbb{R}^{3 \times 4 \times 2}$ whose entry
 $C_{i,j,h}$ represents the cost of travelling on the path connecting the $i$th
 node in layer 0, the $j$th node in layer 1 and the $h$th node in layer 2. This
@@ -368,7 +368,7 @@ Table~\ref{tab:ptrackexamplechirpparams}.
 
 Two 1 second long signals are synthesized at a sampling rate of 16000 Hz, the
 first with chirps 0--2, the second with chirps 3--5. We add
-Gaussian distributed white noise at several SNR to evaluate the technique in the
+Gaussian distributed white noise at several SNRs to evaluate the technique in the
 presence of noise.
 
 \begin{figure}[!t]

@@ -8,7 +8,7 @@ The various techniques to synthesize these pieces of the signal discussed here
 differ in the orders used for analysis and those for synthesis. The first
 technique presented simply synthesizes signals of short duration using the
 estimated parameters and blends these segments together. We recognize that
-having multiple estimations of parameters at discrete times within the partial
+having multiple estimations of parameters at discrete times within the partial's
 duration allow us to postulate, via interpolation, functions describing the
 partial of higher-order than those whose parameters were estimated during
 analysis. It is shown that this strategy is not always to our advantage ---
@@ -72,7 +72,7 @@ estimated at $\tau_{r}$ and $\tau_{r+1}$ using the model that the underlying
 sinusoids are non-stationary\footnote{%
     This is one of the causes of ``pre-echo'' when
     time-stretching using the STFT \cite{roebel2003transient}.%
-}
+}.
 From Equation~\ref{eq:ddmsyseq} we know we can estimate a polynomial of
 arbitrary order for the argument of the complex exponential. We will see that
 using this additional information can give us an interpolating function closer
@@ -168,7 +168,7 @@ We choose $M$ so that
     \label{eq:minfmmq}
     \int_{0}^{H}(\frac{d^{2}\tilde{\phi}}{dt^2}(t))^{2}dt
 \end{equation}
-is minimized in order to have a smooth evolution of phase in the interpolated
+is minimized in order to have a smooth evolution of frequency in the interpolated
 region. $M$ is necessary because some integer number of periods of a sinusoid
 will have passed from times $\tau_{0}$ to $\tau_{1}$. Informally we choose $M$
 so that a polynomial describing the phase evolution between these two times
@@ -215,7 +215,7 @@ the same number of estimated parameters as there are parameters in the model.
 
 \subsection{Analysis: quadratic phase and log-amplitude \label{sec:s235analysis}}
 
-The DDM is used on segments of the signal to estimate the parameters of sinusoid
+The DDM is used on segments of the signal to estimate the parameters of a sinusoid
 with a complex quadratic polynomial argument. This sinusoid has the form
 \begin{equation}
     \label{eq:quadraticphasepoly}
@@ -228,14 +228,14 @@ the DDM. We write Equation~\ref{eq:ddmsyseq} in matrix form with $Q=2$
 \[
     \begin{pmatrix}
         \left\langle \mathcal{T}^{0} x , \overline{\psi}_{1} \right\rangle &
-        2\left\langle \mathcal{T}^{1} x , \overline{\psi}_{1} \right\rangle \\
+        \left\langle \mathcal{T}^{1} x , \overline{\psi}_{1} \right\rangle \\
         \vdots & \vdots \\
         \left\langle \mathcal{T}^{0} x , \overline{\psi}_{R} \right\rangle & 
-        2\left\langle \mathcal{T}^{1} x , \overline{\psi}_{R} \right\rangle
+        \left\langle \mathcal{T}^{1} x , \overline{\psi}_{R} \right\rangle
     \end{pmatrix}
     \begin{pmatrix}
         a_{1} \\
-        a_{2}
+        2a_{2}
     \end{pmatrix}
     =
     \begin{pmatrix}
@@ -330,8 +330,9 @@ at two times $\tau_{0}$ and $\tau_{1}$, with $H = \tau_{1} - \tau_{0}$, and thes
 times have between determined as connected (see
 Chapter~\ref{chap:partialtracking}), we can write a system of equations
 to determine an interpolating cubic phase polynomial. To avoid numerical
-instabilities and for simplicity, we shift the time origin so that $\tau_{0} =
-0$. This means $b_0 = \Im \left\{ a^{\tau_0}_{0} \right\}$. To reduce the size
+instabilities and for simplicity, we shift the time origin so that
+${\tau_{0} = 0}$.
+This means ${b_0 = \Im \left\{ a^{\tau_0}_{0} \right\}}$. To reduce the size
 of the system, we require that 
 \[
     \frac{d \phi}{d n} \left(\frac{H}{2} \right)
@@ -560,6 +561,7 @@ two analysis frames.
 
 \subsubsection{The amplitude part}
 
+\raggedbottom\afterpage{\flushbottom}%
 Solving for the quintic log-amplitude polynomial
 \begin{equation}
     \label{eq:quinticamppoly}
@@ -848,12 +850,11 @@ signals are plotted in Figure~\ref{plot:mqexperrorallspect}.
     range.\label{plot:mqmodquinticpolyevalerr}}
 \end{figure}
 
-Out of the three proposed methods it appears that the modified cubic
-interpolation method works superiorly for the signal model considered. We observe
-overfitting by the higher-order quintic model in
-Figure~\ref{plot:mqmoderrcomplogampfunc}, compromising the accuracy of
-resynthesis.  Even the proposed cubic model shows some overfitting in this case.
-This is consistent with the results of \cite{girin2003comparing}. From
+For the polynomial signal model considered, we observed that increased orders
+for analysis and synthesis models did not necessarily improve signal
+reproduction fidelity. For instance, we observe overfitting by the proposed
+cubic and quintic models in Figure~\ref{plot:mqmoderrcomplogampfunc}.  This is
+consistent with the results of \cite{girin2003comparing}. From
 Figure~\ref{plot:mqmoderrcompphaseerr} it is clear that the DDM-based methods
 provide superior estimation of the phase function --- this is not the case for
 the log-amplitude function. Depending on the underlying signal, perhaps better
@@ -868,11 +869,11 @@ negligible, see Figure~\ref{plot:mqmodquinticpolyevalerr} for the results.
 
 The quintic interpolation $\mathscr{S}_{2,5}$, the polynomial of highest order,
 performs the most accurate resynthesis. This is consistent with the analytic
-property of the exponential function and an encouraging result as it suggests
-analytic phase functions can be approximated with arbitrary accuracy simply by
-increasing the order of the interpolating polynomials. Many models of musical
+property of the exponential function and an encouraging result as it confirms
+that analytic phase functions can be approximated with arbitrary accuracy simply
+by increasing the order of the interpolating polynomials. Many models of musical
 gestures involve such functions, apart from the portamento gesture modeled by an
 exponential phase function, vibrato can be modeled as a sinusoid with sinusoidal
 phase \cite{maher1990investigation}. The DDM-based analysis system combined with
-the higher-order polynomial phase and log-amplitude synthesis system presented here
-allows for accurate modeling of these gestures.
+the higher-order polynomial phase and log-amplitude synthesis system presented
+here allows for accurate modeling of these gestures.
